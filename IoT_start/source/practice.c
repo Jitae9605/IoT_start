@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main(void)
+int main_practice(void)
 {
 
 	// 1. 10개의 수를 입력받아 정렬

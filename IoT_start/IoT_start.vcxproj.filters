@@ -93,5 +93,8 @@
     <ClCompile Include="source\subject1\Q8_2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="source\mini_project1\1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
