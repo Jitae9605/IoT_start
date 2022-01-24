@@ -16,7 +16,7 @@
 
 */
 
-int main(void)
+int main_q1_1(void)
 {
 	float a = 0, b = 0;
 
