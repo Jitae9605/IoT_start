@@ -86,10 +86,10 @@ int main_mini_project1(void)
 					{
 						printf("\n%d 번 차량을 렌트하셨습니다. 즐거운 여행되십시오.\n", car_select);
 						car_state[car_select - 1] = 1;								// 차량상태 렌트중으로 바꿈
-						strcpy(*car_current_owner[car_select - 1], user_name);		// 해당 차량번호에 해당하는 문자열에 주인이름을 적어넣음
+						strcpy(car_current_owner[car_select - 1], user_name);		// 해당 차량번호에 해당하는 문자열에 주인이름을 적어넣음
 						break;
 					}
-					else if (car_state == 1)
+					else if (car_state[car_select-1] == 1)
 					{
 						printf("이미 렌트된 차량입니다. 다시 선택해 주세요.\n");
 					}
@@ -172,7 +172,7 @@ int main_mini_project1(void)
 						if (user_reg_num[i] == -1)			// 초기값은 -1을 찾는다.
 						{
 							// 방금 입력받은 아이디와 번호를 각각 빈 공간에 넣어준다.
-							strcpy(*user_reg_name[i], user_name_reg);
+							strcpy(user_reg_name[i], user_name_reg);
 							user_reg_num[i] = user_num_reg;
 						}
 						else
