@@ -57,7 +57,7 @@ int main(void)
 		{
 			total_grade[i] = total_grade[i] + student_grade[j][i];			// 총점 구하기
 		}
-		avg_grade[i] = total_grade[i] / 4;									// 평균 구하기
+		avg_grade[i] = total_grade[i] / 4.0;									// 평균 구하기
 	}
 
 	for (int i = 0; i < 10; i++)											// 석차 구하기
@@ -138,6 +138,27 @@ int main(void)
 
 			printf("수정후 리스트입니다.\n");
 			print_list();
+
+			// 성적 바뀌었으니 다시 구한다.
+			for (int i = 0; i < 10; i++)
+			{
+				total_grade[i] = 0;
+				for (int j = 0; j < 4; j++)
+				{
+					total_grade[i] = total_grade[i] + student_grade[j][i];			// 총점 구하기
+				}
+				avg_grade[i] = total_grade[i] / 4.0;									// 평균 구하기
+			}
+
+			for (int i = 0; i < 10; i++)											// 석차 구하기
+			{
+				student_rank[i] = 11;												// 모든 랭크를 n+1로 한다(같거나를 이용하므로 - =을 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 )
+				for (int j = 0; j < 10; j++)
+				{
+					if (total_grade[i] >= total_grade[j])							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+						student_rank[i]--;
+				}
+			}
 		}
 
 		else if (select_menu_num == 3)
@@ -229,10 +250,10 @@ int main(void)
 void print_init_title(void)
 {
 	// 프로그램 초기화면( 메뉴 0 )
-	printf("\n\t === < 학생성적 관리프로그램 > === \t\t\n\n");
+	printf("\n\t === < 학생성적 관리프로그램 > === \t\t\n");
 	printf("----------------------------------------------------------\n\n");
 	printf(" 1)학생등록 및 수정 \t2)성적등록 및 수정 \t3)조회 \n");
-	printf(" \n*종료하시려면 -1을 입력해주세요\n");
+	printf(" \n\t\t\t* 종료하시려면 -1을 입력해주세요\n");
 	printf("----------------------------------------------------------\n\n");
 
 
@@ -240,10 +261,10 @@ void print_init_title(void)
 
 void print_serch_title(void)
 {
-	printf("\n\t === < 학생성적 관리프로그램 > === \t\t\n\n");
+	printf("\n\t === < 학생성적 관리프로그램 > === \t\t\n");
 	printf("----------------------------------------------------------\n\n");
 	printf(" 1)학생이름으로 조회 \t2)전체학생통계조회 \n");
-	printf(" \n*메인메뉴로 돌아가시려면 -1을 입력해주세요\n");
+	printf(" \n\t\t\t* 메인메뉴로 돌아가시려면 -1을 입력해주세요\n");
 	printf("----------------------------------------------------------\n\n");
 
 }
