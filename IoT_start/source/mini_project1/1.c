@@ -4,24 +4,25 @@
 void print_init_title(void);						// 시작메뉴 출력하는 함수
 void print_reg_title(void);							// 차량목록을 출력하는 함수
 
+int ans = 0;												// 메인화면 선택지 입력사항 저장공간
+char user_name[20] = { 0 };									// 현재 로그인된 아이디 이름_
+int user_num = 0;											// 현재 로그인된 아이디 비번
+int jugnum_reg = 0;											// 판단 매개변수(0 = 불일치, 1 = 일치)
+char car_state[255] = { 0 };								// 차량 렌트상태 ( 0 = 가능, 1 = 렌트중)
+char car_name[][80] = { "차1","차2","차3","차4","차5" };		// 초기등록된 차량 리스트
+int car_select = 0;											// 렌트 메뉴에서 선택한 차량의 번호
+char user_name_check[20] = { 0 };							// 등록된 회원인지 판단하는 temp (아이디)
+int user_num_check = 0;										// 등록된 회원인지 판단하는 temp (비번)
+int cnt = sizeof(car_name) / sizeof(car_name[0]);			// 행의 수를 계산하는 변수
+char car_current_owner[20][20] = { 0 };						// 각 번호의 차량 현 소유주 이름
+char user_reg_name[20][20] = { 0 };							// 등록된 사람의 이름
+int user_reg_num[20] = { -1 };								// 등록된 사람의 이름
+char user_name_reg[20] = { 0 };								// 등록하려는 경우의 temp
+int user_num_reg = 0;										// 등록하려는 경우의 temp
 
 int main_mini_project1(void)
 {
-	int ans = 0;												// 메인화면 선택지 입력사항 저장공간
-	char user_name[20] = { 0 };									// 현재 로그인된 아이디 이름_
-	int user_num = 0 ;											// 현재 로그인된 아이디 비번
-	int jugnum_reg = 0;											// 판단 매개변수(0 = 불일치, 1 = 일치)
-	char car_state[255] = { 0 };								// 차량 렌트상태 ( 0 = 가능, 1 = 렌트중)
-	char car_name[][80] = { "차1","차2","차3","차4","차5" };		// 초기등록된 차량 리스트
-	int car_select = 0;											// 렌트 메뉴에서 선택한 차량의 번호
-	char user_name_check[20] = { 0 };							// 등록된 회원인지 판단하는 temp (아이디)
-	int user_num_check = 0;										// 등록된 회원인지 판단하는 temp (비번)
-	int cnt = sizeof(car_name) / sizeof(car_name[0]);			// 행의 수를 계산하는 변수
-	char car_current_owner[20][20] = { 0 };						// 각 번호의 차량 현 소유주 이름
-	char user_reg_name[20][20] = { 0 };							// 등록된 사람의 이름
-	int user_reg_num[20] = { -1 };								// 등록된 사람의 이름
-	char user_name_reg[20] = { 0 };								// 등록하려는 경우의 temp
-	int user_num_reg = 0;										// 등록하려는 경우의 temp
+
 
 	while (ans != 3)
 	{

@@ -1,32 +1,35 @@
 #include <stdio.h>
 #include <string.h>
 
-void print_init_title(void);																								// 초기 메인메뉴의 레이아웃 출력함수
-void print_serch_title(void);																								// 조회메뉴의 레이아웃 출력함수
-void print_list(void);																										// 학생의 번호와 성적 목록을 출력하는 함수
-void print_list_all(void);																									// 총점으로 학생들을 정렬한후 평균,총점석차등의 상세정보를 포함해 출력하는 함수
+void print_init_title(void);																						// 초기 메인메뉴의 레이아웃 출력함수
+void print_serch_title(void);																						// 조회메뉴의 레이아웃 출력함수
+void print_list(void);																								// 학생의 번호와 성적 목록을 출력하는 함수
+void print_list_all(void);																							// 총점으로 학생들을 정렬한후 평균,총점석차등의 상세정보를 포함해 출력하는 함수
 
-char student_name[10][80] = { "학생1","학생2","학생3","학생4","학생5","학생6","학생7","학생8","학생9","학생10" };				// 초기 등록되어있는 학생의 이름
-int student_grade[4][10] = {																								// 초기 등록되어있는 학생들의 과목별 성적
-	{15,12,13,14,23,16,17,18,15,20},		// 국어	
-	{21,61,23,24,25,26,27,25,29,31},		// 영어
-	{61,37,55,34,35,41,37,38,86,60},		// 수학
-	{81,72,43,94,41,46,47,48,79,57}			// 과학
+
+
+char student_name[10][80] = { "학생1","학생2","학생3","학생4","학생5","학생6","학생7","학생8","학생9","학생10" };		// 초기 등록되어있는 학생의 이름
+int student_grade[4][10] = {																						// 초기 등록되어있는 학생들의 과목별 성적
+	{15,12,13,14,23,16,17,18,15,20},																				// 국어	
+	{21,61,23,24,25,26,27,25,29,31},																				// 영어
+	{61,37,55,34,35,41,37,38,86,60},																				// 수학
+	{81,72,43,94,41,46,47,48,79,57}																					// 과학
 };
-int student_rank[10] = { 0 };																								// 학생 성적의 총점랭크 초기값
-int select_menu_num = 0;																									// 메뉴선택 입력값 받을 임시 변수
-int select_student_name_for_revice = 0;																						// 이름을 변경할 학생의 번호를 입력받을 변수
-int select_student_grade_for_revice = 0;																					// 성적을 변경할 학생의 번호를 입력받을 변수
+int student_rank[10] = { 0 };																						// 학생 성적의 총점랭크 초기값
+int select_menu_num = 0;																							// 메뉴선택 입력값 받을 임시 변수
+int select_student_name_for_revice = 0;																				// 이름을 변경할 학생의 번호를 입력받을 변수
+int select_student_grade_for_revice = 0;																			// 성적을 변경할 학생의 번호를 입력받을 변수
 
-char student_name_change[80];																								// 변경할 이름을 입력받는 변수												
-int student_grade_change[4] = { 0 };																						// 변경할 성적을 입력받는 변수
-char serch_student_name[80];																								// 조회할 학생의 이름을 입력받는 변수
-int check_for_same = 0;																										// 조회하고자 하는 학생의 이름이 있는지 각각 비교하는 함수
-int total_grade[10] = { 0 };																								// 학생별 총점
-double avg_grade[10] = { 0 };																								// 학생별 평균																			
-int temp = 0;																												// 임시저장(암거나 전부다) 변수																		
+char student_name_change[80];																						// 변경할 이름을 입력받는 변수												
+int student_grade_change[4] = { 0 };																				// 변경할 성적을 입력받는 변수
 
+char serch_student_name[80];																						// 조회할 학생의 이름을 입력받는 변수
+int check_for_same = 0;																								// 조회하고자 하는 학생의 이름이 있는지 각각 비교하는 함수
 
+int total_grade[10] = { 0 };																						// 학생별 총점
+double avg_grade[10] = { 0 };																						// 학생별 평균																			
+int temp = 0;																										// 임시저장(암거나 전부다) 변수			
+int cnt = sizeof(student_name) / sizeof(student_name[0]);
 
 int main(void)
 {
@@ -57,12 +60,12 @@ int main(void)
 		{
 			total_grade[i] = total_grade[i] + student_grade[j][i];			// 총점 구하기
 		}
-		avg_grade[i] = total_grade[i] / 4.0;									// 평균 구하기
+		avg_grade[i] = total_grade[i] / 4.0;								// 평균 구하기
 	}
 
 	for (int i = 0; i < 10; i++)											// 석차 구하기
 	{
-		student_rank[i] = 11;												// 모든 랭크를 n+1로 한다(같거나를 이용하므로 - =을 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 )
+		student_rank[i] = 11;												// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
 		for (int j = 0; j < 10; j++)										
 		{
 			if (total_grade[i] >= total_grade[j])							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
@@ -147,7 +150,7 @@ int main(void)
 				{
 					total_grade[i] = total_grade[i] + student_grade[j][i];			// 총점 구하기
 				}
-				avg_grade[i] = total_grade[i] / 4.0;									// 평균 구하기
+				avg_grade[i] = total_grade[i] / 4.0;								// 평균 구하기
 			}
 
 			for (int i = 0; i < 10; i++)											// 석차 구하기
@@ -160,7 +163,7 @@ int main(void)
 				}
 			}
 		}
-
+		
 		else if (select_menu_num == 3)
 		{
 			// 3. 조회
@@ -284,7 +287,7 @@ void print_list(void)
 
 void print_list_all(void)
 {
-	// 총점순으로 재정렬후 출력(걍 석차순으로 출력하면 됨)
+	// 총점순으로 재정렬후 출력(석차순으로 출력) + 석차,총점,평균등을 추가 출력
 	printf("\n----------------------------------------------------------\n\n");
 	printf("\t 이름\t 국어\t 영어\t 수학\t 과학\t 총점\t 평균\t 석차\n\n");
 
