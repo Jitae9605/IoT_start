@@ -6,8 +6,6 @@ void print_serch_title(void);																						// 조회메뉴의 레이아웃 출력함
 void print_list(void);																								// 학생의 번호와 성적 목록을 출력하는 함수
 void print_list_all(void);																							// 총점으로 학생들을 정렬한후 평균,총점석차등의 상세정보를 포함해 출력하는 함수
 
-
-
 char student_name[10][80] = { "학생1","학생2","학생3","학생4","학생5","학생6","학생7","학생8","학생9","학생10" };		// 초기 등록되어있는 학생의 이름
 int student_grade[4][10] = {																						// 초기 등록되어있는 학생들의 과목별 성적
 	{15,12,13,14,23,16,17,18,15,20},																				// 국어	
@@ -30,12 +28,10 @@ int check_for_same = 0;																								// 조회하고자 하는 학생의 이름이 
 int total_grade[10] = { 0 };																						// 학생별 총점
 double avg_grade[10] = { 0 };																						// 학생별 평균																			
 int temp = 0;																										// 임시저장(암거나 전부다) 변수			
-int cnt = sizeof(student_name) / sizeof(student_name[0]);
+
 int delete_student_num = 0;																							// 조회영역에서 삭제할 학생의 번호 입력받을 변수
 int delete_student_list[10] = { 0 };																				// 삭제처리한 학생들의 번호
 
-char admin_Id[80];																									// 관리자 아이디 (미구현)
-char admin_pw[80];																									// 관리자 비번 (미구현)
 
 int main(void)
 {
@@ -54,8 +50,8 @@ int main(void)
 	//	전체 학생을 성적순(총점)으로 출력,
 	//	성적 출력시 제목으로 이름, 과목명, 총점, 평균, 석차 를 먼저 출력한 후,
 	//	학생 별 성적 결과가 출력이 되도록 할 것.
-	// 삭제 기능을 추가해주세요. 학생 및 성적 정보임으로 데이터는 계속 유지 되어야 합니다.
-	// 따라서, 실제 삭제가 아닌 논리적 삭제가 되도록 하세요. 논리적 삭제는 조회에서 제외되도록 하면 됩니다.
+	//  삭제 기능을 추가해주세요. 학생 및 성적 정보임으로 데이터는 계속 유지 되어야 합니다.
+	//  따라서, 실제 삭제가 아닌 논리적 삭제가 되도록 하세요. 논리적 삭제는 조회에서 제외되도록 하면 됩니다.
 
 	//	- 구현시 고려할 점.
 	//	재사용 및 유지보수를 고려해서 구현할 것.
@@ -82,11 +78,14 @@ int main(void)
 		}
 	}
 
-	while (1)
+	while (1)				// 기능하나 끝나고 다시 메인메뉴로 돌아오기 ( -1을 입력하기 전까지 반복 )
 	{
+		
 		print_init_title();
 		printf("\n원하는 메뉴를 선택하십시오. : ");
 		scanf("%d", &select_menu_num);
+		
+
 
 		if (select_menu_num == 1)
 		{
@@ -228,17 +227,13 @@ int main(void)
 				{
 					break;
 				}
+
 				else
 				{
 					printf("\n잘못된 수를 입력하였습니다. 다시입력하세요.\n");
 				}
 			}
-
-			
 		}
-
-
-
 
 		else if (select_menu_num == 4)
 		{
@@ -263,7 +258,6 @@ int main(void)
 								student_rank[i]--;
 						}
 					}
-				
 					break;
 				}
 
@@ -272,13 +266,7 @@ int main(void)
 					printf("잘못된 값입니다. 다시입력하여주십시오\n");
 					delete_student_num = 0;
 				}
-
-
 			}
-
-
-
-
 		}
 
 		else if (select_menu_num == -1)
@@ -291,13 +279,9 @@ int main(void)
 		{
 			// 5. 잘못된 입력 처리
 			printf("\n잘못된 수를 입력하였습니다. 다시입력하세요.\n");
-			select_menu_num = 0;
+			select_menu_num = 0;	
 		}
 	}
-	
-
-
-
 
 	return 0;
 }
