@@ -28,6 +28,9 @@
     <ClCompile Include="source\7.function.c" />
     <ClCompile Include="source\8.array.c" />
     <ClCompile Include="source\assignment\first_22_01_25.c" />
+    <ClCompile Include="source\help_other_teammate\22_01_26_1.c" />
+    <ClCompile Include="source\help_other_teammate\22_01_26_re.c" />
+    <ClCompile Include="source\mini_project1\idea_list.c" />
     <ClCompile Include="source\practice.c" />
     <ClCompile Include="source\subject1\Q10_1.c" />
     <ClCompile Include="source\subject1\Q11_1.c" />
