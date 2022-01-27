@@ -111,5 +111,8 @@
     <ClCompile Include="source\assignment\1\answer(학생성적관리).c">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="source\mini_project1\1_find_diff.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

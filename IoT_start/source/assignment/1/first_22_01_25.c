@@ -34,7 +34,7 @@ int delete_student_num = 0;																							// 조회영역에서 삭제할 학생의 
 int delete_student_list[10] = { 0 };																				// 삭제처리한 학생들의 번호
 
 
-int main(void)
+int main_213(void)
 {
 	// 지금 까지 C언어의 배운 범위내에서 구현하시면 됩니다.
 
