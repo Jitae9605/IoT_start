@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <windows.h>
 #include <string.h>
 
 void print_init_title(void);																						// 초기 메인메뉴의 레이아웃 출력함수
@@ -80,7 +81,7 @@ int main(void)
 
 	while (1)				// 기능하나 끝나고 다시 메인메뉴로 돌아오기 ( -1을 입력하기 전까지 반복 )
 	{
-		
+		system("cls");
 		print_init_title();
 		printf("\n원하는 메뉴를 선택하십시오. : ");
 		scanf("%d", &select_menu_num);
@@ -89,6 +90,7 @@ int main(void)
 
 		if (select_menu_num == 1)
 		{
+			system("cls");
 			// 1. 학생 등록 및 수정
 			// 1.1 리스트 출력 및 대상입력받기
 			printf("수정전 리스트입니다.\n");
@@ -121,6 +123,7 @@ int main(void)
 
 		else if (select_menu_num == 2)
 		{
+			system("cls");
 			// 2. 성적 등록 및 수정
 			// 2.1 리스트 출력 및 대상입력받기
 			printf("\n수정전 리스트입니다.\n");
@@ -175,6 +178,7 @@ int main(void)
 		else if (select_menu_num == 3)
 		{
 			// 3. 조회
+			system("cls");
 
 			while (1)
 			{
@@ -184,6 +188,7 @@ int main(void)
 
 				if (select_menu_num == 1)
 				{
+					system("cls");
 					// 3.1 학생이름으로 조회
 					printf("조회하고자 하는 학생의 이름을 입력하세요 : ");
 					scanf("%s", serch_student_name);
@@ -219,12 +224,14 @@ int main(void)
 
 				else if (select_menu_num == 2)
 				{
+					system("cls");
 					// 3.2 전체학생성적 조회
 					print_list_all();
 				}
 
 				else if (select_menu_num == -1)
 				{
+					system("cls");
 					break;
 				}
 
@@ -237,6 +244,7 @@ int main(void)
 
 		else if (select_menu_num == 4)
 		{
+			system("cls");
 			// 4. 삭제기능
 			print_list();
 			while (1)
