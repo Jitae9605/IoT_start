@@ -29,7 +29,7 @@ int menuOfLevel1();
 void movePreMenu();
 
 /* 메인 함수 */
-void main_121312141() {
+void main421313() {
 	int idxOfArray = 0;
 
 	int deleteDataList[CNT_OF_STUDENT];
