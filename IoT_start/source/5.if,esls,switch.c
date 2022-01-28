@@ -4,7 +4,7 @@
 // 5. 조건문
 // if, if-else, switch-case 등등
 
-int main_if(void)
+int main_if_4123(void)
 {
 	// 1. if문의 기본 문법
 

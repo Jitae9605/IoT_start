@@ -3,7 +3,7 @@
 
 // 8.¹è¿­
 
-int main_array(void)
+int main_array321(void)
 {
 	/*
 

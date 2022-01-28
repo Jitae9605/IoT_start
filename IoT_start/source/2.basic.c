@@ -3,7 +3,7 @@
 // 2.상수와 데이터출력
 // 기본적인 변환, 데이터타입(% d/c/s), 주석(// , /*)
 
-int main_const(void)
+int main_const_3213(void)
 {
 
 	// 1. printf 사용

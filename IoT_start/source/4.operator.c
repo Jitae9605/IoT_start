@@ -3,7 +3,7 @@
 // 4. 연산자
 // &&, ||, ==, !=, ++, --, %, *, /, = 등등의 연산자
 
-int main_operator(void)
+int main_operator_4312(void)
 {
 	/*
 

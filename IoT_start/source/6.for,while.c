@@ -3,7 +3,7 @@
 // for, while, do ~ while ¹Ýº¹¹®
 
 
-int main_for_while(void)
+int main_for_while124132(void)
 {
 	/*
 

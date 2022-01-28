@@ -105,13 +105,61 @@
     <ClCompile Include="source\mini_project1\idea_list.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\9.struct.c">
+    <ClCompile Include="source\9.struct_dis.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\assignment\1\answer(학생성적관리).c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\mini_project1\1_find_diff.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\1.printf_scanf.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\2.loop(for,while).c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\3.random.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\4.condition.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\5.function.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\5.function_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\6.array.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\6.array_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\7.pointer.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\7.pointer_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\8.m_array.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\8.m_array_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\9.struct.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\9.struct_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\10.file.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\my_project\10.file_project.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
