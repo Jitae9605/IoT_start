@@ -102,16 +102,13 @@
     <ClCompile Include="source\help_other_teammate\22_01_26_re.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\mini_project1\idea_list.c">
+    <ClCompile Include="source\idea_list.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\9.struct_dis.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\assignment\1\answer(학생성적관리).c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\mini_project1\1_find_diff.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\my_project\1.printf_scanf.c">
@@ -160,6 +157,9 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="source\my_project\10.file_project.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mini_project1\c_tp1_temp_revice.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
