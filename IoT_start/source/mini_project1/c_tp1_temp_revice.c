@@ -72,17 +72,24 @@ int main() {
 	int Select_diff_ResetMenu = 0;										// 초기화메뉴 선택지 저장
 	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
 	int Rank_num_diff[max_player] = { 0 };								// 전체랭킹 계산
+	int Rank_num_total[max_player] = { 0 };
 	int Curent_id_num = 0;												// 현재 로그인된 아이디의 번호
 	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
 	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
+	
+
 
 		//------------------ 랭킹시스템 확인을 위한 임시 구조체 정보입력 -----------------------
 
 	for (int i = 0; i < max_player; i++)
 	{
 		strcpy(allPlayerList[i].pw, "0000");
+		allPlayerList[i].sc.total = 0;
+		allPlayerList[i].sc.upDown = (rand() % (How_Many_Time_Play_DiffGame * 100));
+		allPlayerList[i].sc.cal = (rand() % (How_Many_Time_Play_DiffGame * 100));
+		allPlayerList[i].sc.BW = (rand() % (How_Many_Time_Play_DiffGame * 100));
 		allPlayerList[i].sc.spot = (rand() % (How_Many_Time_Play_DiffGame * 100));
-		allPlayerList[i].sc.total += allPlayerList[i].sc.spot;
+		allPlayerList[i].sc.total += allPlayerList[i].sc.spot + allPlayerList[i].sc.BW + allPlayerList[i].sc.cal + allPlayerList[i].sc.upDown;
 	}
 
 	strcpy(allPlayerList[0].id, "아이디0");
@@ -103,13 +110,11 @@ int main() {
 		if (start_choice == 1) { // 로그인 선택했을 때
 			p = logIn(p, allPlayerList); // 로그인 함수 호출
 
-			if (loginCheck == 0)continue; // 등록된 아이디 없을 때 시작화면으로 돌아가기
+			if (loginCheck == 0) continue; // 등록된 아이디 없을 때 시작화면으로 돌아가기
 			else { // 로그인 성공, 메인화면으로
 
 				while (1)
 				{
-
-
 					menu_choice = main_menu();
 
 					if (menu_choice == 1) {       // 업다운 게임 선택
@@ -262,11 +267,11 @@ int main() {
 										system("cls");
 										printf("\n 틀린그림찾기 전체랭킹 페이지입니다.\n");
 										printf("\n----------------------------------------------------------------\n");
-										printf(" 등수\t 아이디\t\t 점수 \n\n");
+										printf(" 등수\t\t 아이디\t\t 점수 \n\n");
 
 										for (int i = 0; i < max_player; i++)								// 등수 구하기
 										{
-											Rank_num_diff[i] = 11;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+											Rank_num_diff[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
 											for (int j = 0; j < max_player; j++)
 											{
 												if (allPlayerList[i].sc.spot >= allPlayerList[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
@@ -280,7 +285,7 @@ int main() {
 											{
 
 												if (Rank_num_diff[j] == i + 1)
-													printf(" %2d등\t %s\t %5d\n", Rank_num_diff[j], allPlayerList[j].id, allPlayerList[j].sc.spot);
+													printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], allPlayerList[j].id, allPlayerList[j].sc.spot);
 
 											}
 										}
@@ -321,20 +326,57 @@ int main() {
 
 					}
 					else if (menu_choice == 5) {  // 랭킹 조회
-						rank_choice = rank();
+						while (1)
+						{
+							rank_choice = rank();
 
-						if (rank_choice == 1) {   // 게임별 랭킹 조회
+							if (rank_choice == 1) {   // 게임별 랭킹 조회
 
+							}
+							else if (rank_choice == 2) {  // 통합 랭킹 조회
+								// 통합 전체랭킹 (total)
+								system("cls");
+								printf("\n 통합 전체랭킹 페이지입니다.\n");
+								printf("\n----------------------------------------------------------------\n");
+								printf(" 등수\t\t 아이디\t\t 점수 \n\n");
+
+								for (int i = 0; i < max_player; i++)								// 등수 구하기
+								{
+									Rank_num_total[i] = max_player + 1;								// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+									for (int j = 0; j < max_player; j++)
+									{
+										if (allPlayerList[i].sc.total >= allPlayerList[j].sc.total)	// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+											Rank_num_total[i]--;
+									}
+								}
+
+								for (int i = 0; i < max_player; i++)
+								{
+									for (int j = 0; j < max_player; j++)
+									{
+
+										if (Rank_num_total[j] == i + 1)
+											printf(" %2d등\t %12s\t\t %5d\n", Rank_num_total[j], allPlayerList[j].id, allPlayerList[j].sc.total);
+
+									}
+								}
+								printf("\n----------------------------------------------------------------\n");
+								system("PAUSE");
+								system("cls");
+								break;
+							}
+
+
+
+							else if (rank_choice == 3) {  // 다시 메인화면으로
+								break;
+							}
+							else { // 이상한 거 눌렀을 때
+								printf("잘못된 입력입니다.\n");
+							}
 						}
-						else if (rank_choice == 2) {  // 통합 랭킹 조회
-
-						}
-						else if (rank_choice == 3) {  // 다시 메인화면으로
-
-						}
-						else { // 이상한 거 눌렀을 때
-
-						}
+					
+						
 					}
 					else if (menu_choice == 6) {  // 로그아웃
 						printf("로그아웃되었습니다.\n");
@@ -388,7 +430,8 @@ int start() {
 
 void join(struct player allPlayerList[]) {
 	int id_check = -1;
-	char id_temp[id_limit + 1] = { NULL };
+	char id_temp[id_limit + 1] = { NULL, };
+	char check_NULL[id_limit + 1] = { NULL, };
 
 	printf("[플레이어 등록]\n\n");
 	while (1) {
@@ -398,6 +441,7 @@ void join(struct player allPlayerList[]) {
 
 		for (int i = 0; i < max_player; i++) {
 			id_check = strcmp(allPlayerList[i].id, id_temp); // 존재하는 아이디인지 비교
+
 			if (id_check == 0) { // 존재하는 아이디일 때
 				printf("이미 존재하는 아이디입니다.\n");
 				break;
@@ -406,7 +450,7 @@ void join(struct player allPlayerList[]) {
 
 		if (id_check != 0) { // 생성 가능한 아이디일 때
 			for (int i = 0; i < max_player; i++) {
-				if (allPlayerList[i].id == NULL) { // 빈자리 찾아서
+				if (strcmp(allPlayerList[i].id,check_NULL) == 0) { // 빈자리 찾아서
 					strcpy(allPlayerList[i].id, id_temp); // 빈자리에 아이디 저장
 					printf("사용 가능한 아이디입니다.\n");
 					printf("비밀번호를 입력하세요(4자리 숫자)\n");
@@ -417,6 +461,7 @@ void join(struct player allPlayerList[]) {
 			}
 
 			printf("등록이 완료되었습니다.\n");
+			
 			break;
 		}
 	}
