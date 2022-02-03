@@ -9,6 +9,7 @@
 #define Height_of_Array 5											// 배열 높이(y)
 #define Over_the_Time_limit -1										// 시간제한을 넘겼을때 적용될 값
 #define Succes_to_Login 1											// 로그인 성공
+
 #define id_limit 12													// id의 길이한계
 #define pw_limit 4													// pw의 길이한계
 #define game 4														// 1.up/down 2.암산 3.청기백기 4.틀린그림찾기
@@ -26,14 +27,25 @@ int Print_Final_Score(int Score[How_Many_Time_Play_Game]);			// 최종점수 출력 함
 
 // -------------------------------------- 구조체 -----------------------------------
 
-struct player			// 플레이어 정보관리 구조체
-{
-	char id[id_limit + 1];  // 아이디
-	char pw[pw_limit + 1];   // 비밀번호
-	int score[game];    // 게임별 점수
-	int total_score;    // 통합 점수
-	int join;           // 등록 순서
+
+struct score	// [게임 점수 구조체]
+{   
+	int upDown;  // 업다운 점수
+	int cal;     // 암산 점수
+	int BW;      // 청기백기 점수
+	int spot;    // 틀린그림 찾기
+	int total;   // 통합 점수
 };
+
+struct player				 // [플레이어 정보 관리 구조체]
+{
+	struct score sc;		 // score 구조체를 멤버로 사용
+	char id[id_limit + 1];   // 아이디
+	char pw[pw_limit + 1];   // 비밀번호
+	int rank;                // 랭킹
+	int join;                // 등록 순서
+};
+
 
 // -------------------------------------- 매인 ---------------------------------------
 
@@ -61,15 +73,14 @@ int main(void)
 	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
 	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
 
+
 	//------------------ 랭킹시스템 확인을 위한 임시 구조체 정보입력 -----------------------
+
 	for (int i = 0; i < max_player; i++)
 	{
 		strcpy(p[i].pw, "0000");
-		for (int j = 0; j < pw_limit; j++)
-		{
-			p[i].score[j] = (rand() % 10000);
-			p[i].total_score += p[i].score[j];
-		}
+		p[i].sc.spot = (rand() % 10000);
+		p[i].sc.total += p[i].sc.spot;
 	}
 
 	strcpy(p[0].id, "아이디0");
@@ -87,6 +98,7 @@ int main(void)
 
 
 	//------------------------- 로그인 --------------------------------------------------
+
 	while (1)
 	{
 		// 로그인
@@ -114,20 +126,21 @@ int main(void)
 
 		printf("입력하신 정보와 일치하는 id와 pw를 발견하지 못했습니다. 다시 확인해주세요.\n");
 	}
-	// -----------------------------------------------------------------------------------
+	// ------------------------------------------------------------------------------------------------------
 
 	// ------------------------------ 로그인 이후의 프로그램 작동부 --------------------------------------------
 		while (1)
 		{
-			Print_diff_Mainmenu();
-			printf("원하는 메뉴의 번호를 입력하세요\n");
-			scanf("%d", &Select_diff_main_menu);
+			Print_diff_Mainmenu();										// 메뉴 레이아웃 출력
+			printf(" 원하는 메뉴의 번호를 입력하세요\n");					// 메뉴 선택
+			scanf("%d", &Select_diff_main_menu);						// 사용자한테 메뉴 입력받음
 
 			if (Select_diff_main_menu == 1)
 			{
 				// 1. 게임 실행부
 				system("cls");
-				for (int q = 0; q < How_Many_Time_Play_Game; q++)
+
+				for (int q = 0; q < How_Many_Time_Play_Game; q++)			// 틀린그림찾기게임 반복횟수
 				{
 
 					// 걸린 시간 계산을 위한 시작시간 기록 및 초기화
@@ -183,9 +196,9 @@ int main(void)
 				{
 					// 최종스코어 합산 및 출력
 					Final_Score = Print_Final_Score(score);
-					p[Curent_id_num].score[3] = Final_Score;											// 플레이어 기록에 스코어 추가
+					p[Curent_id_num].sc.spot = Final_Score;											// 플레이어 기록에 스코어 추가
 					printf("\n=========================================\n");
-					printf("\n%s님의 최종 점수는 %d 입니다\n", p[Curent_id_num].id, Final_Score);
+					printf("\n %s님의 최종 점수는 < %d > 점입니다\n", p[Curent_id_num].id, Final_Score);
 					printf("\n=========================================\n");
 					system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
 					system("cls");							// 화면 정리
@@ -197,15 +210,15 @@ int main(void)
 				while (1)
 				{
 					system("cls");
-					printf("초기화 메뉴입니다. 플레이어님의 틀린그림찾기 기록을 초기화하시겠습니까?\n");
+					printf(" 초기화 메뉴입니다. 플레이어님의 틀린그림찾기 기록을 초기화하시겠습니까?\n");
 					printf(" 1. 진행 \t 2. 취소\n");
 					scanf("%d", &Select_diff_ResetMenu);
 
 					// 2.1 초기화 진행
 					if (Select_diff_ResetMenu == 1)
 					{
-						p[Curent_id_num].score[3] = 0;
-						printf("초기화 되었습니다.");
+						p[Curent_id_num].sc.spot = 0;
+						printf(" 초기화 되었습니다.");
 						break;
 					}
 
@@ -218,7 +231,7 @@ int main(void)
 					// 2.3 잘못된 값 처리
 					else
 					{
-						printf("잘못된 입력값입니다. 다시입력해주세요\n");
+						printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 					}
 				}
 
@@ -230,24 +243,19 @@ int main(void)
 				while (1)
 				{
 					system("cls");
-					printf("랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
-					printf("\n1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
+					printf(" 랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
+					printf("\n 1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
 					scanf("%d", &Select_diff_RankingMenu);
 
 					if (Select_diff_RankingMenu == 1)
 					{
 						// 3.1 개인랭킹
 						system("cls");
-						for (int i = 0; i < max_player; i++)								// 등수 구하기
-						{
-							Rank_num_diff[i] = 11;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
-							for (int j = 0; j < max_player; j++)
-							{
-								if (p[i].score[3] >= p[j].score[3])							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
-									Rank_num_diff[i]--;
-							}
-						}
-						printf("\n%s 님의 틀린그림찾기 기록은 %d 점입니다.\n", p[Curent_id_num].id, p[Curent_id_num].score[3]);
+						printf("\n----------------------------------------------------------------\n");
+						printf("\n %s 님의 틀린그림찾기 기록은 < %d > 점입니다.\n\n", p[Curent_id_num].id, p[Curent_id_num].sc.spot);
+						printf("\n----------------------------------------------------------------\n");
+						system("PAUSE");
+						system("cls");
 						break;
 					}
 
@@ -255,7 +263,7 @@ int main(void)
 					{
 						// 3.2 전체랭킹
 						system("cls");
-						printf("\n틀린그림찾기 전체랭킹 페이지입니다.\n");
+						printf("\n 틀린그림찾기 전체랭킹 페이지입니다.\n");
 						printf("\n----------------------------------------------------------------\n");
 						printf(" 등수\t 아이디\t\t 점수 \n\n");
 
@@ -264,7 +272,7 @@ int main(void)
 							Rank_num_diff[i] = 11;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
 							for (int j = 0; j < max_player; j++)
 							{
-								if (p[i].score[3] >= p[j].score[3])							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+								if (p[i].sc.spot >= p[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
 									Rank_num_diff[i]--;
 							}
 						}
@@ -275,7 +283,7 @@ int main(void)
 							{
 
 								if (Rank_num_diff[j] == i + 1)
-									printf(" %d등\t %s\t %d\n", Rank_num_diff[j], p[j].id, p[j].score[3]);
+									printf(" %2d등\t %s\t %5d\n", Rank_num_diff[j], p[j].id, p[j].sc.spot);
 
 							}
 						}
@@ -294,7 +302,7 @@ int main(void)
 					else
 					{
 						// 3.4 잘못된 값 처리
-						printf("잘못된 입력값입니다. 다시입력해주세요\n");
+						printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 					}
 				}
 
@@ -310,7 +318,7 @@ int main(void)
 			else
 			{
 				// 4.1 잘못된 값 처리
-				printf("잘못된 입력값입니다. 다시입력해주세요\n");
+				printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 			}
 		}
 
@@ -327,14 +335,14 @@ int main(void)
 // 기본을 100으로 하여 (걸린시간*2)만큼을 100에서 뺀다
 int Cal_Score(int StartTime)
 {
-	int Score = 100;
+	int Score = 100;					// 기본점수
 	int totalElapsedTime = (clock() - StartTime) / CLOCKS_PER_SEC; // 걸린 시간
 	
 	printf("\n걸린 시간은 %d 초 입니다.\n ", totalElapsedTime);
 
-	Score = Score - (totalElapsedTime * 2);
+	Score = Score - (totalElapsedTime * 2);				// 최종 점수 = 기본점수 - (걸린시간 * 2)
 
-	if (Score < 0)
+	if (Score < 0)										// 스코어가 음수가 되면 실격 
 	{
 		Score = Over_the_Time_limit;
 	}
