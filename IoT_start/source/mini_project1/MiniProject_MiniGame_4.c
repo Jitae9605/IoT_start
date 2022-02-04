@@ -578,18 +578,19 @@ int main() {
 							printf("                               ----- 청기 백기 게임 입니다 -----\n");
 							printf("                   화면에 등장하는 지시에 맞춰 답을 입력 후 ENTER를 눌러주세요\n");
 							printf("\n");
-							printf("                                           규칙                \n");
-							printf("                                     1.청기 올려 = 1번\n");
-							printf("                                     2.청기 내려는 2번\n");
-							printf("                                     3.백기 올려는 3번\n");
-							printf("                                     4.백기 내려는 4번\n");
+							printf("                                              규칙                \n");
+							printf("                                     1. 청기 올려는 1번\n");
+							printf("                                     2. 청기 내려는 2번\n");
+							printf("                                     3. 백기 올려는 3번\n");
+							printf("                                     4. 백기 내려는 4번\n");
 							printf("\n");
 
 
 							int NUM3 = 0;                                                      // 정수형 NUM3 초기화
-							printf("                   *1번 : 게임시작\n");
-							printf("                   *2번 : 뒤로가기\n");
-							printf("                   *3번 : 랭킹확인\n");
+							int BW_Select_Quit = 0;
+							printf("\t\t\t\t    * 1번 : 게임시작\n");
+							printf("\t\t\t\t    * 2번 : 뒤로가기\n");
+							printf("\t\t\t\t    * 3번 : 랭킹확인\n");
 							scanf("%d", &NUM3);
 
 
@@ -765,8 +766,13 @@ int main() {
 							else if (NUM3 == 2)                                                  // 2일때 게임을 종료
 							{
 								printf("게임을 종료합니다\n");
+								BW_Select_Quit = 1;
+								system("PAUSE");
+								system("cls");
+								break;
 
 							}
+
 
 							else if (NUM3 == 3)
 							{
@@ -784,7 +790,7 @@ int main() {
 										// 3.1 개인랭킹
 										system("cls");
 										printf("\n----------------------------------------------------------------\n");
-										printf("\n %s 님의 틀린그림찾기 기록은 < %d > 점입니다.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.BW);
+										printf("\n %s 님의 청기백시 기록은 < %d > 점입니다.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.BW);
 										printf("\n----------------------------------------------------------------\n");
 										system("PAUSE");
 										system("cls");
@@ -795,7 +801,7 @@ int main() {
 										int Rank_num_BW[max_player] = { 0 };
 										// 3.2 전체랭킹
 										system("cls");
-										printf("\n 틀린그림찾기 전체랭킹 페이지입니다.\n");
+										printf("\n 청기백기 전체랭킹 페이지입니다.\n");
 										printf("\n----------------------------------------------------------------\n");
 										printf(" 등수\t\t 아이디\t\t 점수 \n\n");
 
@@ -840,8 +846,13 @@ int main() {
 
 							}
 
+							if (BW_Select_Quit == 1)
+							{
+								break;
+							}
 						}
-						}
+
+					}
 						
 
 					// 틀린그림찾기 게임 선택
@@ -1197,6 +1208,7 @@ void join(struct player allPlayerList[]) {
 		//	
 		//	break;
 		//}
+
 		if (id_check != 0) { // 생성 가능한 아이디일 때
 			if (isFull()) { // 큐가 다 차있을 때 delete queue 해줘야함
 				front = (front + 1) % (max_player + 1);

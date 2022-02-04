@@ -19,38 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\1.hello.c" />
-    <ClCompile Include="source\2.basic.c" />
-    <ClCompile Include="source\3.init_and_parameter.c" />
-    <ClCompile Include="source\4.operator.c" />
-    <ClCompile Include="source\5.if,esls,switch.c" />
-    <ClCompile Include="source\6.for,while.c" />
-    <ClCompile Include="source\7.function.c" />
-    <ClCompile Include="source\8.array.c" />
-    <ClCompile Include="source\9.struct_dis.c" />
-    <ClCompile Include="source\assignment\1\answer(학생성적관리).c" />
-    <ClCompile Include="source\assignment\1\first_22_01_25.c" />
-    <ClCompile Include="source\help_other_teammate\22_01_26_1.c" />
-    <ClCompile Include="source\help_other_teammate\22_01_26_re.c" />
-    <ClCompile Include="source\idea_list.c" />
-    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_3.c" />
-    <ClCompile Include="source\my_project\1.printf_scanf.c" />
-    <ClCompile Include="source\my_project\10.file.c" />
-    <ClCompile Include="source\my_project\10.file_project.c" />
-    <ClCompile Include="source\my_project\2.loop(for,while).c" />
-    <ClCompile Include="source\my_project\3.random.c" />
-    <ClCompile Include="source\my_project\4.condition.c" />
-    <ClCompile Include="source\my_project\5.function.c" />
-    <ClCompile Include="source\my_project\5.function_project.c" />
-    <ClCompile Include="source\my_project\6.array.c" />
-    <ClCompile Include="source\my_project\6.array_project.c" />
-    <ClCompile Include="source\my_project\7.pointer.c" />
-    <ClCompile Include="source\my_project\7.pointer_project.c" />
-    <ClCompile Include="source\my_project\8.m_array.c" />
-    <ClCompile Include="source\my_project\8.m_array_project.c" />
-    <ClCompile Include="source\my_project\9.struct.c" />
-    <ClCompile Include="source\my_project\9.struct_project.c" />
-    <ClCompile Include="source\practice.c" />
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_4.c" />
     <ClCompile Include="source\subject1\Q10_1.c" />
     <ClCompile Include="source\subject1\Q11_1.c" />
     <ClCompile Include="source\subject1\Q1_1.c" />
