@@ -9,24 +9,19 @@
 #define pw_limit 4
 #define game 4
 #define max_player 10
-#define How_Many_Time_Play_DiffGame 5								// °ÔÀÓ ¹İº¹ È½¼ö
-#define Length_of_Array 5											// ¹è¿­ ±æÀÌ(x)
-#define Height_of_Array 5											// ¹è¿­ ³ôÀÌ(y)
-#define Over_the_Time_limit -1										// ½Ã°£Á¦ÇÑÀ» ³Ñ°åÀ»¶§ Àû¿ëµÉ °ª
-#define Succes_to_Login 1											// ·Î±×ÀÎ ¼º°ø
-#define Amsan_count 3												// ¾Ï»ê stageNUM
+#define How_Many_Time_Play_DiffGame 5	// °ÔÀÓ ¹İº¹ È½¼ö
+#define Length_of_Array 5				// ¹è¿­ ±æÀÌ(x)
+#define Height_of_Array 5				// ¹è¿­ ³ôÀÌ(y)
+#define Over_the_Time_limit -1			// ½Ã°£Á¦ÇÑÀ» ³Ñ°åÀ»¶§ Àû¿ëµÉ °ª
+#define Succes_to_Login 1				// ·Î±×ÀÎ ¼º°ø
+#define Amsan_count 3					// ¾Ï»ê stageNUM
 
-int loginCheck = 1;													// ·Î±×ÀÎ ¼º°ø=1, ½ÇÆĞ ¶Ç´Â ·Î±×¾Æ¿ô=0
-int Curent_id_num = 0;												// ÇöÀç ·Î±×ÀÎµÈ ¾ÆÀÌµğÀÇ ¹øÈ£
+int loginCheck = 1;						// ·Î±×ÀÎ ¼º°ø=1, ½ÇÆĞ ¶Ç´Â ·Î±×¾Æ¿ô=0
+int Curent_id_num = 0;					// ÇöÀç ·Î±×ÀÎµÈ ¾ÆÀÌµğÀÇ ¹øÈ£
 
-int front = -1, rear = -1;
-//int queue[max_player + 1];
+int front = -1, rear = -1;				// ¿øÇü Å¥¿¡ »ç¿ëÇÒ front, rear
+int Rank_num_total[max_player] = { 0 };
 
-int isFull(void) {
-	int temp = (rear + 1) % (max_player + 1); // ¿øÇü Å¥¿¡¼­ rear+1À» ¹è¿­Å©±â·Î ³ª´« ³ª¸ÓÁö°ªÀÌ
-	if (temp == front) return 1; // front¿Í °°À¸¸é Å¥´Â °¡µæ Â÷ÀÖ´Â »óÅÂ
-	else return 0;
-}
 
 struct score {   // [°ÔÀÓ Á¡¼ö ±¸Á¶Ã¼]
 	int upDown;  // ¾÷´Ù¿î Á¡¼ö
@@ -44,14 +39,19 @@ struct player {              // [ÇÃ·¹ÀÌ¾î Á¤º¸ °ü¸® ±¸Á¶Ã¼]
 	int join;                // µî·Ï ¼ø¼­
 };
 
-int start();
+int start(); // ½ÃÀÛÈ­¸é ÇÔ¼ö
 void join(struct player allPlayerList[]); // ÇÃ·¹ÀÌ¾î µî·Ï ÇÔ¼ö
-int logIn(struct player p, struct player allPlayerList[]);
-int main_menu();
-int rank();
+int logIn(struct player p, struct player allPlayerList[]); // ·Î±×ÀÎ ÇÔ¼ö
+int main_menu(); // ¸ŞÀÎ¸Ş´º ÇÔ¼ö
+int isFull(); // ¿øÇü Å¥°¡ ´Ù Ã¡´ÂÁö ÆÇº°ÇÏ´Â ÇÔ¼ö
 
-// ----------------------------------------- Æ²¸°±×¸²Ã£±â ÇÔ¼ö¼±¾ğ --------------------------------------------------------------------
+int isFull() {
+	int temp = (rear + 1) % (max_player + 1); // ¿øÇü Å¥¿¡¼­ rear+1À» ¹è¿­Å©±â·Î ³ª´« ³ª¸ÓÁö°ªÀÌ
+	if (temp == front) return 1; // front¿Í °°À¸¸é Å¥´Â °¡µæ Â÷ÀÖ´Â »óÅÂ
+	else return 0;
+}
 
+// ----------------------------------------- Æ²¸°±×¸²Ã£±â ÇÔ¼ö¼±¾ğ ----------------------------------------------------------------
 void Print_diff_Mainmenu(void);										// ¸ÅÀÎ¸Ş´º Ãâ·Â ÇÔ¼ö
 int Cal_Score(int Set_endTime);										// ½ºÄÚ¾î °è»ê ÇÔ¼ö
 int Make_Random_Num(int Random_Num_Range);							// ³­¼öÃâ·Â ÇÔ¼ö
@@ -61,7 +61,6 @@ void Check_Answer(int Where_is_diff_x, int Where_is_diff_y);		// Á¤´ä ÀÔ·Â¹Ş¾Æ È
 int Print_Diff_Final_Score(int Score[How_Many_Time_Play_DiffGame]);	// ÃÖÁ¾Á¡¼ö Ãâ·Â ÇÔ¼ö
 
 // ----------------------------------------- ¾Ï»ê ÇÔ¼ö¼±¾ğ --------------------------------------------------------------------
-
 int RandNum1(int i);
 int RandNum2(int i);
 int Calc(Num1, Num2);
@@ -72,31 +71,27 @@ void StartMenu();
 void End_Menu();
 
 // ----------------------------------------- updownÇÔ¼ö¼±¾ğ --------------------------------------------------------------------
-
-int game1(void);													// updown ÇÔ¼ö
-void game1_main_menu(void);											// updown ¸ŞÀÎ¸Å´º
-
-
+int upDown_menu(void); // updown ¸ŞÀÎ¸Ş´º
+int game1(void);		   // updown ÇÔ¼ö
 
 
 int main() {
-
-	// ³­¼ö ÃÊ±âÈ­
-	srand((unsigned)time(NULL));
+	srand((unsigned)time(NULL)); // ³­¼ö ÃÊ±âÈ­
 
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;
 	struct player p = { 0, }; // ÇÃ·¹ÀÌ¾î ±¸Á¶Ã¼ º¯¼ö ¼±¾ğ
-	struct player allPlayerList[max_player + 1]; // ¸ğµç ÇÃ·¹ÀÌ¾î Á¤º¸ ÀúÀåÇÒ ±¸Á¶Ã¼ ¹è¿­ ¼±¾ğ
+	struct player allPlayerList[max_player + 1] = { 0, }; // ¸ğµç ÇÃ·¹ÀÌ¾î Á¤º¸ ÀúÀåÇÒ ±¸Á¶Ã¼ ¹è¿­ ¼±¾ğ
+
 
 	for (int i = 0; i < max_player; i++) {
-		for (int j = 0; j <= id_limit; j++) {
-			allPlayerList[i].id[j] = '\0';
-		}
-	} //ÇÃ·¹ÀÌ¾î ¾ÆÀÌµğ ¹è¿­ null·Î ÃÊ±âÈ­
+		strcpy(allPlayerList[i].id, "EMPTY");
+		strcpy(allPlayerList[i].pw, "0000");
+		
+		 //ÇÃ·¹ÀÌ¾î ¾ÆÀÌµğ, ºñ¹ø ¹è¿­ÃÊ±âÈ­
+	}
 
 
 	// ----------------------------------------- Æ²¸°±×¸²Ã£±âº¯¼ö¼±¾ğ -------------------------------------------------------------------------------------
-
 	int score[How_Many_Time_Play_DiffGame] = { 0 };						// °ÔÀÓ ½ÇÇà º° Á¡¼ö
 	int Final_Score = 0;												// ÃÖÁ¾Á¡¼ö
 	int Judg_num = 0;													// Á¦ÇÑ½Ã°£ ³Ñ°åÀ» °æ¿ì ÃÖÁ¾Á¡¼ö ¾øÀ½
@@ -104,18 +99,17 @@ int main() {
 	int Select_diff_ResetMenu = 0;										// ÃÊ±âÈ­¸Ş´º ¼±ÅÃÁö ÀúÀå
 	int Select_diff_RankingMenu = 0;									// ·©Å·È®ÀÎ¸Ş´º ¼±ÅÃÁö ÀúÀå
 	int Rank_num_diff[max_player] = { 0 };								// ÀüÃ¼·©Å· °è»ê
-	int Rank_num_total[max_player] = { 0 };
+	
 
 	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// ·£´ıÀ¸·Î ²ÅÈù ¼ıÀÚµéÀ» ÀúÀåÇÏ´Â ¹è¿­
 	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original°ú ´Ù¸¥ ºÎºĞÀ» ¸¸µé¾î ÀúÀåÇÒ ¹è¿­
 
-		// ----------------------------------------- ¾÷´Ù¿î º¯¼ö¼±¾ğ -------------------------------------------------------------------------------------
-
+	// ----------------------------------------- ¾÷´Ù¿î º¯¼ö¼±¾ğ -------------------------------------------------------------------------------------
+	int upDown_choice = 0;
 	int game1_rank_num[max_player] = { 0 };
 	int game1_score = 0;
 
 	// ----------------------------------------- Ã»±â¹é±â º¯¼ö¼±¾ğ -------------------------------------------------------------------------------------
-
 	int choice = 0;
 	int sumscore = 0;
 	int player = -55;
@@ -128,54 +122,10 @@ int main() {
 	int com2 = 0;
 	int com3 = 0;
 
-
-
 	int score0 = 0;
 	int score1 = 0;
 	int score2 = 0;
 	int score3 = 0;
-
-
-	//------------------ ·©Å·½Ã½ºÅÛ È®ÀÎÀ» À§ÇÑ ÀÓ½Ã ±¸Á¶Ã¼ Á¤º¸ÀÔ·Â -----------------------
-
-	for (int i = 0; i < 10; i++)
-	{
-		strcpy(allPlayerList[i].pw, "0000");
-		allPlayerList[i].sc.total = 0;
-		allPlayerList[i].sc.upDown = i;
-		allPlayerList[i].sc.cal = i * 10;
-		allPlayerList[i].sc.BW = i * 100;
-		allPlayerList[i].sc.spot = i * 1000;
-		allPlayerList[i].sc.total = allPlayerList[i].sc.spot + allPlayerList[i].sc.BW + allPlayerList[i].sc.cal + allPlayerList[i].sc.upDown;
-		//allPlayerList[i + 10].sc.total = 0;
-		//allPlayerList[i + 10].sc.upDown = 0;
-		//allPlayerList[i + 10].sc.cal = 0;
-		//allPlayerList[i + 10].sc.BW = 0;
-		//allPlayerList[i + 10].sc.spot = 0;
-		//allPlayerList[i + 10].sc.total = allPlayerList[i + 10].sc.spot + allPlayerList[i + 10].sc.BW + allPlayerList[i + 10].sc.cal + allPlayerList[i + 10].sc.upDown;
-	}
-	
-	strcpy(allPlayerList[0].id, "¾ÆÀÌµğ0");
-	strcpy(allPlayerList[1].id, "¾ÆÀÌµğ1");
-	strcpy(allPlayerList[2].id, "¾ÆÀÌµğ2");
-	strcpy(allPlayerList[3].id, "¾ÆÀÌµğ3");
-	strcpy(allPlayerList[4].id, "¾ÆÀÌµğ4");
-	strcpy(allPlayerList[5].id, "¾ÆÀÌµğ5");
-	strcpy(allPlayerList[6].id, "¾ÆÀÌµğ6");
-	strcpy(allPlayerList[7].id, "¾ÆÀÌµğ7");
-	strcpy(allPlayerList[8].id, "¾ÆÀÌµğ8");
-	strcpy(allPlayerList[9].id, "¾ÆÀÌµğ9");
-	//strcpy(allPlayerList[10].id, "Empty");
-	//strcpy(allPlayerList[11].id, "Empty");
-	//strcpy(allPlayerList[12].id, "Empty");
-	//strcpy(allPlayerList[13].id, "Empty");
-	//strcpy(allPlayerList[14].id, "Empty");
-	//strcpy(allPlayerList[15].id, "Empty");
-	//strcpy(allPlayerList[16].id, "Empty");
-	//strcpy(allPlayerList[17].id, "Empty");
-	//strcpy(allPlayerList[18].id, "Empty");
-	//strcpy(allPlayerList[19].id, "Empty");
-
 
 	while (1) {
 		start_choice = start(); // ½ÃÀÛÈ­¸é Ãâ·Â
@@ -185,24 +135,14 @@ int main() {
 
 			if (loginCheck == 0) continue; // µî·ÏµÈ ¾ÆÀÌµğ ¾øÀ» ¶§ ½ÃÀÛÈ­¸éÀ¸·Î µ¹¾Æ°¡±â
 			else { // ·Î±×ÀÎ ¼º°ø, ¸ŞÀÎÈ­¸éÀ¸·Î
-
-				while (1)
-				{
+				while (1){
 					menu_choice = main_menu();
 
-					if (menu_choice == 1) {       // ¾÷´Ù¿î °ÔÀÓ ¼±ÅÃ
-						//¾÷´Ù¿î °ÔÀÓ È£Ãâ ÀÛ¼ºÇÏ±â
-						while (1)
-						{
+					if (menu_choice == 1) { // ¾÷´Ù¿î °ÔÀÓ ¼±ÅÃÇßÀ» ¶§
+						while (1){
+							upDown_choice = upDown_menu(); // updown ¸ŞÀÎ¸Ş´º È£Ãâ
 							
-							int Select_UpDown_mainMenu = 0;
-							game1_main_menu();										// updown ¸ŞÀÎ¸Å´º È£Ãâ
-							printf("¿øÇÏ´Â ¸Ş´ºÀÇ ¹øÈ£¸¦ ÀÔ·Â ÇÏ¼¼¿ä\n");
-							scanf("%d", &Select_UpDown_mainMenu);
-
-							// 1. °ÔÀÓ ½ÇÇà
-							if (Select_UpDown_mainMenu == 1)
-							{
+							if (upDown_choice == 1){
 								// °ÔÀÓ ½ÃÀÛ Àü ¼³¸í Ãâ·Â
 								system("cls");
 								printf("\n===============================================\n");
@@ -230,7 +170,7 @@ int main() {
 								system("cls");
 							}
 							// 2. ÃÊ±âÈ­
-							else if (Select_UpDown_mainMenu == 2)
+							else if (upDown_choice == 2)
 							{
 
 								while (1)
@@ -263,7 +203,7 @@ int main() {
 								}
 							}
 							// 3. ·©Å·È®ÀÎ
-							else if (Select_UpDown_mainMenu == 3)
+							else if (upDown_choice == 3)
 							{
 								while (1)
 								{
@@ -308,9 +248,12 @@ int main() {
 											for (int j = 0; j < max_player; j++)
 											{
 
-												if (game1_rank_num[j] == i + 1)
-													printf(" %2dµî\t %12s\t %5d\n", game1_rank_num[j], allPlayerList[j].id, allPlayerList[j].sc.upDown);
-
+												if (game1_rank_num[j] == i + 1) {
+													char temp[10] = "EMPTY";
+													int id_check = -1;
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0) printf(" %2dµî\t %12s\t %5d\n", game1_rank_num[j], allPlayerList[j].id, allPlayerList[j].sc.upDown);
+												}
 											}
 										}
 										printf("\n----------------------------------------------------------------\n");
@@ -334,7 +277,7 @@ int main() {
 
 							}
 							// 4. µÚ·Î
-							else if (Select_UpDown_mainMenu == 4)
+							else if (upDown_choice == 4)
 							{
 								system("cls");
 								break;
@@ -414,7 +357,7 @@ int main() {
 
 								for (int i = 0; i < max_player; i++)								// µî¼ö ±¸ÇÏ±â
 								{
-									Rank_num_cal[i] = 21;											// ¸ğµç ·©Å©¸¦ n+1·Î ÇÑ´Ù(°°°Å³ª¸¦ ÀÌ¿ëÇÏ¹Ç·Î ( ' >= ' »ç¿ë ¾ÈÇÏ¸é ¶È°°Àº Á¡¼ö¸¦ °¡Áø»ç¶÷µéÀÌ ¸ğµÎ ºÒÀÌÀÍÀ» º»´Ù ))
+									Rank_num_cal[i] = max_player + 1;											// ¸ğµç ·©Å©¸¦ n+1·Î ÇÑ´Ù(°°°Å³ª¸¦ ÀÌ¿ëÇÏ¹Ç·Î ( ' >= ' »ç¿ë ¾ÈÇÏ¸é ¶È°°Àº Á¡¼ö¸¦ °¡Áø»ç¶÷µéÀÌ ¸ğµÎ ºÒÀÌÀÍÀ» º»´Ù ))
 									for (int j = 0; j < max_player; j++)
 									{
 										if (allPlayerList[i].sc.cal >= allPlayerList[j].sc.cal)							// ÇÏ³ªÇÏ³ª¸¦ ´Ù¸¥ ¸ğµç °ª°ú ºñ±³ÇÏ¿© °°°Å³ª ÀÚ½ÅÀÌ Å©¸é ·©Å©¸¦ ÇÏ³ª¾¿ ³·Ãá´Ù
@@ -426,9 +369,13 @@ int main() {
 								{
 									for (int j = 0; j < max_player; j++)
 									{
-
-										if (Rank_num_cal[j] == i + 1)
-											printf(" %2dµî\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
+										
+										if (Rank_num_cal[j] == i + 1) {
+											char temp[10] = "EMPTY";
+											int id_check = -1;
+											id_check = strcmp(allPlayerList[j].id, temp);
+											if (id_check != 0) printf(" %2dµî\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
+										}
 
 									}
 								}
@@ -537,9 +484,12 @@ int main() {
 											for (int j = 0; j < max_player; j++)
 											{
 
-												if (Rank_num_cal[j] == i + 1)
-													printf(" %2dµî\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
-
+												if (Rank_num_cal[j] == i + 1) {
+													char temp[10] = "EMPTY";
+													int id_check = -1;
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0) printf(" %2dµî\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
+												}
 											}
 										}
 										printf("\n----------------------------------------------------------------\n");
@@ -579,14 +529,15 @@ int main() {
 							printf("                   È­¸é¿¡ µîÀåÇÏ´Â Áö½Ã¿¡ ¸ÂÃç ´äÀ» ÀÔ·Â ÈÄ ENTER¸¦ ´­·¯ÁÖ¼¼¿ä\n");
 							printf("\n");
 							printf("                                           ±ÔÄ¢                \n");
-							printf("                                     1.Ã»±â ¿Ã·Á = 1¹ø\n");
-							printf("                                     2.Ã»±â ³»·Á´Â 2¹ø\n");
-							printf("                                     3.¹é±â ¿Ã·Á´Â 3¹ø\n");
-							printf("                                     4.¹é±â ³»·Á´Â 4¹ø\n");
+							printf("                                     1.Ã»±â ¿Ã·Á - 1¹ø\n");
+							printf("                                     2.Ã»±â ³»·Á - 2¹ø\n");
+							printf("                                     3.¹é±â ¿Ã·Á - 3¹ø\n");
+							printf("                                     4.¹é±â ³»·Á - 4¹ø\n");
 							printf("\n");
 
 
-							int NUM3 = 0;                                                      // Á¤¼öÇü NUM3 ÃÊ±âÈ­
+							int NUM3 = 0;   
+							int BW_Select_Quit = 0;// Á¤¼öÇü NUM3 ÃÊ±âÈ­
 							printf("                   *1¹ø : °ÔÀÓ½ÃÀÛ\n");
 							printf("                   *2¹ø : µÚ·Î°¡±â\n");
 							printf("                   *3¹ø : ·©Å·È®ÀÎ\n");
@@ -757,15 +708,16 @@ int main() {
 
 								sumscore = score0 + score1 + score2 + score3;
 								printf("´ç½ÅÀÇ ÃÑ Á¡¼ö´Â:%dÁ¡ÀÔ´Ï´Ù", sumscore);
-
-
-
+								allPlayerList[Curent_id_num].sc.BW = sumscore;
 
 							}
 							else if (NUM3 == 2)                                                  // 2ÀÏ¶§ °ÔÀÓÀ» Á¾·á
 							{
 								printf("°ÔÀÓÀ» Á¾·áÇÕ´Ï´Ù\n");
-
+								BW_Select_Quit = 1;
+								system("PAUSE");
+								system("cls");
+								break;
 							}
 
 							else if (NUM3 == 3)
@@ -784,7 +736,7 @@ int main() {
 										// 3.1 °³ÀÎ·©Å·
 										system("cls");
 										printf("\n----------------------------------------------------------------\n");
-										printf("\n %s ´ÔÀÇ Æ²¸°±×¸²Ã£±â ±â·ÏÀº < %d > Á¡ÀÔ´Ï´Ù.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.BW);
+										printf("\n %s ´ÔÀÇ Ã»±â¹é±â ±â·ÏÀº < %d > Á¡ÀÔ´Ï´Ù.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.BW);
 										printf("\n----------------------------------------------------------------\n");
 										system("PAUSE");
 										system("cls");
@@ -795,7 +747,7 @@ int main() {
 										int Rank_num_BW[max_player] = { 0 };
 										// 3.2 ÀüÃ¼·©Å·
 										system("cls");
-										printf("\n Æ²¸°±×¸²Ã£±â ÀüÃ¼·©Å· ÆäÀÌÁöÀÔ´Ï´Ù.\n");
+										printf("\n Ã»±â¹é±â ÀüÃ¼·©Å· ÆäÀÌÁöÀÔ´Ï´Ù.\n");
 										printf("\n----------------------------------------------------------------\n");
 										printf(" µî¼ö\t\t ¾ÆÀÌµğ\t\t Á¡¼ö \n\n");
 
@@ -814,9 +766,13 @@ int main() {
 											for (int j = 0; j < max_player; j++)
 											{
 
-												if (Rank_num_BW[j] == i + 1)
-													printf(" %2dµî\t %12s\t %5d\n", Rank_num_BW[j], allPlayerList[j].id, allPlayerList[j].sc.BW);
-
+												if (Rank_num_BW[j] == i + 1) {
+													char temp[10] = "EMPTY";
+													int id_check = -1;
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0)
+														printf(" %2dµî\t %12s\t %5d\n", Rank_num_BW[j], allPlayerList[j].id, allPlayerList[j].sc.BW);
+												}
 											}
 										}
 										printf("\n----------------------------------------------------------------\n");
@@ -840,8 +796,13 @@ int main() {
 
 							}
 
+							if (BW_Select_Quit == 1)
+							{
+								break;
+							}
+
 						}
-						}
+					}
 						
 
 					// Æ²¸°±×¸²Ã£±â °ÔÀÓ ¼±ÅÃ
@@ -1003,9 +964,14 @@ int main() {
 											for (int j = 0; j < max_player; j++)
 											{
 
-												if (Rank_num_diff[j] == i + 1)
-													printf(" %2dµî\t %12s\t %5d\n", Rank_num_diff[j], allPlayerList[j].id, allPlayerList[j].sc.spot);
-
+												if (Rank_num_diff[j] == i + 1) {
+													char temp[10] = "EMPTY";
+													int id_check = -1;
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0) {
+														printf(" %2dµî\t %12s\t %5d\n", Rank_num_diff[j], allPlayerList[j].id, allPlayerList[j].sc.spot);
+													}
+												}
 											}
 										}
 										printf("\n----------------------------------------------------------------\n");
@@ -1044,78 +1010,57 @@ int main() {
 						}
 
 					}
-
-					// ·©Å· Á¶È¸
+						
+					// ÅëÇÕ ·©Å· Á¶È¸
 					else if (menu_choice == 5) {  
-						while (1)
-						{
-							rank_choice = rank();
+					allPlayerList[Curent_id_num].sc.total = allPlayerList[Curent_id_num].sc.spot + allPlayerList[Curent_id_num].sc.BW + allPlayerList[Curent_id_num].sc.cal + allPlayerList[Curent_id_num].sc.upDown;
+						while (1){
+							system("cls");
+							printf("\n ÅëÇÕ ÀüÃ¼·©Å· ÆäÀÌÁöÀÔ´Ï´Ù.\n");
+							printf("\n----------------------------------------------------------------\n");
+							printf(" µî¼ö\t\t ¾ÆÀÌµğ\t\t Á¡¼ö \n\n");
 
-							if (rank_choice == 1) {   // °ÔÀÓº° ·©Å· Á¶È¸
-
-							}
-							else if (rank_choice == 2) {  // ÅëÇÕ ·©Å· Á¶È¸
-								// ÅëÇÕ ÀüÃ¼·©Å· (total)
-								system("cls");
-								printf("\n ÅëÇÕ ÀüÃ¼·©Å· ÆäÀÌÁöÀÔ´Ï´Ù.\n");
-								printf("\n----------------------------------------------------------------\n");
-								printf(" µî¼ö\t\t ¾ÆÀÌµğ\t\t Á¡¼ö \n\n");
-
-								for (int i = 0; i < max_player; i++)								// µî¼ö ±¸ÇÏ±â
+							for (int i = 0; i < max_player; i++)								// µî¼ö ±¸ÇÏ±â
+							{
+								Rank_num_total[i] = max_player + 1;								// ¸ğµç ·©Å©¸¦ n+1·Î ÇÑ´Ù(°°°Å³ª¸¦ ÀÌ¿ëÇÏ¹Ç·Î ( ' >= ' »ç¿ë ¾ÈÇÏ¸é ¶È°°Àº Á¡¼ö¸¦ °¡Áø»ç¶÷µéÀÌ ¸ğµÎ ºÒÀÌÀÍÀ» º»´Ù ))
+								for (int j = 0; j < max_player; j++)
 								{
-									Rank_num_total[i] = max_player + 1;								// ¸ğµç ·©Å©¸¦ n+1·Î ÇÑ´Ù(°°°Å³ª¸¦ ÀÌ¿ëÇÏ¹Ç·Î ( ' >= ' »ç¿ë ¾ÈÇÏ¸é ¶È°°Àº Á¡¼ö¸¦ °¡Áø»ç¶÷µéÀÌ ¸ğµÎ ºÒÀÌÀÍÀ» º»´Ù ))
-									for (int j = 0; j < max_player; j++)
-									{
-										if (allPlayerList[i].sc.total >= allPlayerList[j].sc.total)	// ÇÏ³ªÇÏ³ª¸¦ ´Ù¸¥ ¸ğµç °ª°ú ºñ±³ÇÏ¿© °°°Å³ª ÀÚ½ÅÀÌ Å©¸é ·©Å©¸¦ ÇÏ³ª¾¿ ³·Ãá´Ù
-											Rank_num_total[i]--;
+									if (allPlayerList[i].sc.total >= allPlayerList[j].sc.total)	// ÇÏ³ªÇÏ³ª¸¦ ´Ù¸¥ ¸ğµç °ª°ú ºñ±³ÇÏ¿© °°°Å³ª ÀÚ½ÅÀÌ Å©¸é ·©Å©¸¦ ÇÏ³ª¾¿ ³·Ãá´Ù
+										Rank_num_total[i]--;
+								}
+							}
+
+							for (int i = 0; i < max_player; i++){
+								for (int j = 0; j < max_player; j++){
+									if (Rank_num_total[j] == i + 1) {
+										char temp[10] = "EMPTY";
+										int id_check = -1;
+										id_check = strcmp(allPlayerList[j].id, temp);
+										if (id_check != 0) printf(" %2dµî\t %12s\t\t %5d\n", Rank_num_total[j], allPlayerList[j].id, allPlayerList[j].sc.total);
 									}
 								}
-
-								for (int i = 0; i < max_player; i++)
-								{
-									for (int j = 0; j < max_player; j++)
-									{
-
-										if (Rank_num_total[j] == i + 1)
-											printf(" %2dµî\t %12s\t\t %5d\n", Rank_num_total[j], allPlayerList[j].id, allPlayerList[j].sc.total);
-
-									}
-								}
-								printf("\n----------------------------------------------------------------\n");
-								system("PAUSE");
-								system("cls");
-								break;
 							}
-
-
-
-							else if (rank_choice == 3) {  // ´Ù½Ã ¸ŞÀÎÈ­¸éÀ¸·Î
-								break;
-							}
-							else { // ÀÌ»óÇÑ °Å ´­·¶À» ¶§
-								printf("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n");
+							printf("\n----------------------------------------------------------------\n");
+							system("PAUSE");
+							system("cls");
+							break;
 							}
 						}
 					
-						
-					}
 
-					// ·Î±×¾Æ¿ô
-					else if (menu_choice == 6) {  
+					else if (menu_choice == 6) {  // ·Î±×¾Æ¿ô
 						printf("·Î±×¾Æ¿ôµÇ¾ú½À´Ï´Ù.\n");
 						loginCheck = 0;
 						Curent_id_num = 0;
 						break;
 					}
 
-					// ÇÁ·Î±×·¥Á¾·á
 					else if (menu_choice == 7) {  // ÇÁ·Î±×·¥ Á¾·á
 						printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
 						select_quit = 1;
 						break;
 					}
 
-					// Àß¸øµÈ ÀÔ·Â Ã³¸®(¾È³»¹® Ãâ·Â)
 					else { // Àß¸øµÈ ¼±ÅÃ
 						printf("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n");
 					}
@@ -1133,18 +1078,17 @@ int main() {
 
 		else if (start_choice == 3) { // Á¾·á ¼±ÅÃÇßÀ» ¶§
 			printf("ÇÁ·Î±×·¥À» Á¾·áÇÕ´Ï´Ù.\n");
-			
 			break;
 		}
 
 		else printf("Àß¸øµÈ ÀÔ·ÂÀÔ´Ï´Ù.\n"); // 1,2,3 ¾Æ´Ñ °Å ÀÔ·ÂÇßÀ» ¶§
+		}
+		
+		return 0;
 	}
 
-	return 0;
-}
 
-// ------------------------ ·Î±×ÀÎ ¹× ¸ÅÀÎ¸Ş´º ÇÔ¼ö ----------------------------------------------------------
-
+// ------------------------ ·Î±×ÀÎ ¹× ¸ŞÀÎ¸Ş´º ÇÔ¼ö ---------------------------------------------------------
 int start() {
 	int choice;
 
@@ -1161,10 +1105,8 @@ int start() {
 void join(struct player allPlayerList[]) {
 	int id_check = -1;
 	char id_temp[id_limit + 1] = { NULL, };
-	char check_Empty[id_limit + 1] = "Empty";
 
-
-	printf(" [ÇÃ·¹ÀÌ¾î µî·Ï]\n\n");
+	printf("[ÇÃ·¹ÀÌ¾î µî·Ï]\n\n");
 	while (1) {
 		printf(" »ç¿ëÇÒ ¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä(ÃÖ´ë ¿µ¾î12±ÛÀÚ, ÇÑ±Û6±ÛÀÚ)\n");
 		printf(" ÀÔ·Â : ");
@@ -1179,52 +1121,20 @@ void join(struct player allPlayerList[]) {
 			}
 		}
 
-		//if (id_check != 0) { // »ı¼º °¡´ÉÇÑ ¾ÆÀÌµğÀÏ ¶§
-		//	for (int i = 0; i < max_player; i++)
-		//	{
-		//		if (strcmp(allPlayerList[i].id,check_Empty) == 0)
-		//		{
-		//		strcpy(allPlayerList[i].id, id_temp); // ºóÀÚ¸®¿¡ ¾ÆÀÌµğ ÀúÀå
-		//		printf(" »ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.\n");
-		//		printf(" ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä(4ÀÚ¸® ¼ıÀÚ)\n");
-		//		printf(" ÀÔ·Â : ");
-		//		scanf(" %s", allPlayerList[i].pw); // ºñ¹Ğ¹øÈ£ ÀúÀå
-		//		break;
-		//		}
-		//	}
-
-		//	printf("µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
-		//	
-		//	break;
-		//}
 		if (id_check != 0) { // »ı¼º °¡´ÉÇÑ ¾ÆÀÌµğÀÏ ¶§
-			if (isFull()) { // Å¥°¡ ´Ù Â÷ÀÖÀ» ¶§ delete queue ÇØÁà¾ßÇÔ
-				front = (front + 1) % (max_player + 1);
+			if (isFull()) { // Å¥°¡ ´Ù Â÷ÀÖÀ» ¶§ 
+				front = (front + 1) % (max_player + 1); // delete queue(FIFO)
 			}
 			else { // Å¥°¡ ´Ù Â÷ÀÖÁö ¾ÊÀ» ¶§
-				rear = (rear + 1) % (max_player + 1);
+				rear = (rear + 1) % (max_player + 1); // ºóÀÚ¸®·Î ÀÌµ¿
 			}
 
-			strcpy(allPlayerList[rear].id, id_temp); // ºóÀÚ¸®¿¡ ¾ÆÀÌµğ ÀúÀå
+			strcpy(allPlayerList[rear].id, id_temp); // add queue (ºóÀÚ¸®¿¡ ¾ÆÀÌµğ ÀúÀå)
 			printf("»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.\n");
 			printf("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä(4ÀÚ¸® ¼ıÀÚ)\n");
 			printf("ÀÔ·Â : ");
 			scanf("%s", allPlayerList[rear].pw); // ºñ¹Ğ¹øÈ£ ÀúÀå
-
-			/*
-			for (int i = 0; i < max_player; i++) {
-			   if (allPlayerList[i].id != NULL) { // ºóÀÚ¸® Ã£¾Æ¼­
-				  strcpy(allPlayerList[i].id, id_temp); // ºóÀÚ¸®¿¡ ¾ÆÀÌµğ ÀúÀå
-				  printf("»ç¿ë °¡´ÉÇÑ ¾ÆÀÌµğÀÔ´Ï´Ù.\n");
-				  printf("ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä(4ÀÚ¸® ¼ıÀÚ)\n");
-				  printf("ÀÔ·Â : ");
-				  scanf("%s", allPlayerList[i].pw); // ºñ¹Ğ¹øÈ£ ÀúÀå
-				  break;
-			   }
-			}*/
-
 			printf("µî·ÏÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.\n");
-
 			break;
 		}
 	}
@@ -1241,7 +1151,7 @@ int logIn(struct player p, struct player allPlayerList[]) {
 		printf(" ¾ÆÀÌµğ : ");
 		scanf(" %s", id_temp);
 
-		for (int i = 0; i < max_player; i++) {
+		for (int i = 0; i < max_player + 1; i++) {
 			id_check = strcmp(allPlayerList[i].id, id_temp); // Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÎÁö ºñ±³
 			if (id_check == 0) { // Á¸ÀçÇÏ´Â ¾ÆÀÌµğÀÏ ¶§
 				printf(" ºñ¹Ğ¹øÈ£ :");
@@ -1250,7 +1160,6 @@ int logIn(struct player p, struct player allPlayerList[]) {
 				check_id_temp = i;
 				break;
 			}
-		
 		}
 
 		if (id_check != 0) { // Á¸ÀçÇÏ´Â ¾ÆÀÌµğ°¡ ¾Æ´Ò ¶§,
@@ -1295,23 +1204,8 @@ int main_menu() {
 	return choice;
 }
 
-int rank() {
-	int choice = 0;
-
-	printf(" [·©Å· Á¶È¸]\n\n");
-	printf(" (1) °ÔÀÓº° ·©Å· Á¶È¸\n");
-	printf(" (2) ÅëÇÕ ·©Å· Á¶È¸\n");
-	printf(" (3) µÚ·Î°¡±â\n");
-	printf(" ÀÔ·Â : ");
-	scanf(" %d", &choice);
-
-	return choice;
-}
 
 // ------------------------ Æ²¸°±×¸²Ã£±â ÇÔ¼öÁ¤ÀÇ ----------------------------------------------------------
-
-
-
 // °É¸° ½Ã°£À» ÅëÇÑ Á¡¼ö »êÃâ
 // ±âº»À» 100À¸·Î ÇÏ¿© (°É¸°½Ã°£*2)¸¸Å­À» 100¿¡¼­ »«´Ù
 int Cal_Score(int StartTime)
@@ -1329,7 +1223,6 @@ int Cal_Score(int StartTime)
 	}
 
 	return Score;
-
 }
 
 // ³­¼ö¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö
@@ -1602,11 +1495,23 @@ void End_Menu() ////¾Ï»ê°ÔÀÓ °ÔÀÓ Á¾·áÈÄ ³ª¿À´Â ¸Ş´º ÇÔ¼ö
 
 
 // ----------------------------------------- updown ÇÔ¼öÁ¤ÀÇ --------------------------------------------------------------------
+int upDown_menu() { // updown ¸ŞÀÎ¸Ş´º Ãâ·Â
+	int choice = 0;
 
+	printf("\n\n ===============================================\n");
+	printf("\t\t Up / Down \t\t");
+	printf("\n ===============================================\n");
+	printf("\n\t\t 1. µµÀü\n\n\t\t 2. ÃÊ±âÈ­\n\n\t\t 3. ·©Å· È®ÀÎ\n\n\t\t 4. µÚ·Î\n");
+	printf("\n ===============================================\n");
+
+	printf("¿øÇÏ´Â ¸Ş´ºÀÇ ¹øÈ£¸¦ ÀÔ·Â ÇÏ¼¼¿ä\n");
+	scanf("%d", &choice);
+
+	return choice;
+}
 
 // updown ÇÔ¼ö
-int game1(void)
-{
+int game1(void){
 	int num1 = 0;														// ¼ıÀÚ1
 	int num2 = 0;														// ¼ıÀÚ2
 	int num3 = 0;														// ¼ıÀÚ3 
@@ -1833,15 +1738,3 @@ int game1(void)
 	printf("½Ã°£ Á¾·á! \n\n");											// ½Ã°£ Á¾·á! Ãâ·Â ÈÄ Á¡¼ö ¸®ÅÏ
 	return score;
 }
-
-// updown ¸ŞÀÎ¸Ş´º Ãâ·Â
-void game1_main_menu(void)
-{
-	printf("\n\n ===============================================\n");
-	printf("\t\t Up / Down \t\t");
-	printf("\n ===============================================\n");
-	printf("\n\t\t 1. µµÀü\n\n\t\t 2. ÃÊ±âÈ­\n\n\t\t 3. ·©Å· È®ÀÎ\n\n\t\t 4. µÚ·Î\n");
-	printf("\n ===============================================\n");
-}
-
-// -------------------------------------------------------------------------------------------------------------------------------------------
