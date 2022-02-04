@@ -78,7 +78,7 @@ int main() {
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;
 	struct player p = { 0, }; // 플레이어 구조체 변수 선언
 	struct player allPlayerList[max_player]; // 모든 플레이어 정보 저장할 구조체 배열 선언
-	
+
 	for (int i = 0; i < max_player; i++) {
 		for (int j = 0; j <= id_limit; j++) {
 			allPlayerList[i].id[j] = '\0';
@@ -96,7 +96,7 @@ int main() {
 	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
 	int Rank_num_diff[max_player] = { 0 };								// 전체랭킹 계산
 	int Rank_num_total[max_player] = { 0 };
-							
+
 	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
 	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
 
@@ -129,23 +129,23 @@ int main() {
 
 	//------------------ 랭킹시스템 확인을 위한 임시 구조체 정보입력 -----------------------
 
-	for (int i = 0; i < 10 ; i++)
+	for (int i = 0; i < 10; i++)
 	{
 		strcpy(allPlayerList[i].pw, "0000");
 		allPlayerList[i].sc.total = 0;
 		allPlayerList[i].sc.upDown = i;
-		allPlayerList[i].sc.cal = i*10;
-		allPlayerList[i].sc.BW = i*100;
-		allPlayerList[i].sc.spot = i*1000;
+		allPlayerList[i].sc.cal = i * 10;
+		allPlayerList[i].sc.BW = i * 100;
+		allPlayerList[i].sc.spot = i * 1000;
 		allPlayerList[i].sc.total = allPlayerList[i].sc.spot + allPlayerList[i].sc.BW + allPlayerList[i].sc.cal + allPlayerList[i].sc.upDown;
-		allPlayerList[i+10].sc.total = 0;
-		allPlayerList[i+10].sc.upDown = 0;
-		allPlayerList[i+10].sc.cal = 0;
-		allPlayerList[i+10].sc.BW = 0;
-		allPlayerList[i+10].sc.spot = 0;
-		allPlayerList[i+10].sc.total = allPlayerList[i+10].sc.spot + allPlayerList[i+10].sc.BW + allPlayerList[i+10].sc.cal + allPlayerList[i+10].sc.upDown;
+		allPlayerList[i + 10].sc.total = 0;
+		allPlayerList[i + 10].sc.upDown = 0;
+		allPlayerList[i + 10].sc.cal = 0;
+		allPlayerList[i + 10].sc.BW = 0;
+		allPlayerList[i + 10].sc.spot = 0;
+		allPlayerList[i + 10].sc.total = allPlayerList[i + 10].sc.spot + allPlayerList[i + 10].sc.BW + allPlayerList[i + 10].sc.cal + allPlayerList[i + 10].sc.upDown;
 	}
-
+	
 	strcpy(allPlayerList[0].id, "아이디0");
 	strcpy(allPlayerList[1].id, "아이디1");
 	strcpy(allPlayerList[2].id, "아이디2");
@@ -561,7 +561,8 @@ int main() {
 						}
 					}
 
-					else if (menu_choice == 3) {  // 청기백기 게임 선택
+					// 청기백기 게임
+					else if (menu_choice == 3) {  
 						//청기백기 게임 호출 작성하기
 
 
@@ -757,7 +758,9 @@ int main() {
 						}
 						
 					}
-					else if (menu_choice == 4) {  // 틀린그림찾기 게임 선택
+
+					// 틀린그림찾기 게임 선택
+					else if (menu_choice == 4) {  
 						//틀린그림찾기 게임 호출 작성하기
 
 						while (1)
@@ -956,7 +959,9 @@ int main() {
 						}
 
 					}
-					else if (menu_choice == 5) {  // 랭킹 조회
+
+					// 랭킹 조회
+					else if (menu_choice == 5) {  
 						while (1)
 						{
 							rank_choice = rank();
@@ -1009,17 +1014,23 @@ int main() {
 					
 						
 					}
-					else if (menu_choice == 6) {  // 로그아웃
+
+					// 로그아웃
+					else if (menu_choice == 6) {  
 						printf("로그아웃되었습니다.\n");
 						loginCheck = 0;
 						Curent_id_num = 0;
 						break;
 					}
+
+					// 프로그램종료
 					else if (menu_choice == 7) {  // 프로그램 종료
 						printf("프로그램을 종료합니다.\n");
 						select_quit = 1;
 						break;
 					}
+
+					// 잘못된 입력 처리(안내문 출력)
 					else { // 잘못된 선택
 						printf("잘못된 입력입니다.\n");
 					}

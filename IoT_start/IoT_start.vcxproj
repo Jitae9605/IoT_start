@@ -33,7 +33,7 @@
     <ClCompile Include="source\help_other_teammate\22_01_26_1.c" />
     <ClCompile Include="source\help_other_teammate\22_01_26_re.c" />
     <ClCompile Include="source\idea_list.c" />
-    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_2.c" />
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_3.c" />
     <ClCompile Include="source\my_project\1.printf_scanf.c" />
     <ClCompile Include="source\my_project\10.file.c" />
     <ClCompile Include="source\my_project\10.file_project.c" />

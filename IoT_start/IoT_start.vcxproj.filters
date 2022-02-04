@@ -36,9 +36,6 @@
     <ClCompile Include="source\7.function.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\practice.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="source\subject1\Q3_1.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
@@ -159,7 +156,10 @@
     <ClCompile Include="source\my_project\10.file_project.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_2.c">
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_3.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\practice.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
