@@ -159,7 +159,7 @@
     <ClCompile Include="source\my_project\10.file_project.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\mini_project1\c_tp1_temp_revice.c">
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

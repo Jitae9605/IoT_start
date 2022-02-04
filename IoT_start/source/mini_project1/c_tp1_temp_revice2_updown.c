@@ -48,6 +48,13 @@ void Print_Bingo(int original_array[Length_of_Array][Height_of_Array], int diffe
 void Check_Answer(int Where_is_diff_x, int Where_is_diff_y);		// 정답 입력받아 확인
 int Print_Diff_Final_Score(int Score[How_Many_Time_Play_DiffGame]);	// 최종점수 출력 함수
 
+// ----------------------------------------- updown함수선언 --------------------------------------------------------------------
+
+int game1(void);													// updown 함수
+void game1_main_menu(void);											// updown 메인매뉴
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
+
 int main() {
 
 	// 난수 초기화
@@ -56,7 +63,7 @@ int main() {
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;
 	struct player p = { 0, }; // 플레이어 구조체 변수 선언
 	struct player allPlayerList[max_player]; // 모든 플레이어 정보 저장할 구조체 배열 선언
-	
+
 	for (int i = 0; i < max_player; i++) {
 		for (int j = 0; j <= id_limit; j++) {
 			allPlayerList[i].id[j] = '\0';
@@ -65,6 +72,7 @@ int main() {
 
 
 	// ----------------------------------------- 틀린그림찾기변수선언 -------------------------------------------------------------------------------------
+
 	int score[How_Many_Time_Play_DiffGame] = { 0 };						// 게임 실행 별 점수
 	int Final_Score = 0;												// 최종점수
 	int Judg_num = 0;													// 제한시간 넘겼을 경우 최종점수 없음
@@ -76,8 +84,15 @@ int main() {
 	int Curent_id_num = 0;												// 현재 로그인된 아이디의 번호
 	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
 	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
-	
 
+	// -------------------------------------------------------------------------------------------------------------------------------------------
+
+	// ----------------------------------------- updown변수선언 --------------------------------------------------------------------
+
+	int game1_rank_num[max_player] = { 0 };
+	int game1_score = 0;
+
+	// -------------------------------------------------------------------------------------------------------------------------------------------
 
 		//------------------ 랭킹시스템 확인을 위한 임시 구조체 정보입력 -----------------------
 
@@ -117,8 +132,158 @@ int main() {
 				{
 					menu_choice = main_menu();
 
-					if (menu_choice == 1) {       // 업다운 게임 선택
-						//업다운 게임 호출 작성하기
+					if (menu_choice == 1)
+					{	// 업다운 게임 선택
+						while (1)
+						{
+							game1_main_menu();										// updown 메인매뉴 호출
+							printf("원하는 메뉴의 번호를 입력 하세요\n");
+							scanf("%d", &Select_diff_main_menu);
+
+							// 1. 게임 실행
+							if (Select_diff_main_menu == 1)
+							{
+								// 게임 시작 전 설명 출력
+								system("cls");
+								printf("\n===============================================\n");
+								printf("\n 10초 동안 랜덤으로 나오는 숫자 중 화면에 \n");
+								printf("\n 표시된대로 가장 큰 수나 작은 수를 입력하세요. \n");
+								printf("\n===============================================\n");
+								Sleep(2000);
+								system("cls");
+
+								int sec = 3;
+								// 게임 시작 전 대기
+								for (sec; sec > 0; sec--)
+								{
+									printf("\n 게임시작 %d초전..", sec);
+									Sleep(1000);
+									system("cls");
+								}
+
+								game1_score = game1();															// 첫번째게임 실행 후 game1_final_score에 점수 저장
+								allPlayerList[Curent_id_num].sc.upDown = game1_score;								// 플레이어 기록에 스코어 추가
+								printf("\n=========================================\n");
+								printf("\n%s님의 최종 점수는 %d 입니다\n", allPlayerList[Curent_id_num].id, game1_score);	// 점수 출력
+								printf("\n=========================================\n");
+								system("pause");
+								system("cls");
+							}
+							// 2. 초기화
+							else if (Select_diff_main_menu == 2)
+							{
+
+								while (1)
+								{
+									system("cls");
+									printf("초기화 메뉴입니다. 플레이어님의 Up / Down 기록을 초기화 하시겠습니까?\n");
+									printf(" 1. 진행 \t 2. 취소\n");
+									scanf("%d", &Select_diff_ResetMenu);
+
+									// 2.1 초기화 진행
+									if (Select_diff_ResetMenu == 1)
+									{
+										allPlayerList[Curent_id_num].sc.upDown = 0;
+										printf("초기화 되었습니다.");
+										break;
+									}
+
+									// 2.2 뒤로
+									else if (Select_diff_ResetMenu == 2)
+									{
+										break;
+									}
+
+									// 2.3 잘못된 값 처리
+									else
+									{
+										printf("잘못된 입력 값 입니다. 다시 입력 해주세요\n");
+									}
+								}
+							}
+							// 3. 랭킹확인
+							else if (Select_diff_main_menu == 3)
+							{
+								while (1)
+								{
+									system("cls");
+									printf("\n랭킹확인 메뉴입니다. 원하는 메뉴를 선택 해주세요\n");
+									printf("\n1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
+									scanf("%d", &Select_diff_RankingMenu);
+
+									// 3.1 개인랭킹
+									if (Select_diff_RankingMenu == 1)
+									{
+										system("cls");
+										printf("\n===============================================\n");
+										printf("\nUp / Down 개인랭킹 페이지 입니다.\n\n");
+										printf("\n\n%s 님의 Up / Down 기록은 %d 점 입니다.\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.upDown);
+										printf("\n===============================================\n");
+										system("PAUSE");
+										system("cls");
+										break;
+									}
+									// 3.2 전체랭킹
+									else if (Select_diff_RankingMenu == 2)
+									{
+										system("cls");
+										printf("\nUp / Down 전체랭킹 페이지 입니다.\n");
+										printf("\n----------------------------------------------------------------\n");
+										printf(" 등수\t 아이디\t\t 점수 \n\n");
+
+										for (int i = 0; i < max_player; i++)					// 등수 구하기
+										{
+											game1_rank_num[i] = max_player + 1;					// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+											for (int j = 0; j < max_player; j++)
+											{
+												if (allPlayerList[i].sc.upDown >= allPlayerList[j].sc.upDown)				// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+													game1_rank_num[i]--;
+											}
+										}
+
+										for (int i = 0; i < max_player; i++)
+										{
+											for (int j = 0; j < max_player; j++)
+											{
+
+												if (game1_rank_num[j] == i + 1)
+													printf(" %2d등\t %12s\t %5d\n", game1_rank_num[j], allPlayerList[j].id, allPlayerList[j].sc.upDown);
+
+											}
+										}
+										printf("\n----------------------------------------------------------------\n");
+										system("PAUSE");
+										system("cls");
+										break;
+									}
+									// 3.3 뒤로
+									else if (Select_diff_RankingMenu == 3)
+									{
+
+										break;
+									}
+									// 3.4 잘못된 값 처리
+									else
+									{
+
+										printf("\n잘못된 입력 값 입니다. 다시 입력 해주세요\n");
+									}
+								}
+
+							}
+							// 4. 뒤로
+							else if (Select_diff_main_menu == 4)
+							{
+								system("cls");
+								break;
+							}
+							// 4.1 잘못된 값 처리
+							else
+							{
+
+								printf("\n잘못된 입력 값 입니다. 다시 입력 해주세요\n");
+							}
+						}
 					}
 					else if (menu_choice == 2) {  // 암산 게임 선택
 						//암산 게임 호출 작성하기
@@ -375,8 +540,8 @@ int main() {
 								printf("잘못된 입력입니다.\n");
 							}
 						}
-					
-						
+
+
 					}
 					else if (menu_choice == 6) {  // 로그아웃
 						printf("로그아웃되었습니다.\n");
@@ -405,7 +570,7 @@ int main() {
 
 		else if (start_choice == 3) { // 종료 선택했을 때
 			printf("프로그램을 종료합니다.\n");
-			
+
 			break;
 		}
 
@@ -418,7 +583,7 @@ int main() {
 int start() {
 	int choice;
 
-	printf("\n[미니게임천국]\n\n"); 
+	printf("\n[미니게임천국]\n\n");
 	printf("(1) 로그인\n");
 	printf("(2) 플레이어 등록\n");
 	printf("(3) 종료\n");
@@ -450,7 +615,7 @@ void join(struct player allPlayerList[]) {
 
 		if (id_check != 0) { // 생성 가능한 아이디일 때
 			for (int i = 0; i < max_player; i++) {
-				if (strcmp(allPlayerList[i].id,check_NULL) == 0) { // 빈자리 찾아서
+				if (strcmp(allPlayerList[i].id, check_NULL) == 0) { // 빈자리 찾아서
 					strcpy(allPlayerList[i].id, id_temp); // 빈자리에 아이디 저장
 					printf("사용 가능한 아이디입니다.\n");
 					printf("비밀번호를 입력하세요(4자리 숫자)\n");
@@ -461,7 +626,7 @@ void join(struct player allPlayerList[]) {
 			}
 
 			printf("등록이 완료되었습니다.\n");
-			
+
 			break;
 		}
 	}
@@ -487,7 +652,7 @@ struct player logIn(struct player p, struct player allPlayerList[]) {
 				check_id_temp = i;
 				break;
 			}
-		
+
 		}
 
 		if (id_check != 0) { // 존재하는 아이디가 아닐 때,
@@ -657,3 +822,249 @@ void Print_diff_Mainmenu(void)
 	printf("\n\t\t 1. 도전\n\n\t\t 2. 초기화\n\n\t\t 3. 랭킹확인\n\n\t\t 4. 뒤로\n\n");
 	printf("\n===============================================\n");
 }
+// -------------------------------------------------------------------------------------------------------------------------------------------
+
+// ----------------------------------------- updown변수선언 --------------------------------------------------------------------
+
+
+// updown 함수
+int game1(void)
+{
+	int num1 = 0;														// 숫자1
+	int num2 = 0;														// 숫자2
+	int num3 = 0;														// 숫자3 
+	int num4 = 0;														// 숫자4 
+	int num5 = 0;														// 숫자5
+	int answer = 0;														// 정답 입력
+	int	max = 0;														// 최대값 저장
+	int min = 0;														// 최소값 저장
+	int score = 0;														// 점수 저장
+
+	srand(time(0));														//난수 초기화
+
+	clock_t old_time, cur_time;											// 시간 제한 변수
+
+	old_time = clock();
+	// 10초동안 게임반복
+	while (1)
+	{
+		// 0점일 때 2자리 숫자 두개 중 큰 수 고르기
+		if (score == 0)
+		{
+			printf("\n큰 수를 입력하세요! \n\n");
+			num1 = rand() % 100 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 100 + 1;
+			printf("%5d \n\n", num2);
+
+			max = (num1 > num2) ? num1 : num2;
+
+			scanf("\n%d", &answer);
+			if (max == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 10점일 때 3자리 숫자 2개 중 작은 수 고르기
+		else if (score == 10)
+		{
+			printf("\n작은 수를 입력하세요! \n\n");
+			num1 = rand() % 1000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 1000 + 1;
+			printf("%5d \n\n", num2);
+
+			min = (num1 < num2) ? num1 : num2;
+
+			scanf("\n%d", &answer);
+			if (min == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 20점일 때 3자리 숫자 3개 중 작은 수 고르기
+		else if (score == 20)
+		{
+			printf("\n작은 수를 입력하세요! \n\n");
+			num1 = rand() % 1000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 1000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 1000 + 1;
+			printf("%5d \n\n", num3);
+
+			min = (num1 < num2) ? num1 : num2;
+			min = (min < num3) ? min : num3;
+
+			scanf("\n%d", &answer);
+			if (min == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 30점일 때 3자리 숫자 3개 중 큰 수 고르기
+		else if (score == 30)
+		{
+			printf("\n큰 수를 입력하세요! \n\n");
+			num1 = rand() % 1000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 1000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 1000 + 1;
+			printf("%5d \n\n", num3);
+
+			max = (num1 > num2) ? num1 : num2;
+			max = (max > num3) ? max : num3;
+
+			scanf("\n%d", &answer);
+			if (max == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 40점일 때 3자리 숫자 4개 중 작은 수 고르기
+		else if (score == 40)
+		{
+			printf("\n작은 수를 입력하세요! \n\n");
+			num1 = rand() % 1000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 1000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 1000 + 1;
+			printf("%5d ", num3);
+			num4 = rand() % 1000 + 1;
+			printf("%5d \n\n", num4);
+
+			min = (num1 < num2) ? num1 : num2;
+			min = (min < num3) ? min : num3;
+			min = (min < num4) ? min : num4;
+
+			scanf("\n%d", &answer);
+			if (min == answer)
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 50점일 때 3자리 숫자 4개 중 큰 수 고르기
+		else if (score == 50)
+		{
+			printf("\n큰 수를 입력하세요! \n\n");
+			num1 = rand() % 1000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 1000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 1000 + 1;
+			printf("%5d ", num3);
+			num4 = rand() % 1000 + 1;
+			printf("%5d \n\n", num4);
+
+			max = (num1 > num2) ? num1 : num2;
+			max = (max > num3) ? max : num3;
+			max = (max > num4) ? max : num4;
+
+			scanf("\n%d", &answer);
+			if (max == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 60점일 때 4자리 숫자 5개 중 작은 수 고르기
+		else if (score == 60)
+		{
+			printf("\n작은 수를 입력하세요! \n\n");
+			num1 = rand() % 10000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 10000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 10000 + 1;
+			printf("%5d ", num3);
+			num4 = rand() % 10000 + 1;
+			printf("%5d ", num4);
+			num5 = rand() % 10000 + 1;
+			printf("%5d \n\n", num4);
+
+			min = (num1 < num2) ? num1 : num2;
+			min = (min < num3) ? min : num3;
+			min = (min < num4) ? min : num4;
+			min = (min < num5) ? min : num5;
+
+			scanf("\n%d", &answer);
+			if (min == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 70점이상 일 때 4자리 숫자 5개 중 큰 수 고르기
+		else
+		{
+			printf("\n큰 수를 입력하세요! \n\n");
+			num1 = rand() % 10000 + 1;
+			printf("\n\t%d ", num1);
+			num2 = rand() % 10000 + 1;
+			printf("%5d ", num2);
+			num3 = rand() % 10000 + 1;
+			printf("%5d ", num3);
+			num4 = rand() % 10000 + 1;
+			printf("%5d ", num4);
+			num5 = rand() % 10000 + 1;
+			printf("%5d \n\n", num4);
+
+			max = (num1 > num2) ? num1 : num2;
+			max = (max > num3) ? max : num3;
+			max = (max > num4) ? max : num4;
+			max = (min > num5) ? max : num5;
+
+			scanf("\n%d", &answer);
+			if (max == answer)											// 정답을 입력했을시 화면정리 후 정답! 출력, +10점
+			{
+				system("cls");
+				printf("\n\t정답! \n\n");
+				score += 10;
+			}
+		}
+
+		// 게임시작 10초 후 종료
+		cur_time = clock();
+		if ((cur_time - old_time) > (10 * CLOCKS_PER_SEC))
+		{
+			break;
+		}
+	}
+
+	system("cls");														// 화면 정리
+	printf("시간 종료! \n\n");											// 시간 종료! 출력 후 점수 리턴
+	return score;
+}
+
+// updown 메인메뉴 출력
+void game1_main_menu(void)
+{
+	printf("\n\n===============================================\n");
+	printf("\t\t Up / Down \t\t");
+	printf("\n===============================================\n");
+	printf("\n\t\t 1. 도전\n\n\t\t 2. 초기화\n\n\t\t 3. 랭킹 확인\n\n\t\t 4. 뒤로\n");
+	printf("\n===============================================\n");
+}
+
+// -------------------------------------------------------------------------------------------------------------------------------------------
