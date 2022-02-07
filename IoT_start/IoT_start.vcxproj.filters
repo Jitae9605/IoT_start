@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\MiniProject_MiniGame_0204.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="source\mini_project1\MiniProject_MiniGame_0204.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
