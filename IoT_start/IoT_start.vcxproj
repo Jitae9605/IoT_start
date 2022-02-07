@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_0204.c" />
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_Last.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
