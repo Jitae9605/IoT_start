@@ -15,58 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\subject1\Q3_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q1_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q1_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q2_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q3_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q4_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q4_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q5_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q6_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q6_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q7_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q7_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q9_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q10_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q11_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q8_1.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q8_2.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="source\MiniProject_MiniGame_0204.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_0204.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

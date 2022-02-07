@@ -20,25 +20,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\MiniProject_MiniGame_0204.c" />
-    <ClCompile Include="source\subject1\Q10_1.c" />
-    <ClCompile Include="source\subject1\Q11_1.c" />
-    <ClCompile Include="source\subject1\Q1_1.c" />
-    <ClCompile Include="source\subject1\Q1_2.c" />
-    <ClCompile Include="source\subject1\Q2_1.c" />
-    <ClCompile Include="source\subject1\Q3_1.c" />
-    <ClCompile Include="source\subject1\Q3_2.c">
-      <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-    </ClCompile>
-    <ClCompile Include="source\subject1\Q4_1.c" />
-    <ClCompile Include="source\subject1\Q4_2.c" />
-    <ClCompile Include="source\subject1\Q5_1.c" />
-    <ClCompile Include="source\subject1\Q6_1.c" />
-    <ClCompile Include="source\subject1\Q6_2.c" />
-    <ClCompile Include="source\subject1\Q7_1.c" />
-    <ClCompile Include="source\subject1\Q7_2.c" />
-    <ClCompile Include="source\subject1\Q8_1.c" />
-    <ClCompile Include="source\subject1\Q8_2.c" />
-    <ClCompile Include="source\subject1\Q9_1.c" />
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_0204.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
