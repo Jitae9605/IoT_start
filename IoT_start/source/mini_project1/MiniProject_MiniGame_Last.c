@@ -75,7 +75,7 @@ int upDown_menu(void); // updown 메인메뉴
 int game1(void);		   // updown 함수
 
 
-int main() {
+int main1212() {
 	srand((unsigned)time(NULL)); // 난수 초기화
 
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;

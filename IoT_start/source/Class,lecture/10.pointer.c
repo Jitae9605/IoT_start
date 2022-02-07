@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-int main_1213321(void)
+int main(void)
 {
 	// 10. ฦ๗ภฮลอ
 
