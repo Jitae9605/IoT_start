@@ -69,8 +69,5 @@
     <ClCompile Include="source\MiniProject_MiniGame_0204.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\10.pointer.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>

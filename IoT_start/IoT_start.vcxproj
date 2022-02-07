@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\10.pointer.c" />
     <ClCompile Include="source\MiniProject_MiniGame_0204.c" />
     <ClCompile Include="source\subject1\Q10_1.c" />
     <ClCompile Include="source\subject1\Q11_1.c" />
