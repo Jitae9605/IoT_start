@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\12.PointerArray.c">
+    <ClCompile Include="source\subject1\Q12_1.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
