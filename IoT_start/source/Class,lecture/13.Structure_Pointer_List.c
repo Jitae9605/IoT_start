@@ -7,10 +7,13 @@ struct list					// 자기참조구조체
 	struct list* next;		// 구조체 자신을 가리키는 포인터멤버
 };
 
+#define Num_ary 20
+
 int main(void)
 {
+	// 1. 자기참조 구조체
 	struct list a = { 10,0 }, b = { 20,0 }, c = { 30,0 };	// 구조체변수 초기화
-	struct list* head = &a, * current;						// 헤드 포이터 초기화
+	struct list* head = &a, * current;						// 헤드 포인터 초기화
 
 	a.next = &b;		// a의 포인터 멤버(next)가 b를 가리킴
 	b.next = &c;		// b의 포인터 멤버(next)가 c를 가리킴
@@ -21,7 +24,7 @@ int main(void)
 
 	printf("list all : ");
 	current = head;						// 최초 temp포인터(current)가 a를 가리킴
-				
+
 
 	while (current != NULL)				// 마지막 구조체변수까지 출력 후, 종료
 	{
@@ -30,6 +33,20 @@ int main(void)
 	}
 
 	printf("\n");
+
+
+	// 2. 자기참조구조체 배열 
+
+	struct list list_ary[Num_ary] = { {10,0}, };						// 구조체 배열 초기화
+	struct list* head_ary = &list_ary[0], * current_ary;
+
+	for (int i = 0; i < Num_ary-1; i++)
+	{
+		list_ary[i].next = &list_ary[i + 1];
+	}
+	current_ary = head_ary;
+
+
 
 	return 0;
 }

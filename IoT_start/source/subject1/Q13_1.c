@@ -37,8 +37,8 @@ void SortByPrice(void);
 #define Max_STR 50
 #define Full 1
 #define Empty 0
-enum { Main_Print_TITLE = 1, Main_Registe, Main_Set_SortStandard, Main_EXIT };
-enum { SORT_TITLE = 1, SORT_PUB, SORT_PRICE, Sort_EXIT };
+enum { Main_Print_TITLE = 1, Main_Registe, Main_Set_SortStandard, Main_EXIT };          // 매인메뉴 선택지
+enum { SORT_TITLE = 1, SORT_PUB, SORT_PRICE, Sort_EXIT };                               // 정렬메뉴 선택지
 
 struct bookInfo 
 {
@@ -63,8 +63,8 @@ void initsortList(struct bookInfo* bookPtr);
 
 int main(void)
 {
-    
-    struct bookInfo list[Max_List] = { //NULL,       // 실제 사용시
+
+    struct bookInfo list[Max_List] = { //NULL,           // 실제 사용시
         { "다책", "가출판사", 800, Full },                // 정렬 기능확인을 위한 임시정보
         { "라책", "자출판사", 300, Full },                // 정렬 기능확인을 위한 임시정보
         { "마책", "바출판사", 500, Full },                // 정렬 기능확인을 위한 임시정보
@@ -72,7 +72,7 @@ int main(void)
         { "아책", "나출판사", 700, Full },                // 정렬 기능확인을 위한 임시정보
         { "나책", "아출판사", 900, Full },                // 정렬 기능확인을 위한 임시정보
         { "가책", "마출판사", 110, Full },                // 정렬 기능확인을 위한 임시정보
-        { "바책", "차출판사", 20, Full},                 // 정렬 기능확인을 위한 임시정보
+        { "바책", "차출판사", 20, Full},                  // 정렬 기능확인을 위한 임시정보
         { "사책", "라출판사", 400, Full },                // 정렬 기능확인을 위한 임시정보
         { "차책", "다출판사", 600, Full }                 // 정렬 기능확인을 위한 임시정보
     };
@@ -86,45 +86,39 @@ int main(void)
     {
         // 매인메뉴 출력
         Select_Main_Menu = PrintMainMennu();
-
         
-        if (Select_Main_Menu == Main_Print_TITLE)                               // 1.목록출력(이름정렬)
+        if (Select_Main_Menu == Main_Print_TITLE)                                // 1.목록출력(이름정렬)
         {   
             SortByTitle(list);
         }
-
       
-        else if (Select_Main_Menu == Main_Registe)                          // 2.등록
+        else if (Select_Main_Menu == Main_Registe)                               // 2.등록
         {   
             InsertList(list);
         }
-
         
-        else if (Select_Main_Menu == Main_Set_SortStandard)                          // 3.정렬 출력
+        else if (Select_Main_Menu == Main_Set_SortStandard)                      // 3.정렬 출력
         {
             while (1)
             {
                 // 정렬 메뉴 출력
                 int Select_Sort_Menu = PrintSortMenu();
 
-                if (Select_Sort_Menu == SORT_TITLE)                       // 3.1 타이틀 기준 정렬
+                if (Select_Sort_Menu == SORT_TITLE)                              // 3.1 타이틀 기준 정렬
                 {
                     SortByTitle(list);
-                    
                 }
 
-                else if (Select_Sort_Menu == SORT_PUB)                  // 3.2 출판사 기준 정렬
+                else if (Select_Sort_Menu == SORT_PUB)                           // 3.2 출판사 기준 정렬
                 {
                     SortByPubName(list);
-                    
                 }
 
-                else if (Select_Sort_Menu == SORT_PRICE)                  // 3.3 가격 기준 정렬
+                else if (Select_Sort_Menu == SORT_PRICE)                         // 3.3 가격 기준 정렬
                 {
                     SortByPrice(list);
-                    
                 }
-                else if (Select_Sort_Menu == Sort_EXIT)                 // 3.4 뒤로
+                else if (Select_Sort_Menu == Sort_EXIT)                          // 3.4 뒤로
                 {
                     system("cls");
                     break;
@@ -136,11 +130,10 @@ int main(void)
                     system("cls");
                 }
             }
-            
         }
 
         // 종료
-        else if (Select_Main_Menu == Main_EXIT)                          // 4.  종료
+        else if (Select_Main_Menu == Main_EXIT)                                  // 4.  종료
         {
             break;
         }
@@ -154,8 +147,8 @@ int main(void)
     return 0;
 }
 
-// ============================== < 함수 정의 > =====================================================
 
+// ============================== < 함수 정의 > =====================================================
 
 
 // 리스트내 등록된 항목의 갯수를 구하는 함수
