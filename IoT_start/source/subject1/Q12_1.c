@@ -61,36 +61,36 @@ int stringCompare(char* str1, char* str2);				// 12.4 두 문자열을 포인터로 받아 
 
 int main(void)
 {
-	// 변수선언
-	// 복사 / 붙여너기등으로 인해 반환값 등에 영향을 받아 불가피하게 나눔
-	char a1[100] = "hello.";
-	char b1[100] = "nice to meet you.";
-	char a2[100] = "hello.";
-	char b2[100] = "nice to meet you.";
-	char a3[100] = "hello.";
-	char b3[100] = "nice to meet you.";
-	char a4[100] = "hello.";
-	char b4[100] = "nice to meet you.";
-	char copySt[100];
-	int For_Check_return[5] = { 0 };
 
 	printf("\n ======== < 문제 12.1 > ========\n");
 
+	char a1[100] = "hello.";
+	char b1[100] = "nice to meet you.";
 	printf("\n Length of \"%s\" : %d\n", a1, stringLength(a1));
 	printf("\n Length of \"%s\" : %d\n", b1, stringLength(b1));
 
+
 	printf("\n ======== < 문제 12.2 > ========\n");
 
+	char a2[100] = "hello.";
+	char b2[100] = "nice to meet you.";
+	char copySt[100];
 	stringCopy(a2, copySt);
 	printf("\n copy string: \"%s\"\n", copySt); 
 
+
 	printf("\n ======== < 문제 12.3 > ========\n");
 
+	char a3[100] = "hello.";
+	char b3[100] = "nice to meet you.";
 	stringCat(a3, b3);
 	printf("\nconcat string: \"%s\"\n", a3);
 
+
 	printf("\n ======== < 문제 12.4 > ========\n");
 
+	char a4[100] = "hello.";
+	char b4[100] = "nice to meet you.";
 	printf("\ncompare a, a: %d\n", stringCompare(a4, a4));
 	printf("\ncompare b, b: %d\n", stringCompare(b4, b4));
 	printf("\ncompare a, b: %d\n", stringCompare(a4, b4));
@@ -135,9 +135,9 @@ int stringCat(char* dest, char* source)
 {
 	int Length1 = stringLength(dest);
 	int Length2 = stringLength(source);
-	int Length3 = Length1 + Length2;
+	int Length3 = Length1 + Length2;			
 
-	for (int i = 0; i < 100 - Length1; i++)
+	for (int i = 0; i < Length2; i++)
 	{
 		dest[Length1 + i] = source[i];
 	}
