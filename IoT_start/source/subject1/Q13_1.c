@@ -34,43 +34,52 @@ void SortByPrice(void);
 */
 
 #define Max_List 50
+#define Max_STR 50
+#define Full 1
+#define Empty 0
+enum { Main_Print_TITLE = 1, Main_Registe, Main_Set_SortStandard, Main_EXIT };
+enum { SORT_TITLE = 1, SORT_PUB, SORT_PRICE, Sort_EXIT };
 
 struct bookInfo 
 {
-    char bookTitle[50];
-    char bookPub[50];
+    char bookTitle[Max_STR];
+    char bookPub[Max_STR];
     int bookPrice;
-    int check_blank;
+    int check_blank;                                // 내용있으면 Full(= 1) 없는 빈공간(배열요소)이면 Empty(= 0) 
 };
+
+struct bookInfo* sort_book_list[Max_List];          // 정렬값 주소 저장
 
 int PrintSortMenu(void);
 int Length_of_List(struct bookInfo* bookPtr);
 int PrintMainMennu();
-void PrintSortList(struct bookInfo *bookPtr);
 void SortByTitle(struct bookInfo* bookPtr);
 void SortByPubName(struct bookInfo* bookPtr);
 void SortByPrice(struct bookInfo* bookPtr);
-int InsertList(struct bookInfo* bookPtr);
+void InsertList(struct bookInfo* bookPtr);
+void initsortList(struct bookInfo* bookPtr);
 
 // ============================== < 매인 함수 > =====================================================
 
 int main(void)
 {
-    // 정렬 기능확인을 위한 임시정보
-    struct bookInfo list[Max_List] = {
-        { "다책", "가출판사", 800,1 },
-        { "라책", "자출판사", 300,1 },
-        { "마책", "바출판사", 500,1 },
-        { "자책", "사출판사", 100,1 },
-        { "아책", "나출판사", 700,1 },
-        { "나책", "아출판사", 900,1 },
-        { "가책", "마출판사", 110,1 },
-        { "바책", "차출판사", 20,1 },
-        { "사책", "라출판사", 400,1 },
-        { "차책", "다출판사", 600,1 }
+    
+    struct bookInfo list[Max_List] = { //NULL,       // 실제 사용시
+        { "다책", "가출판사", 800, Full },                // 정렬 기능확인을 위한 임시정보
+        { "라책", "자출판사", 300, Full },                // 정렬 기능확인을 위한 임시정보
+        { "마책", "바출판사", 500, Full },                // 정렬 기능확인을 위한 임시정보
+        { "자책", "사출판사", 100, Full },                // 정렬 기능확인을 위한 임시정보
+        { "아책", "나출판사", 700, Full },                // 정렬 기능확인을 위한 임시정보
+        { "나책", "아출판사", 900, Full },                // 정렬 기능확인을 위한 임시정보
+        { "가책", "마출판사", 110, Full },                // 정렬 기능확인을 위한 임시정보
+        { "바책", "차출판사", 20, Full},                 // 정렬 기능확인을 위한 임시정보
+        { "사책", "라출판사", 400, Full },                // 정렬 기능확인을 위한 임시정보
+        { "차책", "다출판사", 600, Full }                 // 정렬 기능확인을 위한 임시정보
     };
 
     int Select_Main_Menu = 0;
+
+    initsortList(list);
 
     // 프로그램 동작부
     while(1)
@@ -79,42 +88,45 @@ int main(void)
         Select_Main_Menu = PrintMainMennu();
 
         
-        if (Select_Main_Menu == 1)                               // 1.목록출력
+        if (Select_Main_Menu == Main_Print_TITLE)                               // 1.목록출력(이름정렬)
         {   
-            PrintSortList(list);
-            system("PAUSE");
-            system("cls");
+            SortByTitle(list);
         }
 
       
-        else if (Select_Main_Menu == 2)                          // 2.등록
+        else if (Select_Main_Menu == Main_Registe)                          // 2.등록
         {   
             InsertList(list);
         }
 
         
-        else if (Select_Main_Menu == 3)                          // 3.정렬 출력
+        else if (Select_Main_Menu == Main_Set_SortStandard)                          // 3.정렬 출력
         {
             while (1)
             {
                 // 정렬 메뉴 출력
                 int Select_Sort_Menu = PrintSortMenu();
 
-                if (Select_Sort_Menu == 1)                       // 3.1 타이틀 기준 정렬
+                if (Select_Sort_Menu == SORT_TITLE)                       // 3.1 타이틀 기준 정렬
                 {
                     SortByTitle(list);
-                    break;
+                    
                 }
 
-                else if (Select_Sort_Menu == 2)                  // 3.2 출판사 기준 정렬
+                else if (Select_Sort_Menu == SORT_PUB)                  // 3.2 출판사 기준 정렬
                 {
                     SortByPubName(list);
-                    break;
+                    
                 }
 
-                else if (Select_Sort_Menu == 3)                  // 3.3 가격 기준 정렬
+                else if (Select_Sort_Menu == SORT_PRICE)                  // 3.3 가격 기준 정렬
                 {
                     SortByPrice(list);
+                    
+                }
+                else if (Select_Sort_Menu == Sort_EXIT)                 // 3.4 뒤로
+                {
+                    system("cls");
                     break;
                 }
                 else
@@ -128,7 +140,7 @@ int main(void)
         }
 
         // 종료
-        else if (Select_Main_Menu == 4)                          // 4.  종료
+        else if (Select_Main_Menu == Main_EXIT)                          // 4.  종료
         {
             break;
         }
@@ -145,13 +157,14 @@ int main(void)
 // ============================== < 함수 정의 > =====================================================
 
 
+
 // 리스트내 등록된 항목의 갯수를 구하는 함수
 int Length_of_List(struct bookInfo *bookPtr)
 {
     int Length = 0;
     for (int i = 0; i < Max_List; i++)
     {
-        if ((bookPtr+i)->check_blank == 1)
+        if ((bookPtr+i)->check_blank == Full)
         {
             Length++;
         }
@@ -159,16 +172,31 @@ int Length_of_List(struct bookInfo *bookPtr)
     return Length;
 }
 
+//  값을 보고 그 크기를 비교해서 그 값이 들어간 구조체의 주소를 저장하는 구조체포인터를 생성함
+//  해당 포인터가 bookPtr(매인에서의 list를 받아옴)를 가리키게한다
+void initsortList(struct bookInfo* bookPtr)
+{
+    int Length = Length_of_List(bookPtr);
+    for (int i = 0; i < Length; i++)
+    {
+        sort_book_list[i] = &bookPtr[i];
+    }
+}
+
 // 정렬메뉴 출력함수
 int PrintSortMenu(void)
 {
+    system("cls");
     int Select_Sort_Menu = 0;
     printf("\n ==================================================\n");
-    printf("\n1. 도서명기준\n\n");
-    printf("2. 출판사기준\n\n");
-    printf("3. 가격기준\n\n");
+    printf("\t  < 도서 정보 정렬 기준 선택 > \n");
     printf("\n ==================================================\n");
-    printf("정렬기준을 선택하세요: ");
+    printf("\n 1. 도서명기준\n\n");
+    printf(" 2. 출판사기준\n\n");
+    printf(" 3. 가격기준\n\n");
+    printf(" 4. 뒤로\n");
+    printf("\n ==================================================\n");
+    printf(" 정렬기준을 선택하세요: ");
     scanf(" %d", &Select_Sort_Menu);
 
     return Select_Sort_Menu;
@@ -189,30 +217,11 @@ int PrintMainMennu(void)
     return Select_Menu;
 }
 
-// 도서 정보 전체를 출력하는 함수를 구현하세요. 
-void PrintSortList(struct bookInfo* bookPtr)
-{
-    int Length = Length_of_List(bookPtr);
-    printf("\n ==============================================================\n");
-    printf("\t도서명 \t\t\t 출판사 \t 가격(원) ");
-    printf("\n ==============================================================\n");
-    for (int i = 0; i < Length; i++)
-    {
-        printf("\t%-15s \t %10s \t %5d원\n", (bookPtr+i)->bookTitle, (bookPtr + i)->bookPub, (bookPtr + i)->bookPrice);
-    }
-    printf(" ==============================================================\n");
-    printf("\n");
-
-}
-
-
 // 도서 정보가 저장이 될 때, 도서 이름의 오름차순으로 정렬하여 저장이 되도록 합니다.
-int InsertList(struct bookInfo* bookPtr)
+void InsertList(struct bookInfo* bookPtr)
 {
     struct bookInfo temp = { NULL, };
-    char temp_bookTitle[50] = "0";
-    char temp_bookPub[50] = "0";
-    int temp_bookPrice = 0;
+    struct bookInfo* Temp = { NULL, };
     int Length = Length_of_List(bookPtr);
 
     
@@ -223,19 +232,22 @@ int InsertList(struct bookInfo* bookPtr)
     printf("\n등록하려는 도서의 출판사를 입력해주세요: ");
     scanf("%s", (bookPtr + Length)->bookPub);
     printf("\n등록하려는 도서의 가격을 입력해주세요: ");
-    scanf("%d", &temp_bookPrice);
-    (bookPtr + Length)->bookPrice = temp_bookPrice;
-    (bookPtr + Length)->check_blank = 1;
+    scanf("%d", &(bookPtr + Length)->bookPrice);
+    (bookPtr + Length)->check_blank = Full;
 
+    initsortList(bookPtr);
 
     // 정렬
  
-    for (int i = 0; i < Length+1; i++)
+    for (int i = 0; i < Length-1; i++)
     {
-        for (int j = 0; j < Length+1; j++)
+        for (int j = 0; j < (Length-i)-1; j++)
         {
-            if (strcmp((bookPtr + i)->bookTitle, (bookPtr + j)->bookTitle) < 0)
+            if (strcmp(sort_book_list[j]->bookTitle, sort_book_list[j+1]->bookTitle) < 0)
             {
+
+                /* 기존코드 - 직접 배열값을 전부 바꿨다 -> 자원낭비심함, 속도느림, 오류가능성 높음
+                 
                 strcpy(temp.bookTitle, (bookPtr + i)->bookTitle);
                 strcpy(temp.bookPub, (bookPtr + i)->bookPub);
                 temp.bookPrice = (bookPtr + i)->bookPrice;
@@ -247,29 +259,41 @@ int InsertList(struct bookInfo* bookPtr)
                 strcpy((bookPtr + j)->bookTitle, temp.bookTitle);
                 strcpy((bookPtr + j)->bookPub, temp.bookPub);
                 (bookPtr + j)->bookPrice = temp.bookPrice;
+
+                */
+
+                Temp = sort_book_list[j];
+                sort_book_list[j] = sort_book_list[j + 1];
+                sort_book_list[j + 1] = Temp;
             }
 
         }
     }
-   
-
+    Length++;
+    printf("\n등록 및 정력이 완료되었습니다. 등록번호: < %d >번 입니다\n", Length);
+    system("PAUSE");
+    system("cls");
 }
 
 
 // 선택된 기준으로 도서정보가 정렬이 되도록 구현합니다.
 // 정렬 기준 : 도서 타이틀, 출판사면, 도서가격
+
 void SortByTitle(struct bookInfo* bookPtr)      // 도서타이틀순
 {
     struct bookInfo temp = { NULL, };
+    struct bookInfo* Temp = { NULL, };
     int Length = Length_of_List(bookPtr);
 
-
-    for (int i = 0; i < Length; i++)
+    system("cls");
+    for (int i = 0; i < Length-1; i++)
     {
-        for (int j = 0; j < Length; j++)
+        for (int j = 0; j < (Length-i)-1; j++)
         {
-            if (strcmp((bookPtr + i)->bookTitle, (bookPtr + j)->bookTitle) < 0)
-            {
+            if (strcmp(sort_book_list[j]->bookTitle, sort_book_list[j+1]->bookTitle) > 0)
+            {   
+                /* 기존코드 - 직접 배열값을 전부 바꿨다 -> 자원낭비심함, 속도느림, 오류가능성 높음
+                
                 strcpy(temp.bookTitle, (bookPtr + i)->bookTitle);
                 strcpy(temp.bookPub, (bookPtr + i)->bookPub);
                 temp.bookPrice = (bookPtr + i)->bookPrice;
@@ -281,6 +305,13 @@ void SortByTitle(struct bookInfo* bookPtr)      // 도서타이틀순
                 strcpy((bookPtr + j)->bookTitle, temp.bookTitle);
                 strcpy((bookPtr + j)->bookPub, temp.bookPub);
                 (bookPtr + j)->bookPrice = temp.bookPrice;
+
+                */
+
+                Temp = sort_book_list[j];
+                sort_book_list[j] = sort_book_list[j + 1];
+                sort_book_list[j + 1] = Temp;
+
             }
 
         }
@@ -291,7 +322,7 @@ void SortByTitle(struct bookInfo* bookPtr)      // 도서타이틀순
 
     for (int i = 0; i < Length; i++)
     {
-        printf("\t%-15s \t %10s \t %5d원\n", (bookPtr + i)->bookTitle, (bookPtr + i)->bookPub, (bookPtr + i)->bookPrice);
+        printf("\t%-15s \t %10s \t %5d원\n", sort_book_list[i]->bookTitle, sort_book_list[i]->bookPub, sort_book_list[i]->bookPrice);
     }
 
     printf(" ==============================================================\n");
@@ -306,15 +337,18 @@ void SortByTitle(struct bookInfo* bookPtr)      // 도서타이틀순
 void SortByPubName(struct bookInfo* bookPtr)    // 출판사순
 {
     struct bookInfo temp = { NULL, };
+    struct bookInfo* Temp = { NULL, };
     int Length = Length_of_List(bookPtr);
 
-
-    for (int i = 0; i < Length; i++)							  
+    system("cls");
+    for (int i = 0; i < Length - 1 ; i++)							  
     {
-        for (int j = 0; j < Length; j++)
+        for (int j = 0; j < (Length-i)-1; j++)
         {
-            if (strcmp((bookPtr + i)->bookPub, (bookPtr + j)->bookPub) < 0)	
+            if (strcmp((sort_book_list[j])->bookPub, sort_book_list[j+1]->bookPub) > 0)
             {
+                /* 기존코드 - 직접 배열값을 전부 바꿨다 -> 자원낭비심함, 속도느림, 오류가능성 높음
+
                 strcpy(temp.bookTitle, (bookPtr+i)->bookTitle);
                 strcpy(temp.bookPub, (bookPtr + i)->bookPub);
                 temp.bookPrice = (bookPtr + i)->bookPrice;
@@ -326,6 +360,12 @@ void SortByPubName(struct bookInfo* bookPtr)    // 출판사순
                 strcpy((bookPtr + j)->bookTitle, temp.bookTitle);
                 strcpy((bookPtr + j)->bookPub, temp.bookPub);
                 (bookPtr + j)->bookPrice = temp.bookPrice;
+
+                */
+
+                Temp = sort_book_list[j];
+                sort_book_list[j] = sort_book_list[j + 1];
+                sort_book_list[j + 1] = Temp;
             }
                 
         }
@@ -336,7 +376,7 @@ void SortByPubName(struct bookInfo* bookPtr)    // 출판사순
 
     for (int i = 0; i < Length; i++)
     {
-        printf("\t%-15s \t %10s \t %5d원\n", (bookPtr + i)->bookTitle, (bookPtr + i)->bookPub, (bookPtr + i)->bookPrice);
+        printf("\t%-15s \t %10s \t %5d원\n", sort_book_list[i]->bookTitle, sort_book_list[i]->bookPub, sort_book_list[i]->bookPrice);
     }
 
     printf(" ==============================================================\n");
@@ -349,17 +389,20 @@ void SortByPubName(struct bookInfo* bookPtr)    // 출판사순
 void SortByPrice(struct bookInfo* bookPtr)      // 가격순
 {
     struct bookInfo temp[Max_List] = { NULL,};
+    struct bookInfo* Temp = { NULL, };
     int Length = Length_of_List(bookPtr);
-    int Rank[Max_List] = { 0 };
 
-
-    for (int i = 0; i < Length; i++)							    	// 등수 구하기
-    {
-        Rank[i] = Length;										    	// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
-        for (int j = 0; j < Length; j++)
+    system("cls");
+    for (int i = 0; i < Length-1; i++)							    	
+    { 						    	
+        for (int j = 0; j < (Length-i)-1; j++)
         {
-            if ((bookPtr + i)->bookPrice >= (bookPtr + j)->bookPrice)	// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
-                Rank[i]--;
+            if (sort_book_list[j]->bookPrice > sort_book_list[j + 1]->bookPrice)
+            {
+                Temp = sort_book_list[j];
+                sort_book_list[j] = sort_book_list[j + 1];
+                sort_book_list[j + 1] = Temp;
+            }
         }
     }
 
@@ -367,27 +410,11 @@ void SortByPrice(struct bookInfo* bookPtr)      // 가격순
     printf("\t도서명 \t\t\t 출판사 \t 가격(원) ");
     printf("\n ==============================================================\n");
 
-    for (int i = 0; i < Length; i++)
-    {
-        for (int j = 0; j < Length; j++)
-        {
 
-            if (Rank[j] == i)
-            {
-                strcpy((temp + i)->bookTitle, (bookPtr + j)->bookTitle);
-                strcpy((temp + i)->bookPub, (bookPtr + j)->bookPub);
-                (temp + i)->bookPrice = (bookPtr + j)->bookPrice;
-               
-            }
-        }
-    }
 
     for (int i = 0; i < Length; i++)
     {
-       strcpy((bookPtr + i)->bookTitle, (temp + i)->bookTitle);
-       strcpy((bookPtr + i)->bookPub, (temp + i)->bookPub);
-       (bookPtr + i)->bookPrice = (temp + i)->bookPrice;
-       printf("\t%-15s \t %10s \t %5d원\n", (bookPtr + i)->bookTitle, (bookPtr + i)->bookPub, (bookPtr + i)->bookPrice);
+       printf("\t%-15s \t %10s \t %5d원\n", sort_book_list[i]->bookTitle, sort_book_list[i]->bookPub, sort_book_list[i]->bookPrice);
     }
 
 
