@@ -38,7 +38,10 @@ struct player {              // [플레이어 정보 관리 구조체]
 	char pw[pw_limit + 1];   // 비밀번호
 	int rank;                // 랭킹
 	int join;                // 등록 순서
+	int* next;
 };
+
+
 
 // ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
 
@@ -88,10 +91,15 @@ int main() {
 	struct player allPlayerList[max_player + 1] = { 0, }; // 모든 플레이어 정보 저장할 구조체 배열 선언
 	
 
+	// linked pointer 선언
+	struct player* head = &allPlayerList[0], * current;
+	
+
 	//플레이어 아이디, 비번 배열초기화
 	for (int i = 0; i < max_player; i++) {
 		strcpy(allPlayerList[i].id, "EMPTY");
 		strcpy(allPlayerList[i].pw, "0000");
+		allPlayerList[i].next = &allPlayerList[i + 1];
 	}
 
 	while (1) {
@@ -1158,6 +1166,11 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 {
 	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
 	int Rank_num_diff[max_player] = { 0 };								// 전체랭킹 계산
+
+	// linked pointer 선언
+	struct player* head = &AllPlayerList_Pt_Diff[0], * current;
+	current = head;
+
 	while (1)
 	{
 		system("cls");
@@ -1203,9 +1216,10 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 					if (Rank_num_diff[j] == i + 1) {
 						char temp[10] = "EMPTY";
 						int id_check = -1;
-						id_check = strcmp(AllPlayerList_Pt_Diff[j].id, temp);
+						id_check = strcmp(current->id, temp);
 						if (id_check != 0) {
-							printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], AllPlayerList_Pt_Diff[j].id, AllPlayerList_Pt_Diff[j].sc.spot);
+							printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], current->id,current->sc.spot);
+							current = current->next;
 						}
 					}
 				}
