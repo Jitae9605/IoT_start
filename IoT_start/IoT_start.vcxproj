@@ -19,7 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\help_other_teammate\22.02.10.c" />
     <ClCompile Include="source\mini_project1\MiniProject_MiniGame_Last.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

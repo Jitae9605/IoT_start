@@ -18,8 +18,5 @@
     <ClCompile Include="source\mini_project1\MiniProject_MiniGame_Last.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\help_other_teammate\22.02.10.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
