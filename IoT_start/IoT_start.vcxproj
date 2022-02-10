@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\13.Structure_Pointer_List.c" />
+    <ClCompile Include="source\help_other_teammate\22.02.10.c" />
+    <ClCompile Include="source\mini_project1\MiniProject_MiniGame_Last.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

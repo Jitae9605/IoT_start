@@ -5,6 +5,7 @@
 #include<stdlib.h>
 #pragma warning(disable:4996)
 
+// 상수정의
 #define id_limit 12
 #define pw_limit 4
 #define game 4
@@ -16,13 +17,13 @@
 #define Succes_to_Login 1				// 로그인 성공
 #define Amsan_count 3					// 암산 stageNUM
 
+// 전역변수
 int loginCheck = 1;						// 로그인 성공=1, 실패 또는 로그아웃=0
 int Curent_id_num = 0;					// 현재 로그인된 아이디의 번호
-
 int front = -1, rear = -1;				// 원형 큐에 사용할 front, rear
 int Rank_num_total[max_player] = { 0 };
 
-
+// 구조체선언
 struct score {   // [게임 점수 구조체]
 	int upDown;  // 업다운 점수
 	int cal;     // 암산 점수
@@ -39,20 +40,17 @@ struct player {              // [플레이어 정보 관리 구조체]
 	int join;                // 등록 순서
 };
 
+// ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
+
 int start(); // 시작화면 함수
 void join(struct player allPlayerList[]); // 플레이어 등록 함수
 int logIn(struct player p, struct player allPlayerList[]); // 로그인 함수
 int main_menu(); // 메인메뉴 함수
 int isFull(); // 원형 큐가 다 찼는지 판별하는 함수
 
-int isFull() {
-	int temp = (rear + 1) % (max_player + 1); // 원형 큐에서 rear+1을 배열크기로 나눈 나머지값이
-	if (temp == front) return 1; // front와 같으면 큐는 가득 차있는 상태
-	else return 0;
-}
-
 // ----------------------------------------- 틀린그림찾기 함수선언 ----------------------------------------------------------------
-void Print_diff_Mainmenu(void);										// 매인메뉴 출력 함수
+
+int Print_diff_Mainmenu(void);										// 매인메뉴 출력 함수
 int Cal_Score(int Set_endTime);										// 스코어 계산 함수
 int Make_Random_Num(int Random_Num_Range);							// 난수출력 함수
 int Make_Random_Num_Range(int from, int end);						// 특정범위의 난수 출력함수
@@ -60,7 +58,12 @@ void Print_Bingo(int original_array[Length_of_Array][Height_of_Array], int diffe
 void Check_Answer(int Where_is_diff_x, int Where_is_diff_y);		// 정답 입력받아 확인
 int Print_Diff_Final_Score(int Score[How_Many_Time_Play_DiffGame]);	// 최종점수 출력 함수
 
+void Sort_Diff(struct player* AllPlayerList_Pt_Diff);									// 틀린그림찾기 랭킹확인
+void PlayDiffGame(struct player* AllPlayerList_Pt_Diff,int Curent_id_num);				// 틀린그림찾기 초기화
+void Reset_Diff_Score(struct player* AllPlayerList_Pt_Diff, int Curent_id_num);			// 틀린그림찾기 게임실행부
+
 // ----------------------------------------- 암산 함수선언 --------------------------------------------------------------------
+
 int RandNum1(int i);
 int RandNum2(int i);
 int Calc(Num1, Num2);
@@ -71,61 +74,25 @@ void StartMenu();
 void End_Menu();
 
 // ----------------------------------------- updown함수선언 --------------------------------------------------------------------
-int upDown_menu(void); // updown 메인메뉴
-int game1(void);		   // updown 함수
 
+int upDown_menu(void);		// updown 메인메뉴
+int game1(void);			// updown 함수
 
-int main1212() {
+// ========================================= main 함수 ====================================================================
+
+int main() {
 	srand((unsigned)time(NULL)); // 난수 초기화
 
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;
 	struct player p = { 0, }; // 플레이어 구조체 변수 선언
 	struct player allPlayerList[max_player + 1] = { 0, }; // 모든 플레이어 정보 저장할 구조체 배열 선언
+	
 
-
+	//플레이어 아이디, 비번 배열초기화
 	for (int i = 0; i < max_player; i++) {
 		strcpy(allPlayerList[i].id, "EMPTY");
 		strcpy(allPlayerList[i].pw, "0000");
-		
-		 //플레이어 아이디, 비번 배열초기화
 	}
-
-
-	// ----------------------------------------- 틀린그림찾기변수선언 -------------------------------------------------------------------------------------
-	int score[How_Many_Time_Play_DiffGame] = { 0 };						// 게임 실행 별 점수
-	int Final_Score = 0;												// 최종점수
-	int Judg_num = 0;													// 제한시간 넘겼을 경우 최종점수 없음
-	int Select_diff_main_menu = 0;										// 메뉴선택 선택지 저장
-	int Select_diff_ResetMenu = 0;										// 초기화메뉴 선택지 저장
-	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
-	int Rank_num_diff[max_player] = { 0 };								// 전체랭킹 계산
-	
-
-	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
-	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
-
-	// ----------------------------------------- 업다운 변수선언 -------------------------------------------------------------------------------------
-	int upDown_choice = 0;
-	int game1_rank_num[max_player] = { 0 };
-	int game1_score = 0;
-
-	// ----------------------------------------- 청기백기 변수선언 -------------------------------------------------------------------------------------
-	int choice = 0;
-	int sumscore = 0;
-	int player = -55;
-	int player1 = -55;
-	int player2 = -55;
-	int player3 = -55;
-
-	int com = 0;
-	int com1 = 0;
-	int com2 = 0;
-	int com3 = 0;
-
-	int score0 = 0;
-	int score1 = 0;
-	int score2 = 0;
-	int score3 = 0;
 
 	while (1) {
 		start_choice = start(); // 시작화면 출력
@@ -135,14 +102,20 @@ int main1212() {
 
 			if (loginCheck == 0) continue; // 등록된 아이디 없을 때 시작화면으로 돌아가기
 			else { // 로그인 성공, 메인화면으로
-				while (1){
+				while (1) {
 					menu_choice = main_menu();
 
-					if (menu_choice == 1) { // 업다운 게임 선택했을 때
-						while (1){
+					// 업다운 게임
+					if (menu_choice == 1) {
+
+						int upDown_choice = 0;
+						int game1_rank_num[max_player] = { 0 };
+						int game1_score = 0;
+
+						while (1) {
 							upDown_choice = upDown_menu(); // updown 메인메뉴 호출
-							
-							if (upDown_choice == 1){
+
+							if (upDown_choice == 1) {
 								// 게임 시작 전 설명 출력
 								system("cls");
 								printf("\n===============================================\n");
@@ -291,7 +264,8 @@ int main1212() {
 						}
 					}
 
-					else if (menu_choice == 2) {  // 암산 게임 선택
+					// 암산 게임
+					else if (menu_choice == 2) {
 						//암산 게임 호출 작성하기
 						while (1)
 						{
@@ -369,7 +343,7 @@ int main1212() {
 								{
 									for (int j = 0; j < max_player; j++)
 									{
-										
+
 										if (Rank_num_cal[j] == i + 1) {
 											char temp[10] = "EMPTY";
 											int id_check = -1;
@@ -521,8 +495,14 @@ int main1212() {
 					}
 
 					// 청기백기 게임
-					else if (menu_choice == 3) {  
+					else if (menu_choice == 3) {
 						//청기백기 게임 호출 작성하기
+
+						int choice = 0, sumscore = 0;
+						int player = -55, player1 = -55, player2 = -55, player3 = -55;
+						int com = 0, com1 = 0, com2 = 0, com3 = 0;
+						int score0 = 0, score1 = 0, score2 = 0, score3 = 0;
+
 						while (1)
 						{
 							printf("                               ----- 청기 백기 게임 입니다 -----\n");
@@ -536,7 +516,7 @@ int main1212() {
 							printf("\n");
 
 
-							int NUM3 = 0;   
+							int NUM3 = 0;
 							int BW_Select_Quit = 0;// 정수형 NUM3 초기화
 							printf("                   *1번 : 게임시작\n");
 							printf("                   *2번 : 뒤로가기\n");
@@ -784,7 +764,7 @@ int main1212() {
 									{
 										// 3.3 뒤로
 										break;
-									
+
 									}
 
 									else
@@ -803,218 +783,55 @@ int main1212() {
 
 						}
 					}
-						
 
 					// 틀린그림찾기 게임 선택
-					else if (menu_choice == 4) {  
+					else if (menu_choice == 4) {
+
 						//틀린그림찾기 게임 호출 작성하기
+						int Select_diff_main_menu = 0;										// 메뉴선택 선택지 저장
+						struct player* AllPlayerList_Pt_Diff = &allPlayerList;				// 틀린그림찾기 구조체포인터 선언
 
 						while (1)
 						{
-							Print_diff_Mainmenu();										// 메뉴 레이아웃 출력
-							printf(" 원하는 메뉴의 번호를 입력하세요\n");					// 메뉴 선택
-							scanf("%d", &Select_diff_main_menu);						// 사용자한테 메뉴 입력받음
+							// 0. 메뉴 레이아웃 출력
+							Select_diff_main_menu = Print_diff_Mainmenu();
 
+							// 1. 게임 실행부
 							if (Select_diff_main_menu == 1)
 							{
-								// 1. 게임 실행부
-								system("cls");
-
-								for (int q = 0; q < How_Many_Time_Play_DiffGame; q++)			// 틀린그림찾기게임 반복횟수
-								{
-
-									// 걸린 시간 계산을 위한 시작시간 기록 및 초기화
-									long StartTime = 0; // 게임시작 시간 초기화
-									long totlaElapsedTime = 0; // 총 경과시간 초기화
-									StartTime = clock(); // 게임시작 시간 기록
-
-									// 랜덤 숫자 생성 및 배열에 저장
-									for (int i = 0; i < 5; i++)
-									{
-										for (int j = 0; j < 5; j++)
-										{
-											original_array[i][j] = Make_Random_Num_Range(33, 126);	// 아스키 코드표상 특수문자 33 ~ 126을 랜덤 출력 (아스키 코드 출력을 통한 특수문자를 출력할 의도)
-											different_array[i][j] = original_array[i][j];			// 틀린쪽에 각 내용 덮어쓰기
-										}
-									}
-
-									// different_array배열에 틀린 부분을 집어 넣기
-									int Whats_diffent = 0;															// 틀린 값 선언
-									int Where_is_diff_x = Make_Random_Num(Length_of_Array);							// 틀린부분 x좌표
-									int Where_is_diff_y = Make_Random_Num(Height_of_Array);							// 틀린부분 y좌표
-
-									Whats_diffent = Make_Random_Num_Range(33, 126);									// 틀린 값을 난수로 받아서 생성
-									while (different_array[Where_is_diff_x][Where_is_diff_y] == Whats_diffent)		// 난수로 생성된 값이 혹시 틀린부분의 좌표에 해당하는 배열부분과 같진 않는지 확인
-									{
-										Whats_diffent = Make_Random_Num_Range(33, 126);								// 같지 않을때 까지 반복
-									}
-
-									different_array[Where_is_diff_x][Where_is_diff_y] = Whats_diffent;				// 같지 않으니까 대입연산
-
-
-									// 화면에 틀린그림 찾기 내용 출력
-									Print_Bingo(original_array, different_array);									// 틀린그림찾기판 출력
-									Check_Answer(Where_is_diff_x, Where_is_diff_y);									// 정답입력받아 정답인지 확인하고 안내문 출력
-
-
-									score[q] = Cal_Score(StartTime);												// 점수 출력
-									if (score[q] == Over_the_Time_limit)	// 제한시간 넘겼을 때 처리										
-									{
-										Judg_num = Over_the_Time_limit;
-										break;
-									}
-									system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
-									system("cls");							// 화면 정리
-								}
-
-								if (Judg_num == Over_the_Time_limit)									// 제한시간 넘기면 최종점수 출력X
-								{
-									printf("땡! 제한시간을 넘겼습니다. 다음에 다시 도전해주세요!");			// 제한시간 넘겼을 때 출력문구
-								}
-
-								else
-								{
-									// 최종스코어 합산 및 출력
-									Final_Score = Print_Diff_Final_Score(score);
-									allPlayerList[Curent_id_num].sc.spot = Final_Score;											// 플레이어 기록에 스코어 추가
-									printf("\n=========================================\n");
-									printf("\n %s님의 최종 점수는 < %d > 점입니다\n", allPlayerList[Curent_id_num].id, Final_Score);
-									printf("\n=========================================\n");
-									system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
-									system("cls");							// 화면 정리
-								}
+								PlayDiffGame(AllPlayerList_Pt_Diff, Curent_id_num);
 							}
+
+							// 2. 초기화
 							else if (Select_diff_main_menu == 2)
 							{
-								// 2. 초기화
-								while (1)
-								{
-									system("cls");
-									printf(" 초기화 메뉴입니다. 플레이어님의 틀린그림찾기 기록을 초기화하시겠습니까?\n");
-									printf(" 1. 진행 \t 2. 취소\n");
-									scanf("%d", &Select_diff_ResetMenu);
-
-									// 2.1 초기화 진행
-									if (Select_diff_ResetMenu == 1)
-									{
-										allPlayerList[Curent_id_num].sc.spot = 0;
-										printf(" 초기화 되었습니다. 초기화면으로 돌아갑니다.");
-										system("PAUSE");
-										system("cls");
-										break;
-									}
-
-									// 2.2 뒤로
-									else if (Select_diff_ResetMenu == 2)
-									{
-										break;
-									}
-
-									// 2.3 잘못된 값 처리
-									else
-									{
-										printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
-									}
-								}
-
+								Reset_Diff_Score(AllPlayerList_Pt_Diff, Curent_id_num);
 							}
 
+							// 3. 랭킹확인
 							else if (Select_diff_main_menu == 3)
 							{
-								// 3. 랭킹확인
-								while (1)
-								{
-									system("cls");
-									printf(" 랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
-									printf("\n 1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
-									scanf("%d", &Select_diff_RankingMenu);
-
-									if (Select_diff_RankingMenu == 1)
-									{
-										// 3.1 개인랭킹
-										system("cls");
-										printf("\n----------------------------------------------------------------\n");
-										printf("\n %s 님의 틀린그림찾기 기록은 < %d > 점입니다.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.spot);
-										printf("\n----------------------------------------------------------------\n");
-										system("PAUSE");
-										system("cls");
-										break;
-									}
-
-									else if (Select_diff_RankingMenu == 2)
-									{
-										// 3.2 전체랭킹
-										system("cls");
-										printf("\n 틀린그림찾기 전체랭킹 페이지입니다.\n");
-										printf("\n----------------------------------------------------------------\n");
-										printf(" 등수\t\t 아이디\t\t 점수 \n\n");
-
-										for (int i = 0; i < max_player; i++)								// 등수 구하기
-										{
-											Rank_num_diff[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
-											for (int j = 0; j < max_player; j++)
-											{
-												if (allPlayerList[i].sc.spot >= allPlayerList[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
-													Rank_num_diff[i]--;
-											}
-										}
-
-										for (int i = 0; i < max_player; i++)
-										{
-											for (int j = 0; j < max_player; j++)
-											{
-
-												if (Rank_num_diff[j] == i + 1) {
-													char temp[10] = "EMPTY";
-													int id_check = -1;
-													id_check = strcmp(allPlayerList[j].id, temp);
-													if (id_check != 0) {
-														printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], allPlayerList[j].id, allPlayerList[j].sc.spot);
-													}
-												}
-											}
-										}
-										printf("\n----------------------------------------------------------------\n");
-										system("PAUSE");
-										system("cls");
-										break;
-									}
-
-									else if (Select_diff_RankingMenu == 3)
-									{
-										// 3.3 뒤로
-										break;
-									}
-
-									else
-									{
-										// 3.4 잘못된 값 처리
-										printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
-									}
-								}
-
+								Sort_Diff(AllPlayerList_Pt_Diff);
 							}
 
+							// 4. 뒤로
 							else if (Select_diff_main_menu == 4)
 							{
-								// 4. 뒤로
 								system("cls");
 								break;
 							}
-
+							// 5. 잘못된 값 처리
 							else
 							{
-								// 4.1 잘못된 값 처리
 								printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 							}
 						}
-
 					}
-						
+
 					// 통합 랭킹 조회
-					else if (menu_choice == 5) {  
-					allPlayerList[Curent_id_num].sc.total = allPlayerList[Curent_id_num].sc.spot + allPlayerList[Curent_id_num].sc.BW + allPlayerList[Curent_id_num].sc.cal + allPlayerList[Curent_id_num].sc.upDown;
-						while (1){
+					else if (menu_choice == 5) {
+						allPlayerList[Curent_id_num].sc.total = allPlayerList[Curent_id_num].sc.spot + allPlayerList[Curent_id_num].sc.BW + allPlayerList[Curent_id_num].sc.cal + allPlayerList[Curent_id_num].sc.upDown;
+						while (1) {
 							system("cls");
 							printf("\n 통합 전체랭킹 페이지입니다.\n");
 							printf("\n----------------------------------------------------------------\n");
@@ -1030,8 +847,8 @@ int main1212() {
 								}
 							}
 
-							for (int i = 0; i < max_player; i++){
-								for (int j = 0; j < max_player; j++){
+							for (int i = 0; i < max_player; i++) {
+								for (int j = 0; j < max_player; j++) {
 									if (Rank_num_total[j] == i + 1) {
 										char temp[10] = "EMPTY";
 										int id_check = -1;
@@ -1044,27 +861,30 @@ int main1212() {
 							system("PAUSE");
 							system("cls");
 							break;
-							}
 						}
-					
+					}
 
-					else if (menu_choice == 6) {  // 로그아웃
+					// 로그아웃
+					else if (menu_choice == 6) {
 						printf("로그아웃되었습니다.\n");
 						loginCheck = 0;
 						Curent_id_num = 0;
 						break;
 					}
 
-					else if (menu_choice == 7) {  // 프로그램 종료
+					// 프로그램 종료
+					else if (menu_choice == 7) {
 						printf("프로그램을 종료합니다.\n");
 						select_quit = 1;
 						break;
 					}
 
-					else { // 잘못된 선택
+					// 잘못된 값 처리
+					else {
 						printf("잘못된 입력입니다.\n");
 					}
 				}
+				// 프로그램 종료2 =  이중반복문 탈출용
 				if (select_quit == 1)
 				{
 					break;
@@ -1072,24 +892,31 @@ int main1212() {
 			}
 		}
 
-		else if (start_choice == 2) { // 플레이어 등록 선택했을 때
+		// 플레이어 등록
+		else if (start_choice == 2) {
 			join(allPlayerList);
 		}
 
-		else if (start_choice == 3) { // 종료 선택했을 때
+		// 종료
+		else if (start_choice == 3) {
 			printf("프로그램을 종료합니다.\n");
 			break;
 		}
 
-		else printf("잘못된 입력입니다.\n"); // 1,2,3 아닌 거 입력했을 때
+		// 잘못된 값 처리
+		else
+		{
+			printf("잘못된 입력입니다.\n"); // 1,2,3 아닌 거 입력했을 때
 		}
+	}
 		
 		return 0;
-	}
+}
 	
 
 
 // ------------------------ 로그인 및 메인메뉴 함수 ---------------------------------------------------------
+
 int start() {
 	int choice;
 
@@ -1205,10 +1032,16 @@ int main_menu() {
 	return choice;
 }
 
+int isFull() {
+	int temp = (rear + 1) % (max_player + 1); // 원형 큐에서 rear+1을 배열크기로 나눈 나머지값이
+	if (temp == front) return 1; // front와 같으면 큐는 가득 차있는 상태
+	else return 0;
+}
+
 
 // ------------------------ 틀린그림찾기 함수정의 ----------------------------------------------------------
-// 걸린 시간을 통한 점수 산출
-// 기본을 100으로 하여 (걸린시간*2)만큼을 100에서 뺀다
+
+// 걸린 시간을 통한 점수 산출 (기본을 100으로 하여 (걸린시간*2)만큼을 100에서 뺀다)
 int Cal_Score(int StartTime)
 {
 	int Score = 100;					// 기본점수
@@ -1226,8 +1059,7 @@ int Cal_Score(int StartTime)
 	return Score;
 }
 
-// 난수를 출력하는 함수
-// 출력되는 난수의 범위를 입력받는다.
+// 난수를 출력하는 함수(출력되는 난수의 범위를 입력받는다.)
 int Make_Random_Num(int Random_Num_Range)
 {
 	int num;
@@ -1236,8 +1068,7 @@ int Make_Random_Num(int Random_Num_Range)
 	return num;
 }
 
-// from ~ end 범위의 난수를 출력하는 함수
-// from과 end를 포함한다.
+// from ~ end 범위의 난수를 출력하는 함수(from과 end를 포함한다.)
 int Make_Random_Num_Range(int from, int end)
 {
 	int num;
@@ -1246,9 +1077,7 @@ int Make_Random_Num_Range(int from, int end)
 	return num;
 }
 
-// 틀린그림 찾기판 출력
-// 왼쪽 = 정상
-// 오른쪽 = 배열중 1개의 값이 다름
+// 틀린그림 찾기판 출력(왼쪽 = 정상, 오른쪽 = 배열중 1개의 값이 다름)
 void Print_Bingo(int original_array[Length_of_Array][Height_of_Array], int different_array[Length_of_Array][Height_of_Array])
 {
 	printf("\n ==================================================================================\n\n\n");
@@ -1306,13 +1135,206 @@ int Print_Diff_Final_Score(int Score[How_Many_Time_Play_DiffGame])
 }
 
 // 틀린그림찾기 매인메뉴 출력
-void Print_diff_Mainmenu(void)
+int Print_diff_Mainmenu(void)
 {
+	int Select_diff_main_menu = 0;
 	printf("\n ===============================================\n");
 	printf("\t\t 틀린 그림 찾기 \t\t");
 	printf("\n ===============================================\n");
 	printf("\n\t\t 1. 도전\n\n\t\t 2. 초기화\n\n\t\t 3. 랭킹확인\n\n\t\t 4. 뒤로\n\n");
 	printf("\n ===============================================\n");
+
+	printf(" 원하는 메뉴의 번호를 입력하세요\n");					// 메뉴 선택
+	scanf("%d", &Select_diff_main_menu);						// 사용자한테 메뉴 입력받음
+
+	return Select_diff_main_menu;
+}
+
+// 틀린그림찾기 랭킹확인
+void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
+{
+	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
+	int Rank_num_diff[max_player] = { 0 };								// 전체랭킹 계산
+	while (1)
+	{
+		system("cls");
+		printf(" 랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
+		printf("\n 1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
+		scanf("%d", &Select_diff_RankingMenu);
+
+		if (Select_diff_RankingMenu == 1)
+		{
+			// 3.1 개인랭킹
+			system("cls");
+			printf("\n----------------------------------------------------------------\n");
+			printf("\n %s 님의 틀린그림찾기 기록은 < %d > 점입니다.\n\n", AllPlayerList_Pt_Diff[Curent_id_num].id, (AllPlayerList_Pt_Diff[Curent_id_num].sc).spot);
+			printf("\n----------------------------------------------------------------\n");
+			system("PAUSE");
+			system("cls");
+			break;
+		}
+
+		else if (Select_diff_RankingMenu == 2)
+		{
+			// 3.2 전체랭킹
+			system("cls");
+			printf("\n 틀린그림찾기 전체랭킹 페이지입니다.\n");
+			printf("\n----------------------------------------------------------------\n");
+			printf(" 등수\t\t 아이디\t\t 점수 \n\n");
+
+			for (int i = 0; i < max_player; i++)								// 등수 구하기
+			{
+				Rank_num_diff[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+				for (int j = 0; j < max_player; j++)
+				{
+					if (AllPlayerList_Pt_Diff[i].sc.spot >= AllPlayerList_Pt_Diff[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+						Rank_num_diff[i]--;
+				}
+			}
+
+			for (int i = 0; i < max_player; i++)
+			{
+				for (int j = 0; j < max_player; j++)
+				{
+
+					if (Rank_num_diff[j] == i + 1) {
+						char temp[10] = "EMPTY";
+						int id_check = -1;
+						id_check = strcmp(AllPlayerList_Pt_Diff[j].id, temp);
+						if (id_check != 0) {
+							printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], AllPlayerList_Pt_Diff[j].id, AllPlayerList_Pt_Diff[j].sc.spot);
+						}
+					}
+				}
+			}
+			printf("\n----------------------------------------------------------------\n");
+			system("PAUSE");
+			system("cls");
+			break;
+		}
+
+		else if (Select_diff_RankingMenu == 3)
+		{
+			// 3.3 뒤로
+			break;
+		}
+
+		else
+		{
+			// 3.4 잘못된 값 처리
+			printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
+		}
+	}
+}
+
+// 틀린그림찾기 초기화
+void Reset_Diff_Score(struct player* AllPlayerList_Pt_Diff, int Curent_id_num)
+{
+	while (1)
+	{
+		int Select_diff_ResetMenu = 0;										// 초기화메뉴 선택지 저장
+		system("cls");
+		printf(" 초기화 메뉴입니다. 플레이어님의 틀린그림찾기 기록을 초기화하시겠습니까?\n");
+		printf(" 1. 진행 \t 2. 취소\n");
+		scanf("%d", &Select_diff_ResetMenu);
+
+		// 2.1 초기화 진행
+		if (Select_diff_ResetMenu == 1)
+		{
+			(AllPlayerList_Pt_Diff[Curent_id_num].sc.spot) = 0;
+			printf(" 초기화 되었습니다. 초기화면으로 돌아갑니다.");
+			system("PAUSE");
+			system("cls");
+			break;
+		}
+
+		// 2.2 뒤로
+		else if (Select_diff_ResetMenu == 2)
+		{
+			break;
+		}
+
+		// 2.3 잘못된 값 처리
+		else
+		{
+			printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
+		}
+	}
+}
+
+// 틀린그림찾기 게임실행부
+void PlayDiffGame(struct player* AllPlayerList_Pt_Diff,int Curent_id_num)
+{
+	int score[How_Many_Time_Play_DiffGame] = { 0 };						// 게임 실행 별 점수
+	int Final_Score = 0;												// 최종점수
+	int Judg_num = 0;													// 제한시간 넘겼을 경우 최종점수 없음
+	int original_array[Length_of_Array][Height_of_Array] = { 0 };		// 랜덤으로 꼽힌 숫자들을 저장하는 배열
+	int different_array[Length_of_Array][Height_of_Array] = { 0 };		// original과 다른 부분을 만들어 저장할 배열
+
+	system("cls");
+	for (int q = 0; q < How_Many_Time_Play_DiffGame; q++)			// 틀린그림찾기게임 반복횟수
+	{
+
+		// 걸린 시간 계산을 위한 시작시간 기록 및 초기화
+		long StartTime = 0; // 게임시작 시간 초기화
+		long totlaElapsedTime = 0; // 총 경과시간 초기화
+		StartTime = clock(); // 게임시작 시간 기록
+
+		// 랜덤 숫자 생성 및 배열에 저장
+		for (int i = 0; i < 5; i++)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				original_array[i][j] = Make_Random_Num_Range(33, 126);	// 아스키 코드표상 특수문자 33 ~ 126을 랜덤 출력 (아스키 코드 출력을 통한 특수문자를 출력할 의도)
+				different_array[i][j] = original_array[i][j];			// 틀린쪽에 각 내용 덮어쓰기
+			}
+		}
+
+		// different_array배열에 틀린 부분을 집어 넣기
+		int Whats_diffent = 0;															// 틀린 값 선언
+		int Where_is_diff_x = Make_Random_Num(Length_of_Array);							// 틀린부분 x좌표
+		int Where_is_diff_y = Make_Random_Num(Height_of_Array);							// 틀린부분 y좌표
+
+		Whats_diffent = Make_Random_Num_Range(33, 126);									// 틀린 값을 난수로 받아서 생성
+		while (different_array[Where_is_diff_x][Where_is_diff_y] == Whats_diffent)		// 난수로 생성된 값이 혹시 틀린부분의 좌표에 해당하는 배열부분과 같진 않는지 확인
+		{
+			Whats_diffent = Make_Random_Num_Range(33, 126);								// 같지 않을때 까지 반복
+		}
+
+		different_array[Where_is_diff_x][Where_is_diff_y] = Whats_diffent;				// 같지 않으니까 대입연산
+
+
+		// 화면에 틀린그림 찾기 내용 출력
+		Print_Bingo(original_array, different_array);									// 틀린그림찾기판 출력
+		Check_Answer(Where_is_diff_x, Where_is_diff_y);									// 정답입력받아 정답인지 확인하고 안내문 출력
+
+
+		score[q] = Cal_Score(StartTime);												// 점수 출력
+		if (score[q] == Over_the_Time_limit)	// 제한시간 넘겼을 때 처리										
+		{
+			Judg_num = Over_the_Time_limit;
+			break;
+		}
+		system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
+		system("cls");							// 화면 정리
+	}
+
+	if (Judg_num == Over_the_Time_limit)									// 제한시간 넘기면 최종점수 출력X
+	{
+		printf("땡! 제한시간을 넘겼습니다. 다음에 다시 도전해주세요!");			// 제한시간 넘겼을 때 출력문구
+	}
+
+	else
+	{
+		// 최종스코어 합산 및 출력
+		Final_Score = Print_Diff_Final_Score(score);
+		((AllPlayerList_Pt_Diff[Curent_id_num].sc).spot) = Final_Score;											// 플레이어 기록에 스코어 추가
+		printf("\n=========================================\n");
+		printf("\n %s님의 최종 점수는 < %d > 점입니다\n", AllPlayerList_Pt_Diff[Curent_id_num].id, Final_Score);
+		printf("\n=========================================\n");
+		system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
+		system("cls");							// 화면 정리
+	}
 }
 
 //--------------------------암산게임 함수---------------------------------------------------------------
@@ -1349,8 +1371,6 @@ int RandNum2(int i) //랜덤으로 숫자 뽑아주는 함수2
 	}
 	return Num2;
 }
-
-
 
 int Calc(Num1, Num2) //4칙연산자 랜덤으로 봅는 함수
 {
@@ -1411,8 +1431,6 @@ int Print(int i) //채점 후 출력함수
 	}
 	return score;
 }
-
-
 
 int Game(int i) // 단계별 게임 실행 함수
 {
@@ -1475,7 +1493,6 @@ void StartMenu() //암산게임 시작 전 나오는 메뉴 함수
 
 }
 
-
 void End_Menu() ////암산게임 게임 종료후 나오는 메뉴 함수
 
 {
@@ -1494,8 +1511,8 @@ void End_Menu() ////암산게임 게임 종료후 나오는 메뉴 함수
 
 }
 
-
 // ----------------------------------------- updown 함수정의 --------------------------------------------------------------------
+
 int upDown_menu() { // updown 메인메뉴 출력
 	int choice = 0;
 
