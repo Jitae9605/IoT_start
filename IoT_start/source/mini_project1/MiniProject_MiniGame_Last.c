@@ -39,15 +39,16 @@ struct player {              // [플레이어 정보 관리 구조체]
 	int join;                // 등록 순서
 };
 
+// ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
+
 int start(); // 시작화면 함수
 void join(struct player allPlayerList[]); // 플레이어 등록 함수
 int logIn(struct player p, struct player allPlayerList[]); // 로그인 함수
 int main_menu(); // 메인메뉴 함수
 int isFull(); // 원형 큐가 다 찼는지 판별하는 함수
 
-
-
 // ----------------------------------------- 틀린그림찾기 함수선언 ----------------------------------------------------------------
+
 int Print_diff_Mainmenu(void);										// 매인메뉴 출력 함수
 int Cal_Score(int Set_endTime);										// 스코어 계산 함수
 int Make_Random_Num(int Random_Num_Range);							// 난수출력 함수
@@ -61,6 +62,7 @@ void PlayDiffGame(struct player* AllPlayerList_Pt_Diff,int Curent_id_num);				//
 void Reset_Diff_Score(struct player* AllPlayerList_Pt_Diff, int Curent_id_num);			// 틀린그림찾기 게임실행부
 
 // ----------------------------------------- 암산 함수선언 --------------------------------------------------------------------
+
 int RandNum1(int i);
 int RandNum2(int i);
 int Calc(Num1, Num2);
@@ -71,6 +73,7 @@ void StartMenu();
 void End_Menu();
 
 // ----------------------------------------- updown함수선언 --------------------------------------------------------------------
+
 int upDown_menu(void);		// updown 메인메뉴
 int game1(void);			// updown 함수
 
@@ -89,9 +92,6 @@ int main() {
 		strcpy(allPlayerList[i].id, "EMPTY");
 		strcpy(allPlayerList[i].pw, "0000");
 	}
-
-
-
 
 	// ----------------------------------------- 청기백기 변수선언 -------------------------------------------------------------------------------------
 	
