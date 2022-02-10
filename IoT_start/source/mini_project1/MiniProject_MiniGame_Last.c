@@ -1098,6 +1098,8 @@ void Print_Bingo(int original_array[Length_of_Array][Height_of_Array], int diffe
 	}
 	printf("\n");
 	printf("\n ==================================================================================\n");
+
+	return;
 }
 
 // 정답 체크 및 안내문 출력
@@ -1120,6 +1122,7 @@ void Check_Answer(int Where_is_diff_x, int Where_is_diff_y)
 			printf("!!! 땡! 틀렸습니다 !!!\n");
 		}
 	}
+	return;
 
 }
 
@@ -1225,6 +1228,7 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 		}
 	}
+	return;
 }
 
 // 틀린그림찾기 초기화
@@ -1260,6 +1264,7 @@ void Reset_Diff_Score(struct player* AllPlayerList_Pt_Diff, int Curent_id_num)
 			printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 		}
 	}
+	return;
 }
 
 // 틀린그림찾기 게임실행부
@@ -1335,6 +1340,7 @@ void PlayDiffGame(struct player* AllPlayerList_Pt_Diff,int Curent_id_num)
 		system("PAUSE");						// 정답 맞추고 다음으로 넘어가기전 일시정지
 		system("cls");							// 화면 정리
 	}
+	return;
 }
 
 //--------------------------암산게임 함수---------------------------------------------------------------
