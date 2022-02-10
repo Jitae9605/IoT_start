@@ -20,7 +20,7 @@ int loginCheck = 1;						// 로그인 성공=1, 실패 또는 로그아웃=0
 int Curent_id_num = 0;					// 현재 로그인된 아이디의 번호
 
 int front = -1, rear = -1;				// 원형 큐에 사용할 front, rear
-int Rank_num_total[max_player] = { 0 };
+int Rank_num_total[max_player] = { 0 }; 
 
 
 struct score {   // [게임 점수 구조체]
