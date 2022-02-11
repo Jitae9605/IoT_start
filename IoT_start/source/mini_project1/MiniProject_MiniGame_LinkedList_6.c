@@ -1242,12 +1242,6 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			head = sort_spot[0];
 			current = head;
 
-
-			//for (int i = 0; i < max_player; i++)
-			//{
-			//	printf("%d 번쨰요소 : %d\n", i, sort_spot[i]->sc.spot);
-			//}
-
 			int j = 1;
 
 			for (int i = 0; i < max_player;i++)
@@ -1265,32 +1259,6 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 				current = current->next;
 			}
 
-			//for (int i = 0; i < max_player; i++)								// 등수 구하기
-			//{
-			//	Rank_num_diff[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
-			//	for (int j = 0; j < max_player; j++)
-			//	{
-			//		if (AllPlayerList_Pt_Diff[i].sc.spot >= AllPlayerList_Pt_Diff[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
-			//			Rank_num_diff[i]--;
-			//	}
-			//}
-
-			//for (int i = 0; i < max_player; i++)
-			//{
-			//	for (int j = 0; j < max_player; j++)
-			//	{
-
-			//		if (Rank_num_diff[j] == i + 1) {
-			//			char temp[10] = "EMPTY";
-			//			int id_check = -1;
-			//			id_check = strcmp(current->id, temp);
-			//			if (id_check != 0) {
-			//				printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], current->id,current->sc.spot);
-			//				current = current->next;
-			//			}
-			//		}
-			//	}
-			//}
 			printf("\n----------------------------------------------------------------\n");
 			system("PAUSE");
 			system("cls");
