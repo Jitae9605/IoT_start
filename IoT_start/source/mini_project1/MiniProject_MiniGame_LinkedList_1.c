@@ -1248,17 +1248,21 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			//	printf("%d 번쨰요소 : %d\n", i, sort_spot[i]->sc.spot);
 			//}
 
-			for (int i = 0; i < max_player; i++)
+			int j = 1;
+
+			for (int i = 0; i < max_player;i++)
 			{
 				char temp[10] = "EMPTY";
 				int id_check = -1;
 				id_check = strcmp(current->id, temp);
+				
 
 				if (id_check != 0)
-					{
-					printf(" %2d등\t %12s\t %5d\n", i + 1, current->id, current->sc.spot);
-					current = current->next;
-					}
+				{
+					printf(" %2d등\t %12s\t %5d\n", j, current->id, current->sc.spot);
+					j++;
+				}
+				current = current->next;
 
 			}
 

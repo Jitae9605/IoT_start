@@ -39,11 +39,11 @@ struct player {              // [플레이어 정보 관리 구조체]
 	char pw[pw_limit + 1];   // 비밀번호
 	int rank;                // 랭킹
 	int join;                // 등록 순서
-	int* next;
+	int* next;				// 링크드 리스트
 };
 
 // 전역 구조체 선언(정렬된 값 임시저장)
-struct player sort_spot[max_player];
+struct player *sort_spot[max_player];
 
 
 // ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
@@ -56,7 +56,7 @@ int isFull(); // 원형 큐가 다 찼는지 판별하는 함수
 
 // ----------------------------------------- 틀린그림찾기 함수선언 ----------------------------------------------------------------
 
-void initsortspot(struct player* AllPlayerList);
+void initsortspot(struct player* AllPlayerList);					// 전역 구조체 sort_spot에 값을 넣어주는 함수 (점수등에 변화 있을떄 마다 끝에 사용)
 int Print_diff_Mainmenu(void);										// 매인메뉴 출력 함수
 int Cal_Score(int Set_endTime);										// 스코어 계산 함수
 int Make_Random_Num(int Random_Num_Range);							// 난수출력 함수
@@ -1068,7 +1068,7 @@ void initsortspot(struct player* AllPlayerList_Pt_Diff)
 	
 	for (int i = 0; i < max_player; i++)
 	{
-		sort_spot[i] = AllPlayerList_Pt_Diff[i];
+		sort_spot[i] = &AllPlayerList_Pt_Diff[i];
 	}
 	return;
 }
@@ -1190,7 +1190,7 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 {
 	initsortspot(AllPlayerList_Pt_Diff);
 	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
-	struct player temp_pt = { NULL ,};
+	struct player *temp_pt;
 
 	// linked pointer 선언
 	struct player* head ,* current;
@@ -1226,7 +1226,7 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			{
 				for (int j = 0; j < ((max_player-i) - 1); j++)
 				{
-					if (sort_spot[j].sc.spot < sort_spot[j+1].sc.spot)
+					if (sort_spot[j]->sc.spot < sort_spot[j+1]->sc.spot)
 					{
 						temp_pt = sort_spot[j];
 						sort_spot[j]= sort_spot[j + 1];
@@ -1235,11 +1235,11 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 				}
 			}
 
-			for (int i = 0; i < max_player; i++)
+			for (int i = 0; i < max_player-1; i++)
 			{
-				sort_spot[i].next = &sort_spot[i + 1];
+				sort_spot[i]->next = sort_spot[i + 1];
 			}
-			head = &sort_spot[0];
+			head = sort_spot[0];
 			current = head;
 
 
@@ -1248,18 +1248,21 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			//	printf("%d 번쨰요소 : %d\n", i, sort_spot[i]->sc.spot);
 			//}
 
-			for (int i = 0; i < max_player; i++)
+			int j = 1;
+
+			for (int i = 0; i < max_player;i++)
 			{
 				char temp[10] = "EMPTY";
 				int id_check = -1;
 				id_check = strcmp(current->id, temp);
+				
 
 				if (id_check != 0)
-					{
-					printf(" %2d등\t %12s\t %5d\n", i + 1, current->id, current->sc.spot);
-					current = current->next;
-					}
-
+				{
+					printf(" %2d등\t %12s\t %5d\n", j, current->id, current->sc.spot);
+					j++;
+				}
+				current = current->next;
 			}
 
 			//for (int i = 0; i < max_player; i++)								// 등수 구하기
