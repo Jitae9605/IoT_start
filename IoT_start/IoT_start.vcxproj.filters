@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\15_PointerFunction_And_VoidFunction.c">
-      <Filter>소스 파일</Filter>
-    </ClCompile>
     <ClCompile Include="source\Class,lecture\16_Malloc_And_Free.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
