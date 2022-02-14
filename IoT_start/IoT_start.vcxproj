@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\14.Applicotion pointer.c" />
+    <ClCompile Include="source\Class,lecture\14_1_Application_Pointer_CommandLineArgumment.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>

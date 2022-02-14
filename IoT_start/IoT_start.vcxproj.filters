@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\14.Applicotion pointer.c">
+    <ClCompile Include="source\Class,lecture\14_1_Application_Pointer_CommandLineArgumment.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
