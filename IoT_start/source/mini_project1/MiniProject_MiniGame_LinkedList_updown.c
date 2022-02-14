@@ -5,7 +5,6 @@
 #include<stdlib.h>
 #pragma warning(disable:4996)
 
-
 // 상수정의
 #define id_limit 12
 #define pw_limit 4
@@ -23,7 +22,7 @@ int loginCheck = 1;						// 로그인 성공=1, 실패 또는 로그아웃=0
 int Curent_id_num = 0;					// 현재 로그인된 아이디의 번호
 int front = -1, rear = -1;				// 원형 큐에 사용할 front, rear
 int Rank_num_total[max_player] = { 0 };
-int BWmamber = 0;                         // 기록이 저장된 갯수
+
 
 // 구조체선언
 struct score {   // [게임 점수 구조체]
@@ -40,11 +39,11 @@ struct player {              // [플레이어 정보 관리 구조체]
 	char pw[pw_limit + 1];   // 비밀번호
 	int rank;                // 랭킹
 	int join;                // 등록 순서
-	int* next;				// 링크드 리스트
+	int* next;
 };
 
 // 전역 구조체 선언(정렬된 값 임시저장)
-struct player *sort_spot[max_player];
+struct player sort_spot[max_player];
 
 
 // ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
@@ -57,7 +56,7 @@ int isFull(); // 원형 큐가 다 찼는지 판별하는 함수
 
 // ----------------------------------------- 틀린그림찾기 함수선언 ----------------------------------------------------------------
 
-void initsortspot(struct player* AllPlayerList);					// 전역 구조체 sort_spot에 값을 넣어주는 함수 (점수등에 변화 있을떄 마다 끝에 사용)
+void initsortspot(struct player* AllPlayerList);
 int Print_diff_Mainmenu(void);										// 매인메뉴 출력 함수
 int Cal_Score(int Set_endTime);										// 스코어 계산 함수
 int Make_Random_Num(int Random_Num_Range);							// 난수출력 함수
@@ -90,13 +89,6 @@ void PlayUpDownGame(struct player* allPlayer, int Curent_id_num);
 void RestUpDownScore(struct player* allPlayer, int Curent_id_num);
 void RankSortUpDown(struct player* allPlayer, int Curent_id_num);
 
-
-//----------------------------------------- 청기백기 함수선언-------------------------------------------------------------------
-
-
-void bwrankinglist(struct player* bw, int Current_id);
-void bwrankresult(struct player* bw);
-
 // ========================================= main 함수 ====================================================================
 
 int main() {
@@ -105,7 +97,8 @@ int main() {
 	int start_choice = 0, menu_choice = 0, rank_choice = 0, select_quit = 0;
 	struct player p = { 0, }; // 플레이어 구조체 변수 선언
 	struct player allPlayerList[max_player + 1] = { 0, }; // 모든 플레이어 정보 저장할 구조체 배열 선언
-	struct player *allPlayerList_Pt = &allPlayerList;
+	
+
 	//플레이어 아이디, 비번 배열초기화
 	for (int i = 0; i < max_player; i++) {
 		strcpy(allPlayerList[i].id, "EMPTY");
@@ -145,7 +138,7 @@ int main() {
 
 							if (upDown_choice == 1) {
 								PlayUpDownGame(allPlayerList, Curent_id_num);
-
+								
 							}
 							// 2. 초기화
 							else if (upDown_choice == 2)
@@ -227,70 +220,43 @@ int main() {
 
 							}
 
-							else if (act == 3) /////암산게임 랭킹확인
+							else if (act == 3) //////암산 게임 랭킹 확인
+
 							{
-								while (1)
+								int Rank_num_cal[max_player] = { 0 };
+								system("cls");
+								printf("\n 암산 전체랭킹 페이지입니다.\n");
+								printf("\n----------------------------------------------------------------\n");
+								printf(" 등수\t 아이디\t\t 점수 \n\n");
+
+								for (int i = 0; i < max_player; i++)								// 등수 구하기
 								{
-									int Select_cal_RankingMenu = 0;
-									system("cls");
-									printf(" 랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
-									printf("\n 1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
-									scanf("%d", &Select_cal_RankingMenu);
-									if (Select_cal_RankingMenu == 1)
+									Rank_num_cal[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+									for (int j = 0; j < max_player; j++)
 									{
-										// 3.1 개인랭킹
-										system("cls");
-										printf("\n----------------------------------------------------------------\n");
-										printf("\n %s 님의 암산게임 기록은 < %d > 점입니다.\n\n", allPlayerList[Curent_id_num].id, allPlayerList[Curent_id_num].sc.cal);
-										printf("\n----------------------------------------------------------------\n");
-										system("PAUSE");
-										system("cls");
-										break;
-									}
-									else if (Select_cal_RankingMenu == 2)
-									{
-										// 3.2 전체랭킹
-										system("cls");
-										printf("\n 암산 전체랭킹 페이지입니다.\n");
-										printf("\n----------------------------------------------------------------\n");
-										printf(" 등수\t 아이디\t\t 점수 \n\n");
-										int Rank_num_cal[max_player] = { 0 };
-										for (int i = 0; i < max_player; i++)                        // 등수 구하기
-										{
-											Rank_num_cal[i] = max_player + 1;                                 // 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
-											for (int j = 0; j < max_player; j++)
-											{
-												if ((*(allPlayerList_Pt + i)).sc.cal >= (*(allPlayerList_Pt + j)).sc.cal)                     // 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
-													Rank_num_cal[i]--;
-											}
-										}
-										for (int i = 0; i < max_player; i++)
-										{
-											for (int j = 0; j < max_player; j++)
-											{
-												if (Rank_num_cal[j] == i + 1) {
-													char temp[10] = "EMPTY";
-													int id_check = -1;
-													id_check = strcmp((*(allPlayerList_Pt + j)).id, temp);
-													if (id_check != 0) printf(" %2d등\t %12s\t %5d\n", Rank_num_cal[j], (*(allPlayerList_Pt + j)).id, (*(allPlayerList_Pt + j)).sc.cal);
-												}
-											}
-										}
-										printf("\n----------------------------------------------------------------\n");
-										system("PAUSE");
-										system("cls");
-									}
-									else if (Select_cal_RankingMenu == 3)
-									{
-										// 3.3 뒤로
-										break;
-									}
-									else
-									{
-										// 3.4 잘못된 값 처리
-										printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
+										if (allPlayerList[i].sc.cal >= allPlayerList[j].sc.cal)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+											Rank_num_cal[i]--;
 									}
 								}
+
+								for (int i = 0; i < max_player; i++)
+								{
+									for (int j = 0; j < max_player; j++)
+									{
+
+										if (Rank_num_cal[j] == i + 1) {
+											char temp[10] = "EMPTY";
+											int id_check = -1;
+											id_check = strcmp(allPlayerList[j].id, temp);
+											if (id_check != 0) printf(" %2d등\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
+										}
+
+									}
+								}
+								printf("\n----------------------------------------------------------------\n");
+								system("PAUSE");
+								system("cls");
+
 							}
 
 							else if (act == 4)  //////암산게임 시작메뉴에서 뒤로가기
@@ -355,6 +321,7 @@ int main() {
 									printf(" 랭킹확인 메뉴입니다. 원하는 메뉴를 선택해주세요\n");
 									printf("\n 1. 개인랭킹 \t 2. 전체랭킹 \t 3. 뒤로\n");
 									scanf("%d", &Select_cal_RankingMenu);
+
 									if (Select_cal_RankingMenu == 1)
 									{
 										// 3.1 개인랭킹
@@ -366,6 +333,7 @@ int main() {
 										system("cls");
 										break;
 									}
+
 									else if (Select_cal_RankingMenu == 2)
 									{
 										// 3.2 전체랭킹
@@ -374,24 +342,27 @@ int main() {
 										printf("\n----------------------------------------------------------------\n");
 										printf(" 등수\t 아이디\t\t 점수 \n\n");
 										int Rank_num_cal[max_player] = { 0 };
-										for (int i = 0; i < max_player; i++)                        // 등수 구하기
+
+										for (int i = 0; i < max_player; i++)								// 등수 구하기
 										{
-											Rank_num_cal[i] = max_player + 1;                                 // 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+											Rank_num_cal[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
 											for (int j = 0; j < max_player; j++)
 											{
-												if ((*(allPlayerList_Pt + i)).sc.cal >= (*(allPlayerList_Pt + j)).sc.cal)                     // 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+												if (allPlayerList[i].sc.cal >= allPlayerList[j].sc.cal)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
 													Rank_num_cal[i]--;
 											}
 										}
+
 										for (int i = 0; i < max_player; i++)
 										{
 											for (int j = 0; j < max_player; j++)
 											{
+
 												if (Rank_num_cal[j] == i + 1) {
 													char temp[10] = "EMPTY";
 													int id_check = -1;
-													id_check = strcmp((*(allPlayerList_Pt + j)).id, temp);
-													if (id_check != 0) printf(" %2d등\t %12s\t %5d\n", Rank_num_cal[j], (*(allPlayerList_Pt + j)).id, (*(allPlayerList_Pt + j)).sc.cal);
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0) printf(" %2d등\t %12s\t %5d\n", Rank_num_cal[j], allPlayerList[j].id, allPlayerList[j].sc.cal);
 												}
 											}
 										}
@@ -399,17 +370,20 @@ int main() {
 										system("PAUSE");
 										system("cls");
 									}
+
 									else if (Select_cal_RankingMenu == 3)
 									{
 										// 3.3 뒤로
 										break;
 									}
+
 									else
 									{
 										// 3.4 잘못된 값 처리
 										printf(" 잘못된 입력값입니다. 다시입력해주세요\n");
 									}
 								}
+
 							}
 
 							else if (act == 4) /////암산게임에서 뒤로가기
@@ -650,7 +624,40 @@ int main() {
 
 									else if (Select_BW_RankingMenu == 2)
 									{
-										bwrankresult(allPlayerList);
+										int Rank_num_BW[max_player] = { 0 };
+										// 3.2 전체랭킹
+										system("cls");
+										printf("\n 청기백기 전체랭킹 페이지입니다.\n");
+										printf("\n----------------------------------------------------------------\n");
+										printf(" 등수\t\t 아이디\t\t 점수 \n\n");
+
+										for (int i = 0; i < max_player; i++)								// 등수 구하기
+										{
+											Rank_num_BW[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+											for (int j = 0; j < max_player; j++)
+											{
+												if (allPlayerList[i].sc.BW >= allPlayerList[j].sc.BW)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+													Rank_num_BW[i]--;
+											}
+										}
+
+										for (int i = 0; i < max_player; i++)
+										{
+											for (int j = 0; j < max_player; j++)
+											{
+
+												if (Rank_num_BW[j] == i + 1) {
+													char temp[10] = "EMPTY";
+													int id_check = -1;
+													id_check = strcmp(allPlayerList[j].id, temp);
+													if (id_check != 0)
+														printf(" %2d등\t %12s\t %5d\n", Rank_num_BW[j], allPlayerList[j].id, allPlayerList[j].sc.BW);
+												}
+											}
+										}
+										printf("\n----------------------------------------------------------------\n");
+										system("PAUSE");
+										system("cls");
 									}
 
 									else if (Select_BW_RankingMenu == 3)
@@ -682,31 +689,31 @@ int main() {
 
 						//틀린그림찾기 게임 호출 작성하기
 						int Select_diff_main_menu = 0;										// 메뉴선택 선택지 저장
-						struct player* AllPlayerList_Pt_spot = &allPlayerList;				// 틀린그림찾기 구조체포인터 선언
+						struct player* AllPlayerList_Pt_Diff = &allPlayerList;				// 틀린그림찾기 구조체포인터 선언
 						
 
 						while (1)
 						{
 							// 0. 메뉴 레이아웃 출력
 							Select_diff_main_menu = Print_diff_Mainmenu();
-							initsortspot(AllPlayerList_Pt_spot);
+							initsortspot(AllPlayerList_Pt_Diff);
 
 							// 1. 게임 실행부
 							if (Select_diff_main_menu == 1)
 							{
-								PlayDiffGame(AllPlayerList_Pt_spot, Curent_id_num);
+								PlayDiffGame(AllPlayerList_Pt_Diff, Curent_id_num);
 							}
 
 							// 2. 초기화
 							else if (Select_diff_main_menu == 2)
 							{
-								Reset_Diff_Score(AllPlayerList_Pt_spot, Curent_id_num);
+								Reset_Diff_Score(AllPlayerList_Pt_Diff, Curent_id_num);
 							}
 
 							// 3. 랭킹확인
 							else if (Select_diff_main_menu == 3)
 							{
-								Sort_Diff(AllPlayerList_Pt_spot);
+								Sort_Diff(AllPlayerList_Pt_Diff);
 							}
 
 							// 4. 뒤로
@@ -942,7 +949,7 @@ void initsortspot(struct player* AllPlayerList_Pt_Diff)
 	
 	for (int i = 0; i < max_player; i++)
 	{
-		sort_spot[i] = &AllPlayerList_Pt_Diff[i];
+		sort_spot[i] = AllPlayerList_Pt_Diff[i];
 	}
 	return;
 }
@@ -1064,7 +1071,7 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 {
 	initsortspot(AllPlayerList_Pt_Diff);
 	int Select_diff_RankingMenu = 0;									// 랭킹확인메뉴 선택지 저장
-	struct player *temp_pt;
+	struct player temp_pt = { NULL ,};
 
 	// linked pointer 선언
 	struct player* head ,* current;
@@ -1100,7 +1107,7 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 			{
 				for (int j = 0; j < ((max_player-i) - 1); j++)
 				{
-					if (sort_spot[j]->sc.spot < sort_spot[j+1]->sc.spot)
+					if (sort_spot[j].sc.spot < sort_spot[j+1].sc.spot)
 					{
 						temp_pt = sort_spot[j];
 						sort_spot[j]= sort_spot[j + 1];
@@ -1109,12 +1116,18 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 				}
 			}
 
-			for (int i = 0; i < max_player-1; i++)
+			for (int i = 0; i < max_player; i++)
 			{
-				sort_spot[i]->next = sort_spot[i + 1];
+				sort_spot[i].next = &sort_spot[i + 1];
 			}
-			head = sort_spot[0];
+			head = &sort_spot[0];
 			current = head;
+
+
+			//for (int i = 0; i < max_player; i++)
+			//{
+			//	printf("%d 번쨰요소 : %d\n", i, sort_spot[i]->sc.spot);
+			//}
 
 			int j = 1;
 
@@ -1131,8 +1144,35 @@ void Sort_Diff(struct player* AllPlayerList_Pt_Diff)
 					j++;
 				}
 				current = current->next;
+
 			}
 
+			//for (int i = 0; i < max_player; i++)								// 등수 구하기
+			//{
+			//	Rank_num_diff[i] = max_player + 1;											// 모든 랭크를 n+1로 한다(같거나를 이용하므로 ( ' >= ' 사용 안하면 똑같은 점수를 가진사람들이 모두 불이익을 본다 ))
+			//	for (int j = 0; j < max_player; j++)
+			//	{
+			//		if (AllPlayerList_Pt_Diff[i].sc.spot >= AllPlayerList_Pt_Diff[j].sc.spot)							// 하나하나를 다른 모든 값과 비교하여 같거나 자신이 크면 랭크를 하나씩 낮춘다
+			//			Rank_num_diff[i]--;
+			//	}
+			//}
+
+			//for (int i = 0; i < max_player; i++)
+			//{
+			//	for (int j = 0; j < max_player; j++)
+			//	{
+
+			//		if (Rank_num_diff[j] == i + 1) {
+			//			char temp[10] = "EMPTY";
+			//			int id_check = -1;
+			//			id_check = strcmp(current->id, temp);
+			//			if (id_check != 0) {
+			//				printf(" %2d등\t %12s\t %5d\n", Rank_num_diff[j], current->id,current->sc.spot);
+			//				current = current->next;
+			//			}
+			//		}
+			//	}
+			//}
 			printf("\n----------------------------------------------------------------\n");
 			system("PAUSE");
 			system("cls");
@@ -1754,7 +1794,7 @@ void RankSortUpDown(struct player* allPlayer, int Curent_id_num)
 {
 	initsortspot(allPlayer);
 
-	struct player *temp;
+	struct player temp;
 	struct player* head, * current;
 	int i, j;
 
@@ -1790,7 +1830,7 @@ void RankSortUpDown(struct player* allPlayer, int Curent_id_num)
 			{
 				for (j = 0; j < (max_player - i) - 1; j++)
 				{
-					if (sort_spot[j]->sc.upDown < sort_spot[j + 1]->sc.upDown)
+					if (sort_spot[j].sc.upDown < sort_spot[j + 1].sc.upDown)
 					{
 						temp = sort_spot[j];
 						sort_spot[j] = sort_spot[j + 1];
@@ -1801,9 +1841,9 @@ void RankSortUpDown(struct player* allPlayer, int Curent_id_num)
 			}
 			for (int i = 0; i < max_player; i++)
 			{
-				sort_spot[i]->next = sort_spot[i + 1];
+				sort_spot[i].next = &sort_spot[i + 1];
 			}
-			head = sort_spot[0];
+			head = &sort_spot[0];
 			current = head;
 
 			j = 1;
@@ -1839,65 +1879,5 @@ void RankSortUpDown(struct player* allPlayer, int Curent_id_num)
 			printf("\n잘못된 입력 값 입니다. 다시 입력 해주세요\n");
 		}
 	}
-
-}
-
-// ----------------------------------------- BW 함수정의 --------------------------------------------------------------------
-
-void bwrankinglist(struct player* bw, int Current_id)
-{
-	// struct player *bw = allPlayerList;
-	// 플레이어 점수를 저장할 구조체 배열 선언
-
-
-	printf("%s님의 점수는 %d점\n", (bw + Current_id)->id, (bw + Current_id)->sc.BW);
-	system("PAUSE");
-
-}
-
-void bwrankresult(struct player* bw)
-{
-	// 모든 플레이어 정보 저장할 구조체 배열 선언
-
-	int i;
-	struct player temp = { NULL };				// *bw에 저장된 값은 포인트 구조체가 아닌 그냥 구조체 이기 때문에 temp가 포인트가 되면 값을 주지 않음
-												// 포인터는 반드시 같은 값만을 출력함
-
-	for (i = 0; i < max_player - 1; i++)
-	{
-		for (int j = 0; j < (max_player - i) - 1; j++)
-		{
-			if (bw[j].sc.BW < bw[j + 1].sc.BW)
-			{
-				temp = bw[j];
-				bw[j] = bw[j + 1];
-				bw[j + 1] = temp;
-			}
-		}
-	}
-
-
-	// 3.2 전체랭킹
-	system("cls");
-	printf("\n 청기백기 전체랭킹 페이지입니다.\n");
-	printf("\n----------------------------------------------------------------\n");
-	printf(" 등수\t\t 아이디\t\t 점수 \n\n");
-
-	int j = 0;
-	for (int i = 0; i < max_player; i++)
-	{
-		char temp[id_limit] = "EMPTY";
-		int id_check = -1;
-		id_check = strcmp(bw[j].id, temp);
-		if (id_check != 0)
-		{
-			printf(" %2d등\t %12s\t %5d\n", j + 1, bw[j].id, bw[j].sc.BW);
-			j++;
-		}
-
-	}
-	printf("\n----------------------------------------------------------------\n");
-	system("PAUSE");
-	system("cls");
 
 }
