@@ -19,7 +19,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\14_0_Applicotion_Pointer.c" />
+    <ClCompile Include="source\Class,lecture\15_PointerFunction_And_VoidFunction.c" />
+    <ClCompile Include="source\Class,lecture\16_Malloc_And_Free.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
