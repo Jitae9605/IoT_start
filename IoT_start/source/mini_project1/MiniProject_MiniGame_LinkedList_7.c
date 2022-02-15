@@ -49,11 +49,11 @@ struct player *sort_spot[max_player];
 
 // ----------------------------------------- 로그인/등록/매인메뉴 함수선언 ----------------------------------------------------------------
 
-int start(); // 시작화면 함수
-void join(struct player allPlayerList[]); // 플레이어 등록 함수
-int logIn(struct player p, struct player allPlayerList[]); // 로그인 함수
-int main_menu(); // 메인메뉴 함수
-int isFull(); // 원형 큐가 다 찼는지 판별하는 함수
+int start();															// 시작화면 함수
+void join(struct player allPlayerList[]);								// 플레이어 등록 함수
+int logIn(struct player p, struct player allPlayerList[]);				// 로그인 함수
+int main_menu();														// 메인메뉴 함수
+int isFull();															// 원형 큐가 다 찼는지 판별하는 함수
 
 // ----------------------------------------- 틀린그림찾기 함수선언 ----------------------------------------------------------------
 
@@ -83,8 +83,8 @@ void End_Menu();
 
 // ----------------------------------------- updown함수선언 --------------------------------------------------------------------
 
-int upDown_menu(void);		// updown 메인메뉴
-int UpDown(void);						// updown 함수
+int upDown_menu(void);			// updown 메인메뉴
+int UpDown(void);				// updown 함수
 
 void PlayUpDownGame(struct player* allPlayer, int Curent_id_num);
 void RestUpDownScore(struct player* allPlayer, int Curent_id_num);
@@ -106,6 +106,7 @@ int main() {
 	struct player p = { 0, }; // 플레이어 구조체 변수 선언
 	struct player allPlayerList[max_player + 1] = { 0, }; // 모든 플레이어 정보 저장할 구조체 배열 선언
 	struct player *allPlayerList_Pt = &allPlayerList;
+
 	//플레이어 아이디, 비번 배열초기화
 	for (int i = 0; i < max_player; i++) {
 		strcpy(allPlayerList[i].id, "EMPTY");

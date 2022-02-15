@@ -4,7 +4,7 @@
 // 3.변수와 데이터입력
 // 변수선언, 쓰레기값 초기화
 
-int main_parameter_421(void)
+int main(void)
 {
 	/* 
 

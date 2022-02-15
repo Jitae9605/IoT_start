@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\16_Malloc_And_Free.c">
+    <ClCompile Include="source\Class,lecture\18_String_Application.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

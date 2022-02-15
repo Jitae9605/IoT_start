@@ -3,7 +3,7 @@
 // 2.상수와 데이터출력
 // 기본적인 변환, 데이터타입(% d/c/s), 주석(// , /*)
 
-int main_const_3213(void)
+int main(void)
 {
 
 	// 1. printf 사용
@@ -23,9 +23,9 @@ int main_const_3213(void)
 
 	// 2. 진법
 
-	printf("%d\n", 12);  // 10진수 12
-	printf("%d\n", 014); //  8진수 12 0
-	printf("%d\n", 0xc); // 16진수 12 0x
+	printf("%d\n", 12);  //	10진수	12
+	printf("%d\n", 014); //	8진수	12 0 
+	printf("%d\n", 0xc); //	16진수	12 0x
 
 
 	// 3. 문자열

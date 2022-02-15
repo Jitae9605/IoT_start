@@ -4,7 +4,7 @@
 // 이해못했음 다시 볼것
 
 
-int main(int argc, char** argv)			// 명령행 인수를 받을 매개변수
+int main(int argc, char* argv[])			// 명령행 인수를 받을 매개변수
 {	
 	//	argc = argument count
 	//	argv = argument vector
