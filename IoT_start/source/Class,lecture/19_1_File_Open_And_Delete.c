@@ -22,7 +22,7 @@ int main(void)
 	
 	FILE* fp_1;
 
-	fp_1 = fopen("19_a.txt", "r");						// 파일 열기
+	fp_1 = fopen("19_1_a.txt", "r");						// 파일 열기
 	if (fp_1 == NULL)								// 해당이름의 파일이 존재하지 않은 경우의 처리
 	{
 		printf("파일이 열리지 않았습니다.\n");
@@ -47,16 +47,16 @@ int main(void)
 	//	!!! 주의사항 !!!
 
 	//	1) 경로설정할때 경로의 모든 역슬래시를 한번씩 더 추가해줘야한다.
-	//	ex ) c:\source\19_a.txt	->	c:\\source\\19_a.txt  
+	//	ex ) c:\source\19_1_a.txt	->	c:\\source\\19_1_a.txt  
 
 	//	2) 상위경로/폴더로 가야한다면 .. 을 사용
 	//	ex) c---ㅁ(목표위치(B))
 	//		|----ㅁ(현재위치(A))
-	//		이러한 상황에서 B의 19_a.txt를 열려면 먼저 c로 간다음 B를 열고 19_a.txt를 열어야한다.
+	//		이러한 상황에서 B의 19_1_a.txt를 열려면 먼저 c로 간다음 B를 열고 19_1_a.txt를 열어야한다.
 
-	//		fopen("c:\\B\\19_a.txt","r");		-	절대경로
+	//		fopen("c:\\B\\19_1_a.txt","r");		-	절대경로
 	//		또는	
-	//		fopen("..\\B\\19_a.txt","r");		-	상대경로
+	//		fopen("..\\B\\19_1_a.txt","r");		-	상대경로
 
 	printf("\n------------------- < 2) 파일 입출력(fgetc함수) > ---------------------------------------------\n\n");
 
@@ -66,8 +66,8 @@ int main(void)
 	FILE* fp_2;
 	int ch_2;
 
-	// fp_2 = fopen("19_a.txt", "r");									// 상대경로
-	fp_2 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_a.txt", "r");	// 절대경로
+	// fp_2 = fopen("19_1_a.txt", "r");									// 상대경로
+	fp_2 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_1_a.txt", "r");	// 절대경로
 	if (fp_2 == NULL)
 	{
 		printf("파일이 열리지 않았습니다.\n");
@@ -94,7 +94,7 @@ int main(void)
 	char str_3[] = "banana";
 	int ch_3;
 
-	fp_3 = fopen("19_b.txt", "w");
+	fp_3 = fopen("19_1_b.txt", "w");
 	if (fp_3 == NULL)
 	{
 		printf("파일을 출력하지 못했습니다.\n");
@@ -117,7 +117,7 @@ int main(void)
 	// 문자가 잘 입력됬는지 확인하기 위한 파일내용 출력
 
 	printf("문자가 파일에 입력됬는지 확인하기 위한 파일내용 출력\n");
-	fp_3 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_b.txt", "r");	// 절대경로
+	fp_3 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_1_b.txt", "r");	// 절대경로
 
 	while (1)								
 	{
@@ -142,7 +142,7 @@ int main(void)
 	//	단, fgetc나 fputs와 같이 기본으로 스트림이 지정되어 있지 않거나 따로 지정해서 사용가능한 함수가 있다는 것을 기억할 것 !
 	
 	int ch_4;
-
+	printf("입력받은 문자열 저장없이 버퍼에서 다시출력 (종료: ctrl + z)");
 	while (1)
 	{
 		ch_4 = fgetc(stdin);			// 키보드로 문자입력
@@ -167,7 +167,7 @@ int main(void)
 	int ary_5[10] = { 13, 10, 13, 13, 10, 26, 13, 10, 13, 10 };
 	int res_5;
 
-	fp_5 = fopen("19_5_a.txt", "wb");
+	fp_5 = fopen("19_1_5_a.txt", "wb");
 	for (int i = 0; i < 10; i++)
 	{
 		fputc(ary_5[i], fp_5);
@@ -179,7 +179,7 @@ int main(void)
 	//	메모장에는 [ \r \n \r \r \n ctrl+z \r \n \r \n ]이 입력이 된다.
 	//	(만들어진 텍스트파일을 열어보면 \r와 \n를 명령어로서 수행함을 알수 있다.) 
 
-	fp_5 = fopen("19_5_a.txt", "rt");
+	fp_5 = fopen("19_1_5_a.txt", "rt");
 	while (1)
 	{
 		res_5 = fgetc(fp_5);
@@ -214,7 +214,7 @@ int main(void)
 	FILE* fp_6;
 	char str_6[20];
 
-	fp_6 = fopen("19_6_a.txt", "a+");				// 읽기 가능한 추가보드로 개방
+	fp_6 = fopen("19_1_6_a.txt", "a+");				// 읽기 가능한 추가보드로 개방
 	if (fp_6 == NULL)
 	{
 		printf("파일을 만들지 못했습니다.\n");

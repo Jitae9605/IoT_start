@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\19_File_Open_And_Delete.c">
+    <ClCompile Include="source\Class,lecture\19_2_Various_Types_of_File_In_Out.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,3 +4,7 @@ jam
 apple
 banana
 strawberry
+바나나
+사과
+딸기
+배
