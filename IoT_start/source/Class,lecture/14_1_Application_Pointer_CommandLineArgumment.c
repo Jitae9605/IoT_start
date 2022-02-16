@@ -5,7 +5,7 @@
 // 작동안되는데 이유 모르겠음 - 생략
 
 
-int main(int argc, char* argv[])			// 명령행 인수를 받을 매개변수
+int main(int argc, char** argv)			// 명령행 인수를 받을 매개변수
 {	
 	//	argc = argument count
 	//	argv = argument vector
