@@ -17,7 +17,7 @@ int main(void)
 	char str_1[80];						// 입력한 문자열 저장할 배열
 	char* res_1;						// fgets 함수의 반환값을 저장할 변수
 
-	ifp_1 = fopen("19_2_1_a.txt", "r");			// 입력파일을 읽기전용으로 개방
+	ifp_1 = fopen("Temp\\19_2_1_a.txt", "r");			// 입력파일을 읽기전용으로 개방
 
 	if (ifp_1 == NULL)							// 입력파일 열지 못한 경우 처리
 	{
@@ -25,7 +25,7 @@ int main(void)
 		return 1;
 	}
 
-	ofp_1 = fopen("19_2_1_b.txt", "w");			// 출력파일 쓰기전용으로 개방
+	ofp_1 = fopen("Temp\\19_2_1_b.txt", "w");			// 출력파일 쓰기전용으로 개방
 
 	if (ofp_1 == NULL)							// 출력파일 열지 못한 경우 처리
 	{
@@ -59,14 +59,14 @@ int main(void)
 	double avg_2;
 	int res_2;
 
-	ifp_2 = fopen("19_2_2_a.txt", "r");			// 입력파일 읽기전용으로 개방
+	ifp_2 = fopen("Temp\\19_2_2_a.txt", "r");			// 입력파일 읽기전용으로 개방
 	if (ifp_2 == NULL)							// 입력파일 열지 못한 경우 처리
 	{
 		printf("입력 파일을 열지 못했습니다.\n");
 		return 1;
 	}
 
-	ofp_2 = fopen("19_2_2_b.txt", "w");			// 출력파일 쓰기전용으로 개방
+	ofp_2 = fopen("Temp\\19_2_2_b.txt", "w");			// 출력파일 쓰기전용으로 개방
 
 	if (ofp_2 == NULL)							// 출력파일 열지 못한 경우 처리
 	{
@@ -99,7 +99,7 @@ int main(void)
 	int age_3_1;
 	char name_3_1[20];
 
-	fp_3_1 = fopen("19_2_3_1_a.txt", "r");
+	fp_3_1 = fopen("Temp\\19_2_3_1_a.txt", "r");
 
 	fscanf(fp_3_1, "%d", &age_3_1);
 	fgets(name_3_1, sizeof(name_3_1), fp_3_1);
@@ -119,7 +119,7 @@ int main(void)
 	int age_3_2;
 	char name_3_2[20];
 
-	fp_3_2 = fopen("19_2_3_2_a.txt", "r");
+	fp_3_2 = fopen("Temp\\19_2_3_2_a.txt", "r");
 
 	fscanf(fp_3_2, "%d", &age_3_2);
 	while (fgetc(fp_3_2) != '\n') {}						// 입력파일의 내용을 한글자씩 들고와서 개행문자 아니면 버리고 개행문자면 반복종료
@@ -136,22 +136,22 @@ int main(void)
 	int num_4 = 10;
 	int res_4;
 
-	afp_4 = fopen("19_2_4_1_a.txt", "wt");		// 텍스트모드로 출력파일개방
+	afp_4 = fopen("Temp\\19_2_4_1_a.txt", "wt");		// 텍스트모드로 출력파일개방
 	fprintf(afp_4, "%d", num_4);				// num_4의 값을 문자로 변환하여 출력
 
-	bfp_4 = fopen("19_2_4_1_b.txt", "wb");		// 바이너리 모드로 출력파일 개방
+	bfp_4 = fopen("Temp\\19_2_4_1_b.txt", "wb");		// 바이너리 모드로 출력파일 개방
 	fwrite(&num_4, sizeof(num_4), 1, bfp_4);	// num_4의 값을 그대로 파일에 출력
 
 	fclose(afp_4);
 	fclose(bfp_4);
 
-	bfp_4 = fopen("19_2_4_1_b.txt", "rb");			// 바이너리 모드로 입력파일 개방
+	bfp_4 = fopen("Temp\\19_2_4_1_b.txt", "rb");			// 바이너리 모드로 입력파일 개방
 	fread(&res_4, sizeof(res_4), 1, bfp_4);			// 파일의 데이터를 그대로 변수에 입력
 	printf("%d\n", res_4);							// 입력한 데이터 확인
 
 	fclose(bfp_4);
 
-	//	fprintf는 메모리에 저장되어있는 이진수를 아스키코드로 전화하여 txt파일(19_2_4_1_ㅠ.txt)에 저장한다
+	//	fprintf는 메모리에 저장되어있는 이진수를 아스키코드로 전화하여 txt파일(19_2_4_1_b.txt)에 저장한다
 	//	fwrite는 이러한 변환과정 없이 메모리에 있는 데이터(2진수)를 그대로 가져와서 파일에 저장한다.
 	//	따라서 이후의 19_2_4_1_b.txt에 저장된 내용은 아스키코드값으로 저장되지 않은 바이너리 파일이 되고 일반 텍스트파일편집기로 읽을수 없다
 	//	이를 읽으려면 fread를 통해 읽어야한다.

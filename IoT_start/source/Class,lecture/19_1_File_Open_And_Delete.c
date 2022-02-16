@@ -22,7 +22,7 @@ int main(void)
 	
 	FILE* fp_1;
 
-	fp_1 = fopen("19_1_a.txt", "r");						// 파일 열기
+	fp_1 = fopen("Temp\\19_1_a.txt", "r");						// 파일 열기
 	if (fp_1 == NULL)								// 해당이름의 파일이 존재하지 않은 경우의 처리
 	{
 		printf("파일이 열리지 않았습니다.\n");
@@ -66,8 +66,8 @@ int main(void)
 	FILE* fp_2;
 	int ch_2;
 
-	// fp_2 = fopen("19_1_a.txt", "r");									// 상대경로
-	fp_2 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_1_a.txt", "r");	// 절대경로
+	// fp_2 = fopen("Temp\\19_1_a.txt", "r");									// 상대경로
+	fp_2 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\Temp\\19_1_a.txt", "r");	// 절대경로
 	if (fp_2 == NULL)
 	{
 		printf("파일이 열리지 않았습니다.\n");
@@ -94,7 +94,7 @@ int main(void)
 	char str_3[] = "banana";
 	int ch_3;
 
-	fp_3 = fopen("19_1_b.txt", "w");
+	fp_3 = fopen("Temp\\19_1_b.txt", "w");
 	if (fp_3 == NULL)
 	{
 		printf("파일을 출력하지 못했습니다.\n");
@@ -117,7 +117,7 @@ int main(void)
 	// 문자가 잘 입력됬는지 확인하기 위한 파일내용 출력
 
 	printf("문자가 파일에 입력됬는지 확인하기 위한 파일내용 출력\n");
-	fp_3 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\19_1_b.txt", "r");	// 절대경로
+	fp_3 = fopen("D:\\1_IoT\\IoT_start\\IoT_start\\Temp\\19_1_b.txt", "r");	// 절대경로
 
 	while (1)								
 	{
@@ -167,7 +167,7 @@ int main(void)
 	int ary_5[10] = { 13, 10, 13, 13, 10, 26, 13, 10, 13, 10 };
 	int res_5;
 
-	fp_5 = fopen("19_1_5_a.txt", "wb");
+	fp_5 = fopen("Temp\\19_1_5_a.txt", "wb");
 	for (int i = 0; i < 10; i++)
 	{
 		fputc(ary_5[i], fp_5);
@@ -179,7 +179,7 @@ int main(void)
 	//	메모장에는 [ \r \n \r \r \n ctrl+z \r \n \r \n ]이 입력이 된다.
 	//	(만들어진 텍스트파일을 열어보면 \r와 \n를 명령어로서 수행함을 알수 있다.) 
 
-	fp_5 = fopen("19_1_5_a.txt", "rt");
+	fp_5 = fopen("Temp\\19_1_5_a.txt", "rt");
 	while (1)
 	{
 		res_5 = fgetc(fp_5);
@@ -214,7 +214,7 @@ int main(void)
 	FILE* fp_6;
 	char str_6[20];
 
-	fp_6 = fopen("19_1_6_a.txt", "a+");				// 읽기 가능한 추가보드로 개방
+	fp_6 = fopen("Temp\\19_1_6_a.txt", "a+");				// 읽기 가능한 추가보드로 개방
 	if (fp_6 == NULL)
 	{
 		printf("파일을 만들지 못했습니다.\n");
