@@ -1,0 +1,6 @@
+apple
+banana
+jam
+apple
+banana
+strawberry
