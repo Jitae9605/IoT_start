@@ -1,12 +1,12 @@
 #include<stdio.h>
 
-void input_data(int* pa, int* pb)
+void input_data_1(int* pa, int* pb)
 {
 	printf("두 정수 입력 : ");
 	scanf("%d%d", pa, pb);
 }
 
-double average(int a, int b)
+double average_1(int a, int b)
 {
 	int tot;
 	double avg;

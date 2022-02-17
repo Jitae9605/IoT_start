@@ -18,7 +18,13 @@
     <ClCompile Include="source\Class,lecture\21_Split_And_Compile_main.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\Class,lecture\21_Split_And_Compile__sub1.c">
+    <ClCompile Include="source\Class,lecture\21_sub1.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Class,lecture\21_sub_2_input.c">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="source\Class,lecture\21_sub_2_average.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
