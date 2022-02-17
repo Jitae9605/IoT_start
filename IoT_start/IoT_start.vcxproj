@@ -19,7 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\04_operator.c" />
+    <ClCompile Include="source\Class,lecture\20_Define_And_Include.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Class,lecture\20_1_student.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
