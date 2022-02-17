@@ -20,9 +20,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="source\Class,lecture\21_Split_And_Compile_main.c" />
-    <ClCompile Include="source\Class,lecture\21_sub1.c" />
+    <ClCompile Include="source\Class,lecture\21_sub_1.c" />
     <ClCompile Include="source\Class,lecture\21_sub_2_average.c" />
     <ClCompile Include="source\Class,lecture\21_sub_2_input.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="source\Class,lecture\21_sub_3_line.h" />
+    <ClInclude Include="source\Class,lecture\21_sub_3_point.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
