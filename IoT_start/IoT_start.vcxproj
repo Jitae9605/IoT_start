@@ -19,14 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Class,lecture\21_Split_And_Compile_main.c" />
-    <ClCompile Include="source\Class,lecture\21_sub_1.c" />
-    <ClCompile Include="source\Class,lecture\21_sub_2_average.c" />
-    <ClCompile Include="source\Class,lecture\21_sub_2_input.c" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="source\Class,lecture\21_sub_3_line.h" />
-    <ClInclude Include="source\Class,lecture\21_sub_3_point.h" />
+    <ClCompile Include="source\Experiment\Using_Thread.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>15.0</VCProjectVersion>
@@ -112,6 +105,7 @@
       <SDLCheck>false</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;_CRT_SECURE_NO_DEPRECATE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
