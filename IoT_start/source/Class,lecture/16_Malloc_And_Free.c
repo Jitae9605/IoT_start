@@ -106,7 +106,7 @@ int main(void)
 
 	for (int i = 0; i < 3; i++)									// 3개의 문자열을 입력받는다 
 	{
-		printF("문자열을 입력하세요 : ");
+		printf("문자열을 입력하세요 : ");
 		gets(temp_ex1);
 		str_ex1[i] = (char*)malloc(strlen(temp_ex1) + 1);		// 동적할당을 선언 [ 영역크기 = 문자열 길이구하는 함수를 통한 문자열길이 + 1(NULL문자를 위한공간) ]
 		strcpy(str_ex1[i], temp_ex1);							// 동적할당을 통해 공간을 확보하고 그 공간에 입력받아 임시저장한 문자열을 복사
