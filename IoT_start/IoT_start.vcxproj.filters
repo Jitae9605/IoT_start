@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Experiment\Using_Thread.c">
+    <ClCompile Include="source\subject1\Q14_2.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
