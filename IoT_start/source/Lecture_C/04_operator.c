@@ -3,10 +3,9 @@
 // 4. 연산자
 // &&, ||, ==, !=, ++, --, %, *, /, = 등등의 연산자
 
-int main_operator_4312(void)
+int main(void)
 {
-	/*
-
+	
 	// 1. 산술연산자
 	int a, b;
 	int sum, sub, mul, inv,div, rest;
@@ -28,9 +27,6 @@ int main_operator_4312(void)
 	printf("나눗셈 : %d\n", div);
 	printf("나머지구하기 : %d\n", rest);
 
-	*/
-
-	/*
 
 	// 2. 증감연산자
 	// a++, a-- : 후위형 = 다른 연산자와 함꼐 사용되면 제일 나중 순위로 증감 수행
@@ -46,10 +42,7 @@ int main_operator_4312(void)
 	printf("초깃값:  a = %d, b = %d\n", a, b);
 	printf("전위형: (++a ** 3 = %d, 후위형: (b++) * 3 = %d\n", pre, post);
 
-	*/
-
-	/*
-
+	
 	// 3. 관계연산자
 	// <, >, >=, <=, ==(일치시 true), !=(불일치시 true)
 	int a = 10, b = 20, c = 10;
@@ -76,10 +69,7 @@ int main_operator_4312(void)
 	res = (a != c);						// a가 c와 같으므로 결과값은 0
 	printf("a != c : %d\n", res);
 
-	*/
-
-	/*
-
+	
 	// 4. 논리연산자
 	// &&(and), ||(or), !(not)
 
@@ -96,10 +86,7 @@ int main_operator_4312(void)
 	res =  !(a >= 30);						// 거짓이면 참, 참이면 거짓
 	printf("!(a >= 30 ):  %d\n", res);
 
-	*/
-
-	/*
-
+	
 	// 5. 기타연산자
 	// 형변환, sizeof, 복합대입(+=, -=, *= ... ), 콤마, 조건(? :),
 	// 비트(&, ^, :, ~, <<, >>) = 중요X
@@ -174,9 +161,6 @@ int main_operator_4312(void)
 	printf("res = %d\n", res);
 
 
-	*/
-
-	
 
 
 	return 0;

@@ -19,7 +19,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="source\Lecture_DataStructure\01_Basic.c" />
+    <ClCompile Include="source\Lecture_C\08_array.c" />
     <ClCompile Include="source\tool.c" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

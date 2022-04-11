@@ -1,6 +1,6 @@
 #include <stdio.h>
 
-// int main321321332(void)
+// int main(void)
 //{
 	// 9. 구조체
 	// 하나의 변수는 하나의 정보를 저장할수있다

@@ -18,7 +18,7 @@
     <ClCompile Include="source\tool.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="source\Lecture_DataStructure\01_Basic.c">
+    <ClCompile Include="source\Lecture_C\08_array.c">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
